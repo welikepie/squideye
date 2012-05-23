@@ -1,0 +1,112 @@
+<? if ($this->list_control_panel): ?>
+	<div class="scrollable_control_panel">
+		<div class="scroll_controls">
+			<div class="scroll_left hidden">&lt;</div>
+			<div class="scroll_area">
+				<? $this->renderPartial($this->list_control_panel); ?>
+				<div class="clear"></div>
+			</div>
+			<div class="scroll_right hidden">&gt;</div>
+			<div class="clear"></div>
+		</div>
+<? endif ?>
+
+<? if (!$this->list_no_interaction || $this->list_search_enabled): ?>
+	<div class="listSettings">
+		<div class="clear"></div>
+		<? if (!$this->list_no_interaction && !$this->list_no_setup_link): ?>
+			<p class="<?= $this->list_search_enabled ? 'searchEnabled' : null ?>"><a class="listSetup" href="#" title="List setup" onclick="new PopupForm('<?= $this->getEventHandler('onLoadListSetup') ?>'); return false;">List setup</a></p>
+		<? endif ?>
+		<? if ($this->list_search_enabled): ?>
+			<?
+				$searchCtrlId = $this->listGetElementId('search_control');
+				$searchFieldId = $this->listGetElementId('search_field');
+				
+				$searchActive = strlen($list_search_string);
+			?>
+
+			<div class="listSearchArea">
+				<div class="searchControl <?= $searchActive ? null : 'inactive' ?>" id="<?= h($searchCtrlId) ?>">
+					<span class="left">Search</span>
+					<input type="text" name="search_field" value="<?= $searchActive ? h($list_search_string) : h($this->list_search_prompt) ?>" id="<?= h($searchFieldId) ?>"/>
+					<span class="right">Cancel</span>
+				</div>
+			</div>
+			
+			<script type="text/javascript">
+				<?
+					$form_id = $this->listGetFormId();
+					$list_form = $this->list_no_form ? '$(\''.$searchCtrlId.'\').getForm()' : '$(\''.$form_id.'\')';
+				?>
+				var searchHandler = new SearchControlHandler('<?= h($searchCtrlId) ?>', {'default_text': '<?= $this->list_search_prompt ?>'});
+
+				searchHandler.addEvent('send', function(){
+					return <?= $list_form ?>.sendPhpr('<?= $this->getEventHandler('onListSearch') ?>', {update: '<?= $this->listGetContainerId() ?>', extraFields: {'search_string': $('<?= $searchFieldId ?>').get('value')}, onFailure: popupAjaxError, onSuccess: function(){$('<?= $this->listGetContainerId() ?>').fireEvent('listUpdated')}, loadIndicator: {injectInElement: true, element: '<?= $this->listGetContainerId() ?>', src: '<?= $list_load_indicator ?>', hideOnSuccess: 1}});
+				});
+				searchHandler.addEvent('cancel', function(){
+					return <?= $list_form ?>.sendPhpr('<?= $this->getEventHandler('onListSearchCancel') ?>', {update: '<?= $this->listGetContainerId() ?>', onSuccess: function(){$('<?= $this->listGetContainerId() ?>').fireEvent('listUpdated')}, loadIndicator: {injectInElement: true, element: '<?= $this->listGetContainerId() ?>', src: '<?= $list_load_indicator ?>', hideOnSuccess: 1}});
+				});
+				
+			</script>
+		<? endif ?>
+		<div class="clear"></div>
+	</div>
+	<div class="clear"></div>
+<? endif ?>
+
+<? if ($this->list_control_panel): ?>
+	</div>
+<? endif ?>
+
+<div class="list_filter_container">
+<? 
+	if ($this->list_render_filters)
+		$this->filterRender();
+?>
+</div>
+
+<? if ($this->list_sidebar_panel): ?>
+	<table class="listSidebarLayout">
+		<tr>
+			<td class="sidebar"><? $this->renderPartial($this->list_sidebar_panel) ?></td>
+			<td class="list">
+<? endif ?>
+<? 
+	if ($this->list_top_partial)
+		$this->renderPartial($this->list_top_partial);
+?>
+
+<?
+	if (!$this->list_no_interaction && !$this->list_no_form):
+?>
+	<?= Phpr_Form::openTag(array('id'=>$this->listGetFormId())) ?>
+<? endif ?>
+	<? 
+	$scrollable = $this->list_scrollable || (isset($this->list_options['list_scrollable']) && $this->list_options['list_scrollable']);
+?>
+	<div id="<?= $this->listGetContainerId() ?>" class="listContainer <? if ($scrollable): ?>scrollableList<? endif ?>">
+		<? 
+			if (!$this->list_custom_partial)
+				$this->listRenderPartial('list'); 
+			else
+				$this->renderPartial($this->list_custom_partial); 
+		?>
+	</div>
+<? if (!$this->list_no_interaction && !$this->list_no_form): ?>
+	</form>
+<? endif ?>
+
+<? if (!$this->list_no_js_declarations): ?>
+	<script type="text/javascript">
+		function listReload(show_load_indicator)
+		{
+			return $('<?= $this->listGetFormId() ?>').sendPhpr('<?= $this->getEventHandler('onListReload') ?>', {update: '<?= $this->listGetContainerId() ?>', onSuccess: function(){$('<?= $this->listGetContainerId() ?>').fireEvent('listUpdated')}, onBeforePost: LightLoadingIndicator.show.pass('Loading...'), 
+			onComplete: LightLoadingIndicator.hide, loadIndicator: {show: false, injectInElement: true, element: '<?= $this->listGetContainerId() ?>', src: '<?= $list_load_indicator ?>', hideOnSuccess: 1}});
+		}
+	</script>
+<? endif ?>
+<? if ($this->list_sidebar_panel): ?>
+			</td>
+		</tr>
+	</table>
+<? endif ?>

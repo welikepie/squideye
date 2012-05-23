@@ -1,0 +1,85 @@
+#1 Created email configuration table
+#2 Created color theme configuration table
+#3 Created backup archive tables
+#4 Created backup settings
+#5 Added email templates feature
+#6 Changes in the email configuration
+#7 Added login auditing feature
+#8 Resource files are now reloading after application update
+#9 Added separate HTML editor configuration feature
+#10 Added Valid Elements feature to the HTML editor configuration
+#11 Added Valid Child Elements feature to the HTML editor configuration
+#12 Increased width of the User form
+#13 Minor spelling fix
+#14 Minor fixes in the class loader
+#15 Added transparency support for the logo (customization feature)
+#16 Minor fixes in the base classes
+#17 Fixed a bug in the Backup/Restore feature
+#18 Updated the text note on the Restore page
+#19 Added automatic update list displaying
+#20 Added new email configuration parameters: custom SMTP port and SSL
+#21 Minor fix in the backup system
+#22 Minor error fix in the email configuration
+#23 Minor fix in the email configuration testing feature
+#24 Subdirectories support  
+#25 Minor fixes in the subdirectories support 
+#26 Added more email sending modes
+#27 Added the sendmail configuration options
+#28 Minor improvements in the email and backup configuration forms
+#29 Minor improvements in the email templates management
+#30 Added the warning message which popups when user tries to leave the software update page during the update process
+#31 Minor update in the session initialization code
+#32 Minor user interface improvements on the System/Settings page
+#33 Added a hint message to the System/Backups page
+#34 Added the Administration Area footer customization options
+#35 Items on the System/Settings page are clickable now
+#36 Minor updates in the user Administration Area interface
+#37 Minor updates on the Modules and Updates page
+#38 Built-in email templates (new order notification, order status update, etc.) are now editable through the Email Templates
+#39 Added the compound email variables feature
+#40 Added system email templates
+#41 Added the email layout management feature
+#42 Created email layouts
+#43 Email template configuration now allows to specify the Reply To email address 
+#44 Minor improvements in the email system classes
+#45 Minor update on the Modules & Updates page
+#46 Minor update on the Modules & Updates page
+#47 Minor update on the Modules & Updates page
+#48 Technology update
+#49 Minor update on the Email Templates page
+#50 Minor update on the Email Template page
+#51 Minor update in the system classes
+#52 Minor update in the system classes
+#53 Minor update in the software update feature
+#54 Improvements in the backup system
+#55 Minor security improvement in the backup system
+#56 Minor update in the module naming
+#57 Minor update in the user login logging
+#58 Minor update in email system
+#59 Minor update of the backup system configuration form
+#60 Added the "Clear the log" button to the error log page
+#61 Minor update in the base classes
+#62 Minor update in the base classes
+#63 Added the Table Controls button to the HTML Editor configuration form
+#64 Minor update on the "Update license information" page
+#65 Technology update
+#66 Minor update in the base classes
+#67 Minor update in the base classes
+#68 Minor update in the email system
+#69 Added batch deleting feature for backup archives
+#1.0.70 The module list now displays disabled modules in a separate tab
+#1.0.71 Minor improvement in backup feature.
+#1.0.72 Technology update.
+#1.0.73 Minor improvements in the user interface.
+#1.1.0 Added My Settings page. 
+#1.1.1 Usability improvements.
+#1.1.2 Minor fix in the Backup/Restore feature.
+#1.1.3 Minor usability improvements.
+#1.1.4 Minor usability improvements. Added new API events: system:onExtendHtmlEditorConfigModel, system:onExtendHtmlEditorConfigForm, system:onExtendHtmlEditorConfigFieldOptions.
+#1.1.5 Minor fix in the email template editor form.
+#1.1.6 Improvements in the System/Settings and My Settings pages.
+#1.1.7 Improvements in the System/Settings and My Settings pages.
+#1.1.8 Improvements on the Modules and Updates page.
+#1.2.0 Added the error decoding function. Added error details to the Error Preview page.
+#1.3.0|@cb7563e Compound email variables and email templates now support Twig.
+#1.3.1 Minor update in the internal classes.

@@ -1,0 +1,66 @@
+<? 
+	$listContainerId = $this->formGetElementId('form_attachments_container_'.get_class($form_model).'_'.$form_field->dbName);
+	$uploaderContainerId = $this->formGetElementId('form_uploader_container_'.get_class($form_model).'_'.$form_field->dbName);
+	$uploaderLinkId = $this->formGetElementId('form_uploader_link_'.get_class($form_model).'_'.$form_field->dbName);
+	$uploader = $this->formGetElementId('form_attachments_uploader_'.get_class($form_model).'_'.$form_field->dbName);
+	$upload_link_container = $this->formGetElementId('form_uploader_link_container_'.get_class($form_model).'_'.$form_field->dbName);
+	$upload_loading_indicator = $this->formGetElementId('form_uploader_indicator_'.get_class($form_model).'_'.$form_field->dbName);
+?>
+
+<div id="<?= $listContainerId ?>">
+	<? $this->formRenderFileAttachments($form_field->dbName); ?>
+</div>
+
+<div class="addFileLink" id="<?= $uploader ?>">
+	<div class="invisible" id="<?= $upload_link_container ?>">
+		<a href="javascript:;" id='<?= $uploaderLinkId ?>'><?= h($form_field->addAttachmentLabel) ?></a>
+		<div class="progressInfo">
+			<img class="overall-progress progress invisible" src="phproad/modules/db/behaviors/db_formbehavior/resources/images/progressbar.gif"/>
+		</div>
+	</div>
+	<div class="upload_files_loading_indicator" id="<?= $upload_loading_indicator ?>"><p class="loading">Loading...</p></div>
+</div>
+
+<div class="uploaderContainer" id="<?= $uploaderContainerId ?>"></div>
+
+<script type="text/javascript">
+	var files_handler = 'domready';
+	var files_handler_element = window;
+	
+	var files_popup_form = $('<?= $uploaderContainerId ?>').selectParent('div.popupForm'); 
+	if (files_popup_form)
+	{
+		files_handler_element = files_popup_form.getElement('div:first-child');
+		files_handler = 'popupLoaded';
+	}
+
+	files_handler_element.addEvent(files_handler, function() {
+		var phpr_uploader = new FileUploader('<?= $uploader ?>', {
+			'url': '<?= $this->formGetUploadUrl($form_field->dbName) ?>', 
+			'container': $('<?= $uploaderContainerId ?>'), 
+			'target': '<?= $uploaderLinkId ?>',
+			'data': $('<?= $uploaderContainerId ?>').getForm(),
+			'onLoad': function() {
+				window.fireEvent('phpr_file_upload_loaded', ['<?= $form_field->dbName ?>', phpr_uploader]);
+				$('<?= $upload_loading_indicator ?>').hide();
+				$('<?= $upload_link_container ?>').removeClass('invisible');
+			},
+			'onUploadComplete': function(){
+				$('<?= $uploaderContainerId ?>').getForm().sendPhpr(
+					'<?= $this->getEventHandler('onUpdateFileList') ?>',
+					{
+						extraFields: {dbName: '<?= $form_field->dbName ?>'},
+						update: '<?= $listContainerId ?>',
+						loadIndicator: {show: false},
+						onBeforePost: LightLoadingIndicator.show.pass('Loading...'), 
+						onComplete: function(){
+							LightLoadingIndicator.hide();
+							realignPopups();
+							window.fireEvent('phpr_file_upload_complete', ['<?= $form_field->dbName ?>']);
+						}
+					}
+				)
+			}
+		});
+	});
+</script>

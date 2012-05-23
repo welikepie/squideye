@@ -1,0 +1,13 @@
+<? Phpr_View::beginBlock("view") ?>
+	<ul class="breadcrumbs">
+		<li><a href="<?= url('system/backup') ?>">Backup or Restore</a></li>
+		<li><a href="<?= url('system/backup/preview/'.$id) ?>">Archive</a></li>
+		<li><?= $this->app_page_title ?></li>
+	</ul>
+	
+	<?= flash() ?>
+
+	<? if (isset($fatalError)): ?>
+		<p><a href="<?= url('/system/backup/preview/'.$id)?>">Return to the archive preview page.</a></p>
+	<? endif ?>
+<? Phpr_View::endBlock() ?>

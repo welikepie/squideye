@@ -1,0 +1,64 @@
+<? Phpr_View::beginBlock("head") ?>
+	<link rel="stylesheet" href="phproad/modules/db/behaviors/db_formbehavior/resources/css/forms.css" type="text/css"/>
+	<link rel="stylesheet" href="modules/backend/resources/css/dashboard.css" type="text/css"/>
+	<script type="text/javascript" src="modules/backend/resources/javascript/dashboard.js?<?= module_build('backend') ?>"></script>
+<? Phpr_View::endBlock() ?>
+
+<? Phpr_View::beginBlock("view") ?>
+	<?= flash() ?>
+
+	<? if (!isset($fatalError)): ?>
+	
+		<? if ($this->isHintVisible('dashboard_hints')): ?>
+			<?= Phpr_Form::openTag(array('id'=>'hint_form')) ?>
+				<div class="hint">
+					<p class="last">
+						<? if ($this->currentUser->belongsToGroups(Users_Groups::admin)): ?>
+							You can configure Google Analytics integration on the <a href="<?= url('cms/settings/stats/') ?>">System/Settings/Statistics and Dashboard</a> page. 
+						<? endif ?>
+						To add more dashboard indicators please click the <strong>Organize</strong> button. To manage indicator and report positions, drag them with the mouse.</p>
+					<a title="Hide this hint" href="#" class="close" onclick="return hide_tip('dashboard_hints', this)">Close</a>
+				</div>
+			</form>
+		<? endif ?>
+
+		<? if ($analytics_error): ?>
+			<div class="error"><?= h($analytics_error) ?></div>
+		<? endif ?>
+
+		<h2 class="separated"><? if (!Cms_Analytics::isGoogleAnalyticsEnabled()): ?>Visitors<? else: ?>Visits<? endif ?></h2>
+
+		<div class="flash_chart">
+			<div class="flash_content">
+				<script type="text/javascript" src="modules/backend/resources/javascript/swfobject.js"></script>
+
+				<div id="flashcontent" class="flashcontent">
+					<span>You may not have Macromedia Flash Player installed on your system, or your Macromedia Flash Player is out of date. Please download and install Flash Player: <a href="http://get.adobe.com/flashplayer/">http://get.adobe.com/flashplayer/</a> </span>
+				</div>
+
+				<script type="text/javascript">
+					var so = new SWFObject("<?= root_url('/modules/backend/resources/swf/amline.swf') ?>", "amchart", "100%", "220", "8", "#FFFFFF");
+					so.addVariable("path", escape("<?= root_url('/modules/backend/resources/swf/') ?>"));
+					so.addVariable("settings_file", 
+						encodeURIComponent("<?= root_url('/modules/backend/resources/xml/chart_common_settings.xml?'.time()) ?>")+',' +
+						encodeURIComponent("<?= root_url('/modules/backend/resources/xml/unique_visits_settings.xml?'.time()) ?>")+','+ 
+						encodeURIComponent( "<?= url('backend/chartdata/unique_visits?'.time()) ?>")
+					);
+					so.addParam("wmode", "transparent");
+			
+					so.addVariable("chart_id", "amchart");
+			
+					so.write("flashcontent");
+			
+					window.flashMovie = null;
+					function amChartInited (chart_id)
+					{
+						window.flashMovie = document.getElementById(chart_id);
+					}
+				</script>
+			</div>
+		</div>
+	
+		<div id="dashboard_content"><? $this->renderPartial('dashboard_content') ?></div>
+	<? endif ?>
+<? Phpr_View::endBlock() ?>

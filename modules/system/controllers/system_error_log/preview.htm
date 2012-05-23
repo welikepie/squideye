@@ -1,0 +1,63 @@
+<script type="text/javascript">
+	var lemonstand_root_dir = '<?= Phpr::$request->getSubdirectory() ?>';
+</script>
+
+<link rel="stylesheet" type="text/css" href="modules/cms/resources/css/error.css" />
+
+<script type="text/javascript" src="phproad/thirdpart/syntaxhighlighter/scripts/shCore.js"></script>
+<script type="text/javascript" src="phproad/thirdpart/syntaxhighlighter/scripts/shBrushPhp.js"></script>
+<script type="text/javascript" src="phproad/thirdpart/syntaxhighlighter/scripts/shBrushXml.js"></script>
+
+<link type="text/css" rel="stylesheet" href="phproad/thirdpart/syntaxhighlighter/styles/shCore.css"/>
+<link type="text/css" rel="stylesheet" href="phproad/thirdpart/syntaxhighlighter/styles/shThemeDefault.css"/>
+
+<script type="text/javascript">
+	SyntaxHighlighter.all();
+	SyntaxHighlighter.defaults.gutter = true;
+</script>
+
+<ul class="breadcrumbs">
+	<li><a href="<?= url('/system/settings') ?>">Settings</a></li>
+	<li><a href="<?= url('/system/error_log') ?>">Error Log</a></li>
+	<li><?= $this->app_page_title ?></li>
+</ul>
+
+<? if (!isset($fatalError)): ?>
+	<div class="scoreboardReport">
+		<ul>
+			<li>
+				<h3>Error log ID</h3>
+				<p><?= $form_model->id ?></p>
+			</li>
+			<li class="last">
+				<h3>Date and time</h3>
+				<p><?= Phpr_Date::display($form_model->record_datetime, '%x %X') ?></p>
+			</li>
+		</ul>
+	</div>
+	
+	<div class="toolbar">
+		<a class="imageLink go_back img_noBottomPading" href="<?= url('/system/error_log') ?>">Return to the error log</a>
+		<div class="clear"></div>
+	</div>
+
+	<?= Phpr_Form::openTag() ?>
+		<? $this->formRenderPreview() ?>
+		<div class="clear"></div>
+	</form>
+<? else: ?>
+	<?= flash() ?>
+	<p><a href="<?= url('/system/error_log') ?>">Return to the error list</a></p>
+<? endif ?>
+
+<? if($form_model->details): ?>
+	<h2 class="section-title left first offset-top">Error details</h2>
+
+	<div id="error-details" class="error-box list-section">
+		<?
+			$this->viewData['error'] = Phpr_ErrorLog::decode_error_details($form_model->details);
+			$this->renderPartial('error_details');
+		?>
+	</div>
+<? endif ?>
+<div class="clear"></div>

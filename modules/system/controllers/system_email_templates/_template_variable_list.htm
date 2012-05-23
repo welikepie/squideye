@@ -1,0 +1,18 @@
+<div id="variables_header">
+	<h3 class="separated">Template variables</h3>
+	<p>The following variables could be used in the email template. Click variable name to insert it into the template content or subject.</p>
+</div>
+
+<? $variables = Core_ModuleManager::listEmailVariables(null, true) ?>
+
+<div class="scrollable" id="variable_list">
+	<? foreach ($variables as $section=>$variables): ?>
+		<h4><?= h($section) ?></h4>
+		
+		<ul>
+			<? foreach ($variables as $variable=>$info): ?>
+				<li><a href="#" onclick="return insert_variable('{<?= h($variable) ?>}')">{<?= h($variable) ?>}</a> &ndash; <?= h($info[0]) ?></li>
+			<? endforeach ?>
+		</ul>
+	<? endforeach ?>
+</div>

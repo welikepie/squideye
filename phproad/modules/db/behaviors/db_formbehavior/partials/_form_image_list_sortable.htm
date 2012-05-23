@@ -1,0 +1,64 @@
+<? 
+	$listContainerId = $this->formGetElementId('form_attachments_container_'.get_class($form_model).'_'.$dbName); 
+	$listId = $this->formGetElementId('form_image_list_'.get_class($form_model).'_'.$dbName); 
+
+	$field_definition = $form_model->find_form_field($dbName);
+	$baseUrl = root_url('/uploaded/public/');
+?>
+<? if ($form_file_list->count): ?>
+	<? if ($form_file_list->count > 3): ?>
+	<div class="scrollable_image_list">
+	<? endif ?>
+	<ul class="imageList_sortable" id="<?= $listId ?>">
+		<? foreach ($form_file_list as $index=>$file): ?>
+			<li class="<?= $index == $form_file_list->count-1 ? 'last' : null ?> <?= Backend_Html::zebra('images_'.$listId) ?>">
+				<a href="#" class="row_drag_handle phpr_image_handle" onclick="return false" title="Reorder grouped products">Reorder options</a>
+				
+				<a class="image_link" href="<?= $baseUrl.urlencode($file->disk_name) ?>" target="_blank"><img src="<?= $file->getThumbnailPath(100, 'auto') ?>" alt="<?= h($file->name) ?>"/></a>
+				
+				<div class="image_info">
+					<h4><?= h($file->name) ?></h4>
+					<p>
+						Uploaded: <?= $file->displayField('created_at') ?> by <?= h($file->created_user_name) ?> |
+
+						<a href="#" onclick="return $(this).getForm().sendPhpr('<?= $this->getEventHandler('onDeleteFile') ?>', {extraFields: {dbName: '<?= $dbName ?>', fileId: '<?= $file->id ?>'}, confirm: 'Do you really want to delete this file?', update: '<?= $listContainerId ?>', loadIndicator: {show: false}, onComplete: function(){ realignPopups(); }});" >Delete</a>
+					</p>
+					
+					<div id="<?= 'phpr_file_description_'.$file->id ?>">
+						<? $this->formRenderPartial('form_file_description', array('file'=>$file)) ?>
+					</div>
+				</div>
+
+				<input class="image_id" value="<?= $file->id ?>" type="hidden"/>
+				<input class="image_order" value="<?= $file->sort_order ?>" type="hidden"/>
+
+				<div class="clear"></div>
+			</li>
+		<? endforeach ?>
+	</ul>
+	<? if ($form_file_list->count > 3): ?>
+	</div>
+	<? endif ?>
+
+	<script type="text/javascript">
+		$('<?= $listId ?>').makeListSortable('<?= $this->getEventHandler("onSetFormFilesOrder") ?>', 'image_order', 'image_id', 'phpr_image_handle', {'dbName': '<?= $dbName ?>'});
+		$('<?= $listId ?>').addEvent('dragComplete', function(){
+			var item_num = $('<?= $listId ?>').getChildren().length;
+			$('<?= $listId ?>').getChildren().each(function(element, index){
+				if (index % 2)
+					element.addClass('even');
+				else
+					element.removeClass('even');
+
+				if (index == item_num-1)
+					element.addClass('last');
+				else
+					element.removeClass('last');
+			})
+		});
+	</script>
+	
+	<div class="clear"></div>
+<? else: ?>
+	<p><?= h($field_definition->noAttachmentsLabel) ?></p>
+<? endif ?>

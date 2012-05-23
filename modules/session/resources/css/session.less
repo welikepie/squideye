@@ -1,0 +1,128 @@
+@import "../../../../phproad/resources/css/common.less";
+
+#wrapper {
+	width: 514px;
+	margin: 10em auto 0 auto;
+}
+
+#wrapper_content {
+	padding-right: 117px;
+}
+
+h1 {
+	text-indent: -1000000em;
+	background: transparent url('../images/lemonstand_header.png') no-repeat left top;
+	width: 397px;
+	height: 110px;
+}
+
+#form_wrapper {
+	margin-top: -25px;
+	width: 267px;
+	float: right;
+}
+
+.formContainer {
+	padding: 10px 15px 14px;
+	margin-bottom: 2em;
+	background: #e9e9e9;
+}
+
+div.form ul.formElements li {
+	&.field label {
+		color: #666666!important;
+	}
+
+	&.error label {
+		color: #CC0000!important;
+	}
+}
+
+h2 {
+	font: normal 19px Arial, Verdana, sans-serif;
+	color: #666;
+	padding: 8px 13px 20px 13px;
+	background: transparent url(../images/form_header.gif) no-repeat left bottom;
+	text-shadow: 1px 1px 1px #fff;
+}
+
+.login_links {
+	float: left;
+	font-size: 1.1em;
+}
+
+.login_button {
+	float: right;
+	margin-left: 1em;
+	outline: none;
+}
+
+a img {border: none;}
+
+p.copyright {
+	font-size: 1.1em;
+	color: #999999;
+	
+	a {color: #5b8bba;}
+}
+
+div.formOverlay {background: #e9e9e9!important;}
+
+/*
+ * Fancy button
+ */
+
+.fancy_button
+{
+	background: #f1b511 url(../images/button_bg.gif) repeat-x left 50%;
+	.round(4px);
+	.outer-shadow(rgba(0,0,0,0.3), 0, 1px, 3px);
+	text-shadow: 0 -1px 1px rgba(0,0,0,0.25);
+	border: none;
+	border-bottom: 1px solid rgba(0,0,0,0.25);
+	line-height: 1;
+	font: bold 12px Arial, Verdana, sans-serif!important;
+	padding: 7px 13px 7px;
+	color: white;
+	float: right;
+	text-decoration: none;
+	cursor: pointer;
+	outline: none;
+	
+	&:hover {color: white;}
+	
+	&:active {
+		.translate(1px, 1px);
+		.hide-shadow();
+	}
+	
+	&.cancel {
+		margin-right: 10px;
+		background: #aaa;
+		.hide-shadow();
+		border-bottom: none;
+	}
+}
+
+/*
+ * IE message
+ */
+
+div.ie_message {
+	margin-left: 8px;
+	padding: 10px;
+	border: 2px solid #eee;
+	background: #f6f6f6;
+	
+	ul {
+		font-size: 12px;
+		line-height: 150%;
+		margin-bottom: 12px;
+		
+		li {
+			padding-left: 10px;
+			background: transparent url(../images/bullet_small.gif) no-repeat left 50%;
+			font-weight: bold;
+		}
+	}
+}

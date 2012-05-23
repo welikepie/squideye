@@ -1,0 +1,32 @@
+<?
+	$fieldId = $this->formGetElementId($form_model_class.'_'.$form_field->dbName.uniqid());
+	$config = Backend_CodeEditorConfiguration::create()->render_settings();
+?>
+
+<div class="code_wrapper <?= $form_field->size ?>">
+	<textarea class="<?= $form_field->size ?>" id="<?= $fieldId ?>" name="<?= $form_model_class ?>[<?= $form_field->dbName ?>]"><?= h($form_model->displayField($form_field->dbName)) ?></textarea>
+</div>
+
+<script type="text/javascript">
+	var thisTab = $('<?= $fieldId ?>').getTab();
+	if (thisTab)
+	{
+		thisTab.addEvent('onTabClick', function(){
+			if (!phpr_field_initialized.has('<?= $fieldId ?>') && $('<?= $fieldId ?>').isVisible())
+			{
+				var editor = init_code_editor('<?= $fieldId ?>', '<?= $form_field->language ?>', <?= $config ?>);
+				phpr_field_initialized.set('<?= $fieldId ?>', 1);
+			} else
+			{
+				var editor = find_code_editor('<?= $fieldId ?>');
+				if (editor)
+					editor.resize();
+			}
+		})
+	} else
+	{
+		window.addEvent('domready', function(){
+			init_code_editor('<?= $fieldId ?>', '<?= $form_field->language ?>', <?= $config ?>);
+		});
+	}
+</script>

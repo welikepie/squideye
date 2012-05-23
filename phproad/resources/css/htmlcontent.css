@@ -1,0 +1,103 @@
+html {
+  font-size: 100%;
+  /* IE hack */
+}
+html,
+body.mceContentBody,
+.mceContentBody form,
+.mceContentBody fieldset,
+.mceContentBody h1,
+.mceContentBody h2,
+.mceContentBody h3,
+.mceContentBody h4,
+.mceContentBody h5,
+.mceContentBody h6,
+.mceContentBody p,
+.mceContentBody pre,
+.mceContentBody blockquote,
+.mceContentBody address,
+.mceContentBody dd,
+.mceContentBody dtm,
+.mceContentBody div {
+  margin: 0;
+  padding: 0;
+}
+body.mceContentBody {
+  font: 62.5% Arial, Verdana, Helvetica, sans-serif;
+  background: #FFFFFF;
+  padding: 0.5em;
+}
+body.mceContentBody h1 {
+  font-size: 2.5em!important;
+  font-weight: normal!important;
+  padding-bottom: 0.5em!important;
+  color: black!important;
+}
+body.mceContentBody h2 {
+  font: normal 2em Arial, verdana, sans-serif !important;
+  padding: 0.3em 0 0.5em 0!important;
+  color: black!important;
+}
+body.mceContentBody h3 {
+  font: normal 1.7em Arial, verdana, sans-serif !important;
+  padding: 0.3em 0 0.5em 0!important;
+  color: black!important;
+}
+body.mceContentBody h4 {
+  font: bold 1.5em Arial, verdana, sans-serif !important;
+  padding: 0.3em 0 0.5em 0!important;
+  color: black!important;
+}
+body.mceContentBody p {
+  font: normal 1.2em/150% Arial, verdana, sans-serif !important;
+  padding-bottom: 0.5em!important;
+  color: #333!important;
+}
+body.mceContentBody ul, body.mceContentBody ol {
+  font: normal 1.2em/150% Arial, verdana, sans-serif !important;
+  padding-bottom: 0.5em!important;
+  padding-left: 2em!important;
+  margin: auto!important;
+}
+body.mceContentBody ul li, body.mceContentBody ol li {
+  padding: auto!important;
+  margin: auto!important;
+}
+body.mceContentBody ol li {
+  list-style-type: decimal!important;
+}
+body.mceContentBody ul li {
+  list-style-type: disc!important;
+}
+body.mceContentBody a.DictionaryReference {
+  color: #cc6600!important;
+  text-decoration: none!important;
+  border-bottom: 1px dotted #cc6600!important;
+  font-weight: bold!important;
+}
+table {
+  border-collapse: collapse!important;
+  margin-bottom: 12px!important;
+  border: 1px solid #ccc!important;
+}
+table th, table td {
+  font-family: Arial, Verdana, Helvetica, sans-serif !important;
+  font-size: 11px!important;
+  color: #333!important;
+  padding: 3px 5px!important;
+  border-right: 1px solid #ccc!important;
+  vertical-align: top!important;
+}
+table thead {
+  background-color: transparent!important;
+}
+table thead th {
+  background-color: #eee!important;
+  border-bottom: 1px solid #ccc!important;
+  border-top: 2px solid #666666!important;
+  font-weight: normal!important;
+  color: #000!important;
+}
+table th.number, table td.number {
+  text-align: right!important;
+}

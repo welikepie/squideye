@@ -1,0 +1,21 @@
+.ajax_loading_indicator
+{
+	position: absolute;
+	top: expression(eval(document.body.scrollTop));
+}
+
+.categories ul li
+{
+	border-bottom: 1px solid #ffffff;
+}
+
+div.right p
+{
+	text-align: left;
+}
+
+ul.progress li
+{
+	padding-left: 20px!important;
+	border-left: 1px solid white;
+}

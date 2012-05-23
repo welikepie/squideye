@@ -1,0 +1,67 @@
+<? Phpr_View::beginBlock("head") ?>
+	<script type="text/javascript">
+		function set_authorization_status()
+		{
+			var cb = $('System_EmailParams_smtp_authorization');
+			$('System_EmailParams_smtp_user').disabled = !cb.checked;
+			$('System_EmailParams_smtp_password').disabled = !cb.checked;
+		}
+		
+		window.addEvent('domready', function(){
+			set_authorization_status();
+			$('System_EmailParams_smtp_authorization').addEvent('click', set_authorization_status);
+			
+			$('System_EmailParams_send_mode').addEvent('change', function(){
+				var send_mode_value = $('System_EmailParams_send_mode').value;
+				
+				switch (send_mode_value)
+				{
+					case 'smtp' :
+						$('tab_smtp').show();
+						$('tab_sendmail').hide();
+					break;
+					case 'mail' :
+						$('tab_smtp').hide();
+						$('tab_sendmail').hide();
+					break;
+					case 'sendmail' :
+						$('tab_sendmail').show();
+						$('tab_smtp').hide();
+					break;
+				}
+			})
+		});
+	</script>
+<? Phpr_View::endBlock() ?>
+
+<? Phpr_View::beginBlock("view") ?>
+	<ul class="breadcrumbs">
+		<li><a href="<?= url('/system/settings') ?>">Settings</a></li>
+		<li><?= $this->app_page_title ?></li>
+	</ul>
+	
+	<?= flash() ?>
+
+	<? if (!isset($fatalError)): ?>
+		<div class="form400">
+			<?= Phpr_Form::openTag(array('id'=>'email_form')) ?>
+				<? $this->formRender() ?>
+
+				<?= backend_ajax_button('Save', 'index_onSave') ?>
+				
+				<?
+					$thisUserMail = $this->currentUser->email;
+					if (strlen($thisUserMail))
+						echo backend_ajax_button('Send test message', 'index_onTest', array(), "confirm: 'Test message will be sent to your email address $thisUserMail. Continue?', hideErrorOnSuccess: false, loadIndicator: {hideOnSuccess: true}, update: $(this).getForm().getElement('.formFlash')");
+					else
+						echo backend_ajax_button('Send test message', 'index_onTest', array(), "alert: 'Your email address is not defined. Please specify it in the user parameters.'");
+				?>
+
+				<?= backend_button('Cancel', array('href'=>url('system/settings'), 'class'=>'right')) ?>
+				<div class="clear"></div>
+			</form>
+		</div>
+	<? else: ?>
+		<p><a href="<?= url('/system/settings') ?>">Return to the settings page</a></p>
+	<? endif ?>
+<? Phpr_View::endBlock() ?>

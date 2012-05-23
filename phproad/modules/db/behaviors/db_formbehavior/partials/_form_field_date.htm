@@ -1,0 +1,23 @@
+<? $inputId =  $this->formGetElementId($form_model_class.'_'.$form_field->dbName) ?>
+
+<div class="datePickerHolder">
+	<input <? if ($form_field->disabled) echo 'disabled="disabled"' ?> value="<?= h($form_model->displayField($form_field->dbName)) ?>" class="date" type="text" id="<?= $inputId ?>" name="<?= $form_model_class ?>[<?= $form_field->dbName ?>]"/>
+
+	<script type='text/javascript'>
+		window.addEvent('domready', function(){
+			var init_calendar = function() {
+				<?= Backend_Html::calendar($inputId); ?>
+			}
+			
+			var thisTab = $('<?= $inputId ?>').getTab();
+			if (thisTab)
+			{
+				thisTab.addEvent('onTabClick', function() {
+					init_calendar();
+				});
+			} else init_calendar();
+		});
+	</script>
+
+	<div class="clear"></div>
+</div>

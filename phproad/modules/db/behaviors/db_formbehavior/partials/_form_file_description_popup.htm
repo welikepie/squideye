@@ -1,0 +1,57 @@
+<div id="file_description_popup">
+	<h2>File Description</h2>
+	<div class="content">
+		<div class="form300">
+			<?= Phpr_Form::openTag() ?>
+				<? if (!isset($fatalError)): ?>
+					<div class="form">
+						<ul class="formElements">
+							<li class="field text full">
+								<label for="phpr_file_title">Title</label>
+
+								<div class="fieldContainer">
+									<input type="text" name="title" id="phpr_file_title" class="varchar" value="<?= h($file->title) ?>" maxlength="255" autocomplete="off"/>
+								</div>
+
+								<div class="clear"></div>
+							</li>
+							
+							<li class="field textarea full">
+								<label for="phpr_file_description">Description</label>
+								<div class="fieldContainer">
+									<textarea name="description" class="small" id="phpr_file_description"><?= h($file->description) ?></textarea>
+								</div>
+							</li>
+						</ul>
+					</div>
+					<div class="clear"></div>
+					
+					<script type="text/javascript">
+						$('file_description_popup').addEvent('popupLoaded', function(){
+							$('phpr_file_title').focus();
+						});
+					</script>
+
+					<?= backend_ajax_button('Save', $this->getEventHandler("onSaveFormFileDescription"), array(), "
+						loadIndicator: {show: false},
+						onBeforePost: LightLoadingIndicator.show.pass('Loading...'), 
+						onComplete: LightLoadingIndicator.hide,
+
+						onAfterUpdate: function(){
+							cancelPopup();
+						},
+						update: 'phpr_file_description_'+$file->id
+					") ?>
+										
+					<?= backend_button('Cancel', array('onclick'=>'return cancelPopup()')) ?>
+					<input type="hidden" name="file_id" value="<?= $file->id ?>"/>
+					<div class="clear"></div>
+				<? else: ?>
+					<?= flash() ?>
+					<?= backend_button('Cancel', array('onclick'=>'return cancelPopup()')) ?>
+					<div class="clear"></div>
+				<? endif ?>
+			</form>
+		</div>
+	</div>
+</div>

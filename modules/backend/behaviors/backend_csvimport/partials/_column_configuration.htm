@@ -1,0 +1,24 @@
+<div class="import_columns" id="csv_import_columns">
+	<div id="columns_toolbar"><? $this->csvImportRenderPartial('columns_toolbar') ?></div>
+	
+	<div class="left">
+		<? if ($this->csv_import_file_columns_header): ?>
+			<h5 class="column_header"><?= h($this->csv_import_file_columns_header) ?></h5>
+		<? endif ?>
+		
+		<div class="backend_scroller" id="file_columns_scroller">
+			<? $this->csvImportRenderPartial('file_columns') ?>
+		</div>
+	</div>
+	
+	<div class="right">
+		<? if ($this->csv_import_db_columns_header): ?>
+			<h5 class="column_header"><?= h($this->csv_import_db_columns_header) ?></h5>
+		<? endif ?>
+		
+		<div class="backend_scroller" id="db_columns_scroller">
+			<? $this->csvImportRenderPartial('db_columns') ?>
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>

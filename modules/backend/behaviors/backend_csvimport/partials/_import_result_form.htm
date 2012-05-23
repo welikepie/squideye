@@ -1,0 +1,100 @@
+<? if (!isset($fatalError)): ?>
+	<div class="scoreboardReport">
+		<ul>
+			<li>
+				<h3>Records added</h3>
+				<p><?= $import_details->added ?></p>
+			</li>
+			<li>
+				<h3>Updated</h3>
+				<p><?= $import_details->updated ?></p>
+			</li>
+			<? if ($import_details->skipped): ?>
+				<li>
+					<h3>Skipped</h3>
+					<p><?= $import_details->skipped ?></p>
+				</li>
+			<? endif ?>
+			<? if (count($import_details->warnings)): ?>
+				<li>
+					<h3>Warnings</h3>
+					<p><?= count($import_details->warnings) ?></p>
+				</li>
+			<? endif ?>
+			<li class="last">
+				<h3>Errors</h3>
+				<p><?= count($import_details->errors) ?></p>
+			</li>
+		</ul>
+		<div class="clear"></div>
+	</div>
+	
+	<? if (count($import_details->errors) || count($import_details->skipped_rows) || count($import_details->warnings)): 
+		$tabs = array(
+			'skipped'=>array($import_details->skipped_rows, 'Skipped lines'),
+			'warnings'=>array($import_details->warnings, 'Warnings'),
+			'errors'=>array($import_details->errors, 'Errors')
+		);
+		
+		if (!count($import_details->errors))
+			unset($tabs['errors']);
+			
+		if (!count($import_details->warnings))
+			unset($tabs['warnings']);
+
+		if (!count($import_details->skipped_rows))
+			unset($tabs['skipped']);
+	?>
+	<div class="form">
+		<div class="tabs">
+			<ul id="import_result_tabs" class="tabs_tabs">
+				<? 
+					$index = 0;
+					foreach ($tabs as $tab_name=>$tab_data): 
+				?>
+					<li  class="round <?= $index == 0 ? 'active' : null ?> "><a href="#" onclick="return false"><?= h($tab_data[1]) ?></a>
+						<div class="lt"></div>
+						<div class="rt"></div>
+					</li>
+				<? endforeach ?>
+			</ul>
+			<div class="clear tab_separator"></div>
+		
+			<ul class="tabs_pages" id="import_result_pages">
+				<? foreach ($tabs as $tab_name=>$tab_data): ?>
+					<li class="full_size_content">
+						<div class="scrollableList offsetTop">
+							<table class="simpleList">
+								<thead class="noTopBorder">
+									<tr>
+										<td class="number">Line #</td>
+										<td class="last">Message</td>
+									</tr>
+								</thead>
+								<tbody>
+									<? 
+										$index = 0;
+										$last_index = count($tab_data[0]) - 1;
+										foreach ($tab_data[0] as $line=>$message): ?>
+										<tr class="<?= $index == $last_index ? 'last' : null ?> <?= Backend_Html::zebra('import_errors'.$tab_name) ?>">
+											<td class="number"><?= h($line) ?></td>
+											<td class="last"><?= nl2br(h($message)) ?></td>
+										</tr>
+									<? 
+										$index++;
+										endforeach ?>
+								</tbody>
+							</table>
+						</div>
+					</li>
+				<? endforeach ?>
+			</ul>
+		</div>
+	</div>
+	<? endif ?>
+
+	<?= backend_button('Close', array('onclick'=>'return cancelPopup()')) ?>
+<? else: ?>
+	<?= flash() ?>
+	<?= backend_button('Close', array('onclick'=>'return cancelPopup()')) ?>
+<? endif ?>

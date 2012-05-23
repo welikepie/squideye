@@ -1,0 +1,47 @@
+<div id="load_csv_form">
+	<h2>Import CSV File</h2>
+	<div class="content">
+		<div class="form400">
+			<?= Phpr_Form::openTag() ?>
+				<p>Please upload a valid CSV file.</p>
+			
+				<div class="form">
+					<? $this->formRenderFieldContainer($form_model, 'csv_file'); ?>
+				</div>
+
+				<input name="edit_session_key" id="<?= $this->formGetElementId('form_session_key', get_class($form_model)) ?>" type="hidden" value="<?= $form_session_key ?>"/>
+				<input type="hidden" name="form_unique_prefix" class="form_unique_prefix" value="<?= $this->formGetUniquePrefix() ?>"/>
+				<input type="hidden" name="phpr_uploader_model_class" value="<?= $this->form_model_class ?>"/>
+				<input type="hidden" id="phpr_grid_import_field" name="grid_field" value="<?= post('dbName') ?>"/>
+				
+				<? if (strlen(post('phpr_grid_model_class'))): ?>
+					<input type="hidden" name="phpr_grid_model_class" value="<?= h(post('phpr_grid_model_class')) ?>"/>
+				<? endif ?>
+				
+				<script type="text/javascript">
+					window.addEvent('phpr_file_upload_complete', function(file_column_name){
+						if (file_column_name == 'csv_file')
+						{
+							$('phpr_grid_import_field').getForm().sendPhpr('<?= $this->getEventHandler('onFormGridCsvUploaded') ?>', {
+								update: 'multi',
+								loadIndicator: {show: false},
+								onBeforePost: LightLoadingIndicator.show.pass('Loading...'), 
+								onComplete: LightLoadingIndicator.hide,
+								onAfterUpdate: function(){
+									GridControlManager.get_control('<?= post('fieldId') ?>').init_table();
+									cancelPopup();
+								}.bind(this),
+								onFailure: popupAjaxError
+							});
+						}
+					});
+				</script>
+
+			</form>
+
+			<?= backend_button('Cancel', array('onclick'=>'return cancelPopup()')) ?>
+
+			<div class="clear"></div>
+		</div>
+	</div>
+</div>

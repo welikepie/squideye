@@ -1,0 +1,167 @@
+@import "../../greymatter/css/theme.less";
+
+body {background-color: #ddd;}
+
+#header_elements {
+	#header {
+		border-bottom: 1px solid #fff;
+	
+		.container {background-color: #E6E6E6;}
+	
+		.lemonStandName {
+			background: transparent url(../images/lemonstand_logo.png) no-repeat left 4px;
+			border-right: 1px solid #bbb;
+			color: #666666;
+			
+			&.noHeaderText {border-right: none;}
+		}
+	
+		.header_text {
+			color: white;
+		
+			a {color: #666;}
+		}
+
+		.user_controls, 
+		.site_links {color: #666;}
+
+		.header_links {
+			.settings_link {
+				border-left: 1px solid rgba(0,0,0,0.1);
+				margin-top: -15px!important;
+
+				&:hover {background-color: rgba(0,0,0,0.1);}
+				&.active {
+					border-left: 1px solid rgba(255,255,255,0.2);
+					background-color: #2B5682!important;
+				}
+			}
+			
+			#user_controls_wrapper {
+				background-color: #2B5682!important;
+				top: 49px;
+				
+				#user_menu_connector {
+					border-top: 4px solid #2B5682;
+					padding-right: 2px;
+				}
+				
+				&.active {
+					border-right: none;
+					border-left: 1px solid rgba(255,255,255,0.2);
+					border-top: 1px solid rgba(255,255,255,0.2);
+					border-bottom: 1px solid rgba(255,255,255,0.2);
+				}
+			}
+			
+			.user_welcome {
+				background: transparent url(../images/user_pic.png) no-repeat left 50%;
+				color: #666;
+			}
+		}
+
+		.user_controls {
+			a {color: white;}
+		}
+
+		ul.site_links li.view_site a {
+			padding-left: 30px!important;
+			color: #666;
+			background: transparent url(../images/store.png) no-repeat 8px 50%;
+		}
+	}
+}
+
+#header_tabs {
+	background-color: #336699;
+	
+	.current_module_name {color: white;}
+
+	ul li {
+		a {
+			color: #fff;
+			.opacity(0.5);
+		}
+		
+		&.current a {
+			color: white;
+			.opacity(1);
+		}
+
+		&:hover a {.opacity(1);}
+		
+		&.current {background: transparent url(../images/current_tab.png) no-repeat center bottom;}
+	}
+
+
+	p {
+		a {
+			border-right: 1px solid rgba(255, 255, 255, 0.1);
+
+			&.active {
+				background-color: #2B5682!important;
+				border-right: 1px solid rgba(255, 255, 255, 0.2)!important;
+			}
+		}
+		
+		&:hover a {background-color: rgba(255,255,255,0.1);}
+	}
+}
+
+.main_menu_wrapper {
+	background-color: #2B5682;
+	border-top: 1px solid rgba(255, 255, 255, 0.2);
+	border-right: 1px solid rgba(255, 255, 255, 0.2);
+	border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+	
+	#main_menu_connector {border-top: 3px solid #2B5682;}
+}
+
+#footer {
+	background: #ddd!important;
+	border-top: 2px solid #ccc!important;
+	
+	p, p a {color: #888;}
+}
+
+li.form_page, div.form_page {
+	background: #f4f4f4!important;
+}
+
+div.button a:hover,
+div.button a:focus {
+	background-color: #999;
+}
+
+.tabs {
+	.tabs_tabs li.active 
+	{
+		a {background-color:#336699!important;}
+	}
+
+	.tab_separator {border-bottom-color: #336699!important;}
+}
+
+li.form_page, div.form_page {
+	background: #f4f4f4!important;
+}
+
+li.form_page, div.form_page {
+	.defaultSkin {
+		table {background-color: #f4f4f4!important;}
+		.mceButton {border-color: #f4f4f4!important;}
+	}
+}
+
+.defaultSkin td.mceToolbar {background-color: #f4f4f4!important;}
+
+div.system_message_container {background: white;}
+
+.webkit {
+	.form {
+		.tabs .tabs_tabs li {
+				&.active {background-color: #336699!important;}
+				&:first-child &.active a {background-color: #336699!important;}
+		}
+	}
+}

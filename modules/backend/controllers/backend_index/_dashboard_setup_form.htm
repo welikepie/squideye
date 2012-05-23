@@ -1,0 +1,103 @@
+<div class="medium" id="setup_form_popup">
+	<h2>Dashboard Items</h2>
+	<div class="content">
+		<p>Select items you want to see on the dashboard.</p>
+		
+		<?= Phpr_Form::openTag(array('id'=>'dashboard_setup_form')) ?>
+			<div class="form">
+				<div class="tabs">
+					<!--[if IE]><fieldset class="ie_fix"><![endif]-->
+					<ul class="tabs_tabs" id="dashboard_form_tabs">
+						<li class="round active">
+							<a href="#tab_1">Indicators</a>
+							<div class="lt"></div>
+							<div class="rt"></div>
+						</li>
+						<li class="round active">
+							<a href="#tab_2">Reports</a>
+							<div class="lt"></div>
+							<div class="rt"></div>
+						</li>
+					</ul>
+					<!--[if IE]></fieldset><![endif]-->
+					<div class="clear tab_separator"></div>
+			
+					<ul class="tabs_pages" id="dashboard_form_pages">
+						<li id="tab_1" class="form_page">
+							<!--[if IE]><fieldset class="ie_fix"><![endif]-->
+							<? if (count($indicators) > 10): ?>
+								<div class="listColumnsScroller">
+							<? endif ?>
+
+							<ul class="simpleList checkboxes">
+								<? foreach ($indicators as $id=>$indicator): ?>
+								<?
+									$isVisible = in_array($id, $visible_indicators);
+								?>
+									<li>
+										<input id="ind_<?= $id ?>" value="<?= $id ?>" name="visible_indicators[]" type="checkbox" <?= Phpr_Form::checkboxState($isVisible) ?>/><label for="ind_<?= $id ?>"><?= isset($indicator['name']) ? $indicator['name'] : 'Unknown indicator' ?></label>
+									</li>
+								<? endforeach ?>
+							</ul>
+
+							<? if (count($indicators) > 10): ?>
+								</div>
+							<? endif ?>
+							<!--[if IE]></fieldset><![endif]-->
+						</li>
+						
+						<li id="tab_2" class="form_page">
+							<!--[if IE]><fieldset class="ie_fix"><![endif]-->
+							<? if (count($reports) > 10): ?>
+								<div class="listColumnsScroller">
+							<? endif ?>
+
+							<ul class="simpleList checkboxes">
+								<? foreach ($reports as $id=>$report): ?>
+								<?
+									$isVisible = in_array($id, $visible_reports);
+								?>
+									<li>
+										<input id="rep_<?= $id ?>" value="<?= $id ?>" name="visible_reports[]" type="checkbox" <?= Phpr_Form::checkboxState($isVisible) ?>/><label for="rep_<?= $id ?>"><?= isset($report['name']) ? $report['name'] : 'Unknown report' ?></label>
+									</li>
+								<? endforeach ?>
+							</ul>
+
+							<? if (count($reports) > 10): ?>
+								</div>
+							<? endif ?>
+							<!--[if IE]></fieldset><![endif]-->
+						</li>
+					</ul>
+				</div>
+			</div>
+		</form>
+
+		<!--[if IE]><fieldset class="ie_fix"><![endif]-->
+		<script type="text/javascript">
+			$('setup_form_popup').addEvent('popupLoaded', function(){
+				new TabManager(
+					'dashboard_form_tabs',
+					'dashboard_form_pages', 
+					{trackTab: false}
+				);
+			});
+		</script>
+
+		<?= backend_button('Apply', 
+			array('onclick'=>"return cancelPopup()"), 
+			'index_onApplyDashboardSettings', "
+				update: 'dashboard_content',
+				loadIndicator: {
+					show: false
+				},
+				onAfterUpdate: dashboard_init_interaction
+			",
+			'dashboard_setup_form'
+		) ?>
+
+		<?= backend_button('Cancel', array('onclick'=>'return cancelPopup()')) ?>
+		<!--[if IE]></fieldset><![endif]-->
+		<div class="clear"></div>
+	</div>
+</div>

@@ -1,0 +1,31 @@
+@import "../../../../phproad/resources/css/common.less";
+
+#header, 
+#footer, 
+#module_tabs_wrapper, 
+#header_tabs,
+.breadcrumbs,
+.toolbar,
+.no_print,
+.system_message_container,
+form .hint {
+	display: none;
+}
+
+#content {padding: 0;}
+
+body,
+body.printLayout {
+	background: transparent!important;
+}
+
+body.printLayout #content {
+	margin: 0!important;
+	.hide-shadow();
+}
+
+div.print_sheet {
+	border-bottom: none;
+	padding-bottom: 0;
+	margin-bottom: 0;
+}

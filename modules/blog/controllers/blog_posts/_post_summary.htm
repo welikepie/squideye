@@ -1,0 +1,53 @@
+<div class="info-header">
+	<p>Blog post</p>
+	<h3><?= $form_model->title ? h($form_model->title) : 'untitled' ?></h3>
+</div>
+
+<div class="info-area">
+	<table class="name-value-report title-width-80">
+		<tr>
+			<th>URL Title</th>
+			<td><?= $form_model->url_title ? h($form_model->url_title) : '-' ?></td>
+		</tr>
+		<tr>
+			<th>Published</th>
+			<td><?= $form_model->is_published ? $form_model->displayField('published_date') : 'No' ?></td>
+		</tr>
+		<tr>
+			<th>Comments allowed</th>
+			<td><?= $form_model->comments_allowed ? 'Yes' : 'No' ?></td>
+		</tr>
+		<tr>
+			<th>Categories</th>
+			<td>
+				<? 
+					$categories = $form_model->displayField('categories');
+					if ($categories):
+				?>
+					<?= h($categories) ?>
+				<? else: ?>
+					-
+				<? endif ?>
+			</td>
+		</tr>
+		<tr>
+			<th>Last update</th>
+			<td>
+				<? if ($form_model->updated_at): ?>
+					<?= $form_model->displayField('updated_at') ?> by <?= h($form_model->updated_user_name) ?>
+				<? elseif ($form_model->created_user_name): ?>
+					<?= $form_model->displayField('created_at') ?> by <?= h($form_model->created_user_name) ?></td>
+				<? else: ?>
+					-
+				<? endif ?>
+			</td>
+		</tr>
+	</table>
+	
+	<? $post_page = Cms_Page::create()->find_by_action_reference('blog:post'); ?>
+	<? if($post_page && $form_model->url_title): 
+		$address = Phpr::$request->getRootUrl().root_url($post_page->url.'/'.Core_String::normalizeUri($form_model->url_title));
+	?>
+		<a href="<?= $address ?>" target="_blank" class="large-image-button preview">Preview</a>
+	<? endif ?>
+</div>

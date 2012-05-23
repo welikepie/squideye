@@ -1,0 +1,39 @@
+<? Phpr_View::beginBlock("head") ?>
+	<script type="text/javascript" src="modules/blog/resources/javascript/post_list.js"></script>
+<? Phpr_View::endBlock() ?>
+
+<? Phpr_View::beginBlock("view") ?>
+	<?= flash() ?>
+	
+	<div class="minorPadding">
+		<? $statistics = $this->eval_posts_statistics() ?>
+		
+		<?= Phpr_Form::openTag(array('id'=>null)) ?>
+			<div class="scoreboardReport">
+				<ul>
+					<li>
+						<h3>Total number of posts</h3>
+						<p><?= $statistics->post_num ?></p>
+						<p class="description">
+							Show all <a href="#" onclick="return $(this).getForm().sendPhpr('index_onResetFilters', {loadIndicator: {show: false}});">(cancel search)</a>
+						</p>
+					</li>
+					<li class="last">
+						<h3>Published posts</h3>
+						<p><?= $statistics->published_num ?></p>
+						<p class="description">Not published: <?= $statistics->post_num-$statistics->published_num ?></p>
+					</li>
+				</ul>
+				<div class="clear"></div>
+			</div>
+		</form>
+	</div>
+
+	<? 
+		$list_options = array();
+		if ($can_manage_posts)
+			$list_options['list_control_panel'] = 'control_panel';
+	?>
+	
+	<?= $this->listRender($list_options) ?>
+<? Phpr_View::endBlock() ?>

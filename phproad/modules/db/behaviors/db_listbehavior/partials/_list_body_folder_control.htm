@@ -1,0 +1,3 @@
+<td class="expandControl">
+	<a href="#" <? if ($childCount > 0): ?>title="Click to view children records"<? endif ?> onclick="new Event(event).stop(); <? if ($childCount > 0): ?>return $(this).getForm().sendPhpr('<?= $this->getEventHandler('onListGotoNode') ?>', {extraFields: {nodeId: '<?= $row->id ?>'}, update: '<?= $this->listGetContainerId() ?>', loadIndicator: {show: false}, onBeforePost: LightLoadingIndicator.show.pass('Loading...'), onComplete: LightLoadingIndicator.hide, onAfterUpdate: function(){$('<?= $this->listGetContainerId() ?>').fireEvent('listUpdated')}});<? else: ?>return false<? endif ?>" class="list-folder-control <?= $childCount > 0 ? 'enabled' : 'disabled' ?>">Open</a>
+</td>

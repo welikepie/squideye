@@ -1,0 +1,49 @@
+<? Phpr_View::beginBlock("head") ?>
+	<link rel="stylesheet" href="modules/system/resources/css/system.css?<?= module_build('core') ?>" type="text/css"/>
+	<link rel="stylesheet" href="modules/core/resources/css/core.css?<?= module_build('core') ?>" type="text/css"/>
+	<script src="modules/system/resources/javascript/updates.js?<?= module_build('core') ?>" type="text/javascript"></script>	
+<? Phpr_View::endBlock() ?>
+
+<? Phpr_View::beginBlock("view") ?>
+	<?= flash() ?>
+	
+	<p>License key of this LemonStand copy is: <strong><?= Db_ModuleParameters::get('core', 'license_key', '&lt;key not found&gt;'); ?></strong></p>
+
+	<?= Phpr_Form::openTag() ?>
+		<div class="toolbar">
+			<? if (!Phpr::$config->get('FREEZE_UPDATES')): ?>
+				<?= backend_ctr_button('Check for updates', 'update', array('href'=>'#', 'onclick'=>"new PopupForm('index_onUpdateForm', {closeByEsc: false}); return false;")) ?>
+			<? else: ?>
+				<?= backend_ctr_button('Check for updates', 'update', array('class'=>'disabled', 'href'=>'#', 'onclick'=>"return false")) ?>
+			<? endif ?>
+
+			<?= backend_ctr_button('Update license information', 'update_license', array('href'=>url('system/modules/update_license'))) ?>
+
+			<? if (Phpr::$config->get('FREEZE_UPDATES')): ?>
+				<div class="separator">&nbsp;</div>
+				<p class="toolbar_text">Updates were blocked by the system administrator</p>
+			<? endif ?>
+			<div class="clear"></div>
+		</div>	
+	
+		<div class="clear"></div>
+		
+		<div class="tabs formReportLayout">
+			<ul id="module_list_tabs" class="tabs_tabs">
+				<li class="round active"><a href="#active" onclick="return false">Active modules</a></li>
+				<li class="round active"><a href="#disabled" onclick="return false">Disabled modules</a></li>
+			</ul>
+			<div class="clear tab_separator"></div>
+			<ul class="tabs_pages" id="module_list_pages">
+				<li class="form_page_preview" id="active">
+					<? $this->renderPartial('module_list', array('modules'=>$active_modules)); ?>
+				</li>
+				<li class="form_page_preview" id="disabled">
+					<div class="hint"><p class="last">You can manage disabled modules with DISABLE_MODULES parameter in your config/config.php file. Please read <a href="http://lemonstandapp.com/docs/lemonstand_configuration_options/" target="_blank">the documentation</a> for details.</p></div>
+					<? $this->renderPartial('module_list', array('modules'=>$disabled_modules)); ?>
+				</li>
+			</ul>
+			<div class="clear"></div>
+		</div>
+	</form>
+<? Phpr_View::endBlock() ?>

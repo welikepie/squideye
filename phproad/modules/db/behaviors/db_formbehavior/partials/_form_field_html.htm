@@ -1,0 +1,106 @@
+<?
+	$fieldId = str_replace('-', '$', $this->formGetElementId($form_model_class.'_'.$form_field->dbName)).uniqid();
+	$resizeCookieName = 'TinyMce_'.$this->formGetElementId($form_model_class.'_'.$form_field->dbName).$this->formGetUniquePrefix().'_size';
+?>
+
+<textarea class="<?= $form_field->size ?> html_field" id="<?= $fieldId ?>" name="<?= $form_model_class ?>[<?= $form_field->dbName ?>]"><?= h($form_model->displayField($form_field->dbName)) ?></textarea>
+
+<script type="text/javascript">
+	var tinymceConfigs_<?= $fieldId ?> = {
+		mode : "exact",
+		elements: "<?= $fieldId ?>",
+		theme : "advanced",
+		cleanup: true,
+		plugins : "<?= $form_field->htmlPlugins ?>",
+		theme_advanced_toolbar_location : "top",
+		theme_advanced_toolbar_align : "left",
+		theme_advanced_buttons1 : "<?= $form_field->htmlButtons1 ?>",
+		theme_advanced_buttons2 : "<?= $form_field->htmlButtons2 ?>",
+		theme_advanced_buttons3 : "<?= $form_field->htmlButtons3 ?>",
+		content_css : "<?= root_url($form_field->htmlContentCss).'?'.module_build('cms') ?>",
+		save_onsavecallback: "<?= $form_field->saveCallback ?>",
+		theme_advanced_blockformats: "<?= Core_String::js_encode($form_field->htmlBlockFormats) ?>",
+		theme_advanced_styles: "<?= Core_String::js_encode($form_field->htmlCustomStyles) ?>",
+		theme_advanced_font_sizes : "<?= Core_String::js_encode($form_field->htmlCustomStyles) ?>",
+		theme_advanced_font_sizes : "<?= Core_String::js_encode($form_field->htmlFontSizes) ?>",
+		theme_advanced_resizing_use_cookie : true,
+		theme_advanced_resizing_cookie_name: '<?= $resizeCookieName ?>',
+		entity_encoding: '<?= Phpr::$config->get('TINYMCE_ENTITY_ENCODING', 'named') ?>',
+		theme_advanced_after_resize: function() {
+			window.fireEvent('phpr_editor_resized', ['<?= $fieldId ?>']);
+		},
+		
+		<? if ($form_field->htmlFontColors): ?>
+			theme_advanced_text_colors : "<?= Core_String::js_encode($form_field->htmlFontColors) ?>",
+		<? endif ?>
+		<? if ($form_field->htmlBackgroundColors): ?>
+			theme_advanced_background_colors : "<?= Core_String::js_encode($form_field->htmlBackgroundColors) ?>",
+		<? endif ?>
+		<? if (!$form_field->htmlAllowMoreColors): ?>
+			theme_advanced_more_colors : false,
+		<? endif ?>
+		<? if ($form_field->htmlValidElements): ?>
+			valid_elements : "<?= Core_String::js_encode($form_field->htmlValidElements) ?>",
+		<? endif ?>
+		<? if ($form_field->htmlValidChildElements): ?>
+			valid_child_elements : "<?= Core_String::js_encode($form_field->htmlValidChildElements) ?>",
+		<? endif ?>
+		
+		<? if ($form_field->htmlFullWidth): ?>
+			width: '100%',
+		<? endif ?>
+		
+		theme_advanced_resizing: true,
+		theme_advanced_resize_horizontal: false,
+		theme_advanced_statusbar_location : "bottom",
+		
+		paste_convert_middot_lists : false,
+		paste_remove_styles: true,
+		paste_auto_cleanup_on_paste: true,
+		relative_urls : false,
+		convert_urls: false,
+		apply_source_formatting: true,
+		dialog_type : "modal"
+	};
+
+	var thisTab = $('<?= $fieldId ?>').getTab();
+	if (thisTab)
+	{
+		thisTab.addEvent('onTabClick', function(){
+			if (!phpr_field_initialized.has('<?= $fieldId ?>'))
+			{
+				if (thisTab.selectParent('.popupForm'))
+				{
+					(function(){ 
+						tinyMCE.settings = tinymceConfigs_<?= $fieldId ?>;
+						tinyMCE.execCommand('mceAddControl',false,'<?= $fieldId ?>');
+						window.fireEvent('phpreditoradded', ['<?= $fieldId ?>']);
+						realignPopups();
+					}).delay(900);
+				} else
+				{
+					tinyMCE.settings = tinymceConfigs_<?= $fieldId ?>;
+					window.addEvent('domready', function(){
+						tinyMCE.execCommand('mceAddControl',false,'<?= $fieldId ?>');
+						window.fireEvent('phpreditoradded', ['<?= $fieldId ?>']);
+					});
+				}
+				
+				phpr_field_initialized.set('<?= $fieldId ?>', 1);
+				window.addEvent('phprformsave', function(){tinyMCE.triggerSave();});
+			} else
+				window.fireEvent('phpreditorreloaded', ['<?= $fieldId ?>']);
+		})
+	} else
+	{
+		window.addEvent('domready', function(){
+			(function(){ 
+				tinyMCE.settings = tinymceConfigs_<?= $fieldId ?>;
+				tinyMCE.execCommand('mceAddControl',false,'<?= $fieldId ?>');
+				window.fireEvent('phpreditoradded', ['<?= $fieldId ?>']);
+			}).delay(500);
+
+			window.addEvent('phprformsave', function(){tinyMCE.triggerSave();});
+		});
+	}
+</script>

@@ -1,0 +1,202 @@
+/* @group HELPERS */
+.hide-outline {
+  outline: none;
+}
+.margin-center {
+  margin: 0 auto;
+}
+.text-left {
+  text-align: left;
+}
+.text-right {
+  text-align: right;
+}
+.text-center {
+  text-align: center;
+}
+.float-right {
+  float: right;
+}
+.float-left {
+  float: left;
+}
+.clear-both {
+  clear: both;
+}
+.clear-left {
+  clear: left;
+}
+.clear-right {
+  clear: right;
+}
+.block {
+  display: block !important;
+}
+.padding-background-clip {
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+}
+/* @end */
+/* @group MISC */
+.clear-fix:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
+}
+.clear-fix {
+  display: inline-table;
+}
+/* Hides from IE-mac \*/
+* html .clear-fix {
+  height: 1%;
+}
+.clear-fix {
+  display: block;
+}
+/* End hide from IE-mac */
+/* @end *//*
+ * Common PHP Road classes
+ */
+.dashSeparator {
+  background: transparent url('../images/border_dashed_hor.gif') repeat-x bottom left;
+  margin-bottom: 1.2em;
+}
+.clear {
+  clear: both;
+}
+.hidden {
+  display: none!important;
+}
+.invisible {
+  visibility: hidden!important;
+}
+/*
+ * Size selectors
+ */
+.medium {
+  width: 300px;
+}
+.large {
+  width: 500px;
+}
+/*
+ * Popup forms
+ */
+.overlay {
+  background-color: #000;
+}
+.popupLoading {
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  width: 100px;
+  height: 100px;
+  background: #dddddd url('../images/form_load_70x70.gif') no-repeat center center;
+}
+.popupForm {
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  background-color: #fff;
+}
+.popupForm h2 {
+  color: #333;
+  font-weight: normal;
+  background: #ccc;
+}
+.popupForm .content {
+  padding: 1em;
+}
+.popupForm form {
+  position: relative;
+}
+/*
+ * Simple list - list
+ */
+ul.simpleList {
+  font-size: 1.2em;
+  line-height: 150%;
+  padding-bottom: 0.9em;
+}
+ul.simpleList li {
+  display: block;
+  color: #333;
+  padding-bottom: 0.3em;
+}
+ul.checkboxes li label {
+  display: inline!important;
+  font-size: 1em!important;
+  font-weight: normal!important;
+}
+ul.checkboxes li input {
+  width: auto!important;
+  margin-right: 0.5em;
+  margin-top: 3px;
+  margin-left: 0;
+  float: left;
+}
+/*
+ * Sortables
+ */
+ul.sortable li {
+  cursor: pointer;
+}
+ul.sortable li.drag {
+  color: #F60;
+}
+ul.sortable li label {
+  cursor: pointer;
+}
+/*
+ * Search control
+ */
+div.searchControl {
+  position: relative;
+  width: 250px;
+  height: 20px;
+}
+div.searchControl .left, div.searchControl .right {
+  display: block;
+  position: absolute;
+  top: 0;
+  text-indent: -10000em;
+  height: 20px;
+}
+div.searchControl .left {
+  background: transparent url(../images/search_left.png) no-repeat left top;
+  width: 22px;
+  left: 0;
+}
+div.searchControl .right {
+  background: transparent url(../images/search_right_cancel.png) no-repeat left top;
+  width: 17px;
+  right: 0;
+  cursor: pointer;
+}
+div.searchControl.inactive .right {
+  background: transparent url(../images/search_right.png) no-repeat left top;
+  cursor: default;
+}
+div.searchControl input {
+  border: none;
+  outline: none;
+  background: transparent url(../images/search_field_bg.gif) repeat-x left top;
+  position: absolute;
+  left: 22px;
+  padding-top: 0;
+  font-size: 11px;
+  width: 211px;
+  height: 20px;
+  color: #333!important;
+}
+div.searchControl.inactive input {
+  color: #999!important;
+}
+.webkit div.searchControl input {
+  height: 19px;
+  line-height: 100%;
+}

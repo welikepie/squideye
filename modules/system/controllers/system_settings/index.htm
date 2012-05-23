@@ -1,0 +1,38 @@
+<? Phpr_View::beginBlock("head") ?>
+	<link rel="stylesheet" href="phproad/modules/db/behaviors/db_formbehavior/resources/css/forms.css" type="text/css"/>
+<? Phpr_View::endBlock() ?>
+
+<? Phpr_View::beginBlock("view") ?>
+	<?= flash() ?>
+	
+	<? 
+		$index = 0;
+		foreach ($items as $section=>$section_items): ?>
+		<h2 class="section-title <?= $index == 0 ? 'first' : null ?>"><?= h($section) ?></h2>
+	
+		<ul class="imageItemList list-section">
+			<? foreach ($section_items as $item): 
+				if (substr($item['icon'], 0, 1) == '/')
+					$item['icon'] = substr($item['icon'], 1);
+					
+				$item_class = isset($item['class']) ? $item['class'] : null;
+			?>
+				<li <?= click_link(url($item['url'])) ?> class="<?= $item_class ?>">
+					<div>
+						<div class="image-container">
+							<img src="<?= $item['icon'] ?>" alt="<?= h($item['title']) ?>"/>
+							<div class="badge"></div>
+						</div>
+						<h3><a href="<?= url($item['url']) ?>"><?= h($item['title']) ?></a></h3>
+						<p><?= h($item['description']) ?></p>
+						<div class="clear"></div>
+					</div>
+				</li>
+			<? endforeach ?>
+		</ul>
+		<div class="clear"></div>
+	<? 
+		$index++;
+		endforeach ?>
+
+<? Phpr_View::endBlock() ?>

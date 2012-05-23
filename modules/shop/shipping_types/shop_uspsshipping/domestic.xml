@@ -1,0 +1,13 @@
+<RateV4Request USERID="<?= h($user_id) ?>">
+	<Package ID="PACKAGE">
+		<Service>ONLINE</Service>
+		<FirstClassMailType>PARCEL</FirstClassMailType>
+		<ZipOrigination><?= h($origination_zip) ?></ZipOrigination>
+		<ZipDestination><?= h($destination_zip) ?></ZipDestination>
+		<Pounds><?= h($pounds) ?></Pounds>
+		<Ounces><?= h($ounces) ?></Ounces>
+		<Container/>
+		<Size><?= $size ?></Size>
+		<Machinable><?= $machinable ? 'true' : 'false' ?></Machinable>
+	</Package>
+</RateV4Request>

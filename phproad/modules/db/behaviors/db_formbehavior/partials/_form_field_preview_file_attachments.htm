@@ -1,0 +1,16 @@
+<?
+	$form_file_list =  $form_model->{$form_field->dbName};
+	$baseUrl = $form_field->fileDownloadBaseUrl ? $form_field->fileDownloadBaseUrl : '/ls_backend/files/get/';
+?>
+
+<? if ($form_file_list->count): ?>
+	<ul class="fileList">
+		<? foreach ($form_file_list as $file): ?>
+			<li>
+				<a href="<?= $baseUrl.$file->id.'/'.urlencode($file->name) ?>" target="_blank"><?= h($file->name) ?></a> (<?= Phpr_Files::fileSize($file->size) ?>)
+			</li>
+		<? endforeach ?>
+	</ul>
+<? else: ?>
+	<p class="last">There are no files uploaded</p>
+<? endif ?>

@@ -1,0 +1,10 @@
+<div class="clear"></div>
+<div class="offsetTop">
+	<?
+		$options = array();
+		if ($this->list_control_panel_partial)
+			$options['list_control_panel'] = $this->list_control_panel_partial;
+	?>
+
+	<? $this->listRender($options) ?>
+</div>

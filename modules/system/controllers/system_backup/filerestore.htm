@@ -1,0 +1,44 @@
+<? Phpr_View::beginBlock("view") ?>
+	<ul class="breadcrumbs">
+		<li><a href="<?= url('system/backup') ?>">Backup or Restore</a></li>
+		<li><?= $this->app_page_title ?></li>
+	</ul>
+	
+	<?= flash() ?>
+
+	<? if (!isset($fatalError)): ?>
+		<div class="form400">
+			<?= Phpr_Form::openTag(array('enctype'=>'multipart/form-data')) ?>
+			<p><strong>Important!</strong> Data from the archive will replace all records in the database, including sales data, license information and user accounts.</p>
+			<p>LemonStand automatically creates a backup archive before restoring data. The archive file will be placed to the <strong><?= System_Backup_Params::get()->backup_path ?></strong> folder. The archive file name has the <strong>before_restore</strong> prefix.
+			</p>
+				
+				<div class="form">
+					<? if ($this->viewDataElement('form_error')): ?>
+						<p class="error"><?= h($form_error) ?></p>
+					<? endif ?>
+					
+					<ul class="formElements">
+						<li class="field full">
+							<label for="archive_file">
+								Archive file
+								<span class="comment">Please upload a .LAR file to restore.</span>
+							</label>
+							<div class="fieldContainer">
+								<input type="file" name="file" id="archive_file"/>
+							</div>
+						</li>
+					</ul>
+				</div>
+
+				<?= backend_button('Cancel', url('/system/backup')) ?>
+				<?= backend_button('Restore data', array('href'=>'#', 'class'=>'right', 'onclick'=>"if (!confirm('Do you really want to restore data?')) return false; $(this).getForm().submit(); return false;")) ?>
+				<input type="hidden" name="postback" value="1"/>
+
+				<div class="clear"></div>
+			</form>
+		</div>
+	<? else: ?>
+		<p><a href="<?= url('system/backup') ?>">Return to the backup page</a></p>
+	<? endif ?>
+<? Phpr_View::endBlock() ?>

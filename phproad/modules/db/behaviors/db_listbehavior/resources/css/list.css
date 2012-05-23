@@ -1,0 +1,499 @@
+/* @group HELPERS */
+.hide-underline {
+  text-decoration: none;
+}
+.hide-outline {
+  outline: none;
+}
+.margin-center {
+  margin: 0 auto;
+}
+.text-left {
+  text-align: left;
+}
+.text-right {
+  text-align: right;
+}
+.text-center {
+  text-align: center;
+}
+.float-right {
+  float: right;
+}
+.float-left {
+  float: left;
+}
+.clear-both {
+  clear: both;
+}
+.clear-left {
+  clear: left;
+}
+.clear-right {
+  clear: right;
+}
+.block {
+  display: block !important;
+}
+.padding-background-clip {
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+}
+/* @end */
+/* @group MISC */
+.clear-fix:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
+}
+.clear-fix {
+  display: inline-table;
+}
+/* Hides from IE-mac \*/
+* html .clear-fix {
+  height: 1%;
+}
+.clear-fix {
+  display: block;
+}
+/* End hide from IE-mac */
+/* @end */a.csv_template_link {
+  padding-left: 20px;
+  background: transparent url('../images/page_white_excel.gif') no-repeat left top;
+  display: block;
+}
+table.simpleList {
+  font: normal 1.1em/150% Arial, Verdana, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+table.simpleList th, table.simpleList td {
+  padding: 0.4em 0.5em;
+  text-align: left;
+  border-right: 1px solid #dddddd;
+  vertical-align: top;
+}
+table.simpleList th.link, table.simpleList td.link {
+  padding: 0;
+  cursor: pointer;
+}
+table.simpleList th.current, table.simpleList td.current {
+  font-weight: bold;
+  color: #333333;
+}
+table.simpleList tbody td.checkbox,
+table.simpleList tbody th.checkbox,
+table.simpleList thead td.checkbox,
+table.simpleList thead th.checkbox {
+  width: 20px;
+  padding: 0.2em 0.3em 0 0.4em!important;
+}
+table.simpleList td.checkbox input, table.simpleList th.checkbox input {
+  float: left;
+}
+table.simpleList th.number,
+table.simpleList td.number,
+table.simpleList th.float,
+table.simpleList td.float,
+table.simpleList th.datetime,
+table.simpleList td.datetime,
+table.simpleList th.date,
+table.simpleList td.date,
+table.simpleList th.bool,
+table.simpleList td.bool,
+table.simpleList th.time,
+table.simpleList td.time {
+  text-align: right !important;
+  white-space: nowrap;
+}
+table.simpleList th.minSize {
+  width: 10px;
+}
+table.simpleList td.noWrap {
+  white-space: nowrap;
+}
+table.simpleList td.disabled {
+  background: #eee!important;
+}
+table.simpleList td.center, table.simpleList th.center {
+  text-align: center!important;
+}
+table.simpleList td.center input, table.simpleList th.center input {
+  float: none;
+}
+table.simpleList thead th.expandControl, table.simpleList tbody td.expandControl {
+  width: 10px;
+}
+table.simpleList td.iconCell, table.simpleList th.iconCell {
+  width: 16px;
+  padding-bottom: 0;
+}
+table.simpleList td.iconCell a, table.simpleList th.iconCell a {
+  float: right;
+  height: 16px;
+  outline: medium none;
+  text-indent: -10000em;
+  width: 16px;
+}
+table.simpleList tr td.last, table.simpleList tr th.last {
+  border-right: none !important;
+}
+table.simpleList thead th, table.simpleList thead td {
+  background: #e5e5e5;
+  font-weight: normal;
+  color: #000000;
+  border-right-color: #d0d0d0;
+  border-top: 2px solid #666666;
+  border-bottom: 1px solid #d0d0d0;
+  white-space: nowrap;
+  text-shadow: 1px 1px 0 #ffffff;
+}
+table.simpleList thead th a, table.simpleList thead td a {
+  text-shadow: none;
+  color: #000000 !important;
+}
+table.simpleList thead th.current, table.simpleList thead td.current {
+  background-color: #dadada;
+}
+table.simpleList thead th.current a, table.simpleList thead td.current a {
+  background-repeat: no-repeat;
+  background-position: right center;
+  padding-right: 17px!important;
+}
+table.simpleList thead th.no-title, table.simpleList thead td.no-title {
+  max-width: 26px;
+}
+table.simpleList thead th.no-title a, table.simpleList thead td.no-title a {
+  text-indent: -10000em;
+  text-decoration: none;
+  background-position: 9px center;
+  padding-left: 0 !important;
+  padding-right: 3px !important;
+  width: 23px;
+}
+table.simpleList thead .order_asc a {
+  background-image: url('../images/order_asc.gif');
+}
+table.simpleList thead .order_desc a {
+  background-image: url('../images/order_desc.gif');
+}
+table.simpleList thead.noTopBorder td, table.simpleList thead.noTopBorder th {
+  border-top: none;
+}
+table.simpleList thead.sortable th, table.simpleList thead.sortable td {
+  padding: 0;
+}
+table.simpleList thead.sortable th a, table.simpleList thead.sortable td a {
+  display: block;
+  padding: 0.4em 0.5em;
+  outline: none;
+}
+table.simpleList thead.sortable th.noSort {
+  padding: 0.4em 0.5em;
+}
+table.simpleList tbody th.link a, table.simpleList tbody td.link a {
+  padding: 0.4em 0.5em;
+  display: block;
+  outline: none;
+  text-decoration: none;
+}
+table.simpleList tbody td.link a.image {
+  padding: 0;
+}
+table.simpleList tbody td.link img.drag-handle {
+  display: block;
+}
+table.simpleList tbody tr td, table.simpleList tbody tr th {
+  border-bottom: 1px solid #eaeaea;
+  color: #333333;
+  background-color: #ffffff;
+}
+table.simpleList tbody tr td.no-title, table.simpleList tbody tr th.no-title {
+  max-width: 26px;
+  width: 26px;
+}
+table.simpleList tbody tr td.error, table.simpleList tbody tr:hover td.error {
+  background-color: #990000!important;
+}
+table.simpleList tbody tr td.error a,
+table.simpleList tbody tr:hover td.error a,
+table.simpleList tbody tr td.error input.inline,
+table.simpleList tbody tr:hover td.error input.inline {
+  color: white!important;
+}
+table.simpleList tbody tr.last td {
+  border-bottom: 1px solid #cccccc !important;
+}
+table.simpleList tbody tr:last-child td {
+  border-bottom: 1px solid #cccccc !important;
+}
+table.simpleList tbody tr:hover td, table.simpleList tbody tr:hover th {
+  background-color: #f9f8d7 !important;
+}
+table.simpleList tbody td.current {
+  background-color: #f5f5f5;
+}
+table.simpleList tbody tr.even td.current {
+  background-color: #e4e4e4;
+}
+table.simpleList tbody a {
+  color: #333333 !important;
+  text-decoration: none;
+}
+table.simpleList tbody a:hover {
+  text-decoration: underline;
+}
+table.simpleList tbody td.bool a:hover {
+  text-decoration: none;
+}
+table.simpleList tbody td.bool span {
+  background: transparent url('../images/preview_cb.gif') no-repeat right top;
+  height: 13px;
+  margin-top: 0.2em;
+  display: block;
+}
+table.simpleList tbody td.bool span.on {
+  background: transparent url('../images/preview_cb_on.gif') no-repeat right top;
+}
+table.simpleList tbody a.list-folder-control {
+  background-repeat: no-repeat;
+  background-position: left top;
+  width: 16px;
+  height: 16px;
+  text-indent: -1000000em;
+  text-align: left;
+  display: block;
+}
+table.simpleList tbody a.list-folder-control.enabled {
+  background-image: url('../images/folder_go.png');
+}
+table.simpleList tbody a.list-folder-control.disabled {
+  background-image: url('../images/folder.png');
+  -moz-opacity: 0.5;
+  -khtml-opacity: 0.5;
+  -webkit-opacity: 0.5;
+  opacity: 0.5;
+  cursor: default;
+}
+table.simpleList tr.even td, table.simpleList tr.even th {
+  background-color: #f5f5f5;
+}
+table.simpleList tr.deleted td,
+table.simpleList tr.deleted th,
+table.simpleList tr.deleted td a,
+table.simpleList tr.deleted th a {
+  color: #888888 !important;
+}
+table.simpleList tr.special td,
+table.simpleList tr.special th,
+table.simpleList tr.special td a,
+table.simpleList tr.special th a {
+  font-style: italic;
+}
+table.simpleList tr.disabled {
+  color: #888888 !important;
+}
+table.simpleList tr.disabled td,
+table.simpleList tr.disabled th,
+table.simpleList tr.disabled td a,
+table.simpleList tr.disabled th a {
+  color: #888888 !important;
+}
+table.simpleList tr.important td,
+table.simpleList tr.important th,
+table.simpleList tr.important td a,
+table.simpleList tr.important th a {
+  font-weight: bold;
+}
+table.simpleList tr.error td,
+table.simpleList tr.error th,
+table.simpleList tr.error td a,
+table.simpleList tr.error th a {
+  color: #990000 !important;
+  color: #b2341c;
+}
+table.simpleList tr.processing td,
+table.simpleList tr.processing th,
+table.simpleList tr.processing td a,
+table.simpleList tr.processing th a {
+  color: #666666 !important;
+}
+table.simpleList tr.success td,
+table.simpleList tr.success th,
+table.simpleList tr.success td a,
+table.simpleList tr.success th a {
+  color: #278731 !important;
+}
+table.simpleList tr.new td,
+table.simpleList tr.new th,
+table.simpleList tr.new td a,
+table.simpleList tr.new th a {
+  font-weight: bold;
+}
+table.simpleList tr.safe td, table.simpleList tr.safe th {
+  font-style: italic;
+}
+table.simpleList tr.noData td {
+  text-align: center;
+  padding: 1em 0;
+  border-right: none;
+}
+table.simpleList .expandControl a img {
+  border: none;
+}
+table.simpleList tfoot th, table.simpleList tfoot td {
+  background-color: #eeeeee;
+  border-bottom: 1px solid #cccccc;
+  color: #333333;
+}
+table.simpleList tfoot th.total, table.simpleList tfoot td.total {
+  font-weight: bold;
+}
+table.simpleList tfoot a {
+  text-decoration: none;
+}
+div.listContainer {
+  position: relative;
+}
+.listSettings {
+  float: right;
+  margin-bottom: 0.4em;
+  margin-top: 1em;
+}
+.listSettings p {
+  padding-bottom: 0.3em;
+  font-size: 1.1em;
+}
+.listSettings a.listSetup {
+  float: right;
+  width: 17px;
+  height: 17px;
+  background: transparent url(../images/list_setup.png) no-repeat 2px 2px;
+  text-indent: -10000em;
+  outline: none;
+  margin-bottom: 0.3em;
+  margin-left: 0.5em;
+}
+.listSettings a.listSetup:hover {
+  background-color: #eeeeee;
+}
+.listSettings p.searchEnabled {
+  float: right;
+  margin-top: 0.1em;
+}
+.listSettings p.searchEnabled a.listSetup {
+  margin-bottom: 0;
+}
+.list-hide-setup-panel .listSettings {
+  display: none;
+}
+.noButtonsList .listSettings {
+  margin-top: -2.6em;
+}
+.embeddedList {
+  margin-bottom: 1em;
+}
+.embeddedList .listSettings {
+  margin-top: 0;
+  margin-bottom: 1em;
+}
+div.listColumnsScroller {
+  height: 200px;
+  padding-left: 0.5em;
+  border: 2px solid #cccccc;
+  overflow: auto;
+  margin-bottom: 1em;
+}
+div.listColumnsScroller ul {
+  padding: 5px 0 0 0;
+}
+div.listSearchArea {
+  float: right;
+  margin-bottom: 0.5em;
+}
+div.list_selectors .list_controlPanel {
+  padding-bottom: 0;
+}
+div.list_selectors p {
+  float: left;
+  margin-top: 0.6em;
+  padding-bottom: 0;
+}
+p.list_select_controls {
+  padding-bottom: 7px;
+}
+/*
+ * List sidebar
+ */
+table.listSidebarLayout {
+  width: 100%;
+  border-collapse: collapse;
+}
+table.listSidebarLayout td {
+  vertical-align: top;
+}
+table.listSidebarLayout td.sidebar {
+  width: 200px;
+}
+.sidebar_hidden table.listSidebarLayout td.sidebar {
+  width: 0;
+}
+/*
+ * List navigation area
+ */
+.list-parent-navigation {
+  margin-bottom: 10px;
+}
+.list-parent-navigation a.up, .list-parent-navigation span.up-disabled {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background-repeat: no-repeat;
+  background-position: left top;
+  text-indent: -1000000em;
+  float: left;
+}
+.list-parent-navigation a.up {
+  background-image: url(../images/folder_up.png);
+}
+.list-parent-navigation span.up-disabled {
+  background-image: url(../images/folder.png);
+}
+.list-parent-navigation ul {
+  font-size: 12px;
+  font-family: Arial, Verdana, sans-serif;
+  line-height: 150%;
+  display: block;
+  margin-left: 20px;
+  color: #333;
+}
+.list-parent-navigation ul li {
+  display: inline-block;
+  font-weight: bold;
+  background: transparent url(../images/breadcrumb.gif) no-repeat right 7px;
+  padding-right: 8px;
+  margin-right: 2px;
+}
+.list-parent-navigation ul li:last-child {
+  background: transparent;
+  padding-right: 0;
+  margin-right: 0;
+}
+.list-parent-navigation ul li a {
+  text-decoration: none;
+  font-weight: normal;
+}
+.list-parent-separator {
+  display: inline-block;
+  background: transparent url(../images/breadcrumb.gif) no-repeat center center;
+  width: 10px;
+  height: 15px;
+  text-indent: -1000000em;
+}
+ul.formElements .list-parent-navigation {
+  margin-top: 8px;
+}

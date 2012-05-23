@@ -1,0 +1,47 @@
+<? Phpr_View::beginBlock("view") ?>
+	<ul class="breadcrumbs">
+		<li><a href="<?= url('system/backup') ?>">Backup or Restore</a></li>
+		<li><?= $this->app_page_title ?></li>
+	</ul>
+	
+	<?= flash() ?>
+
+	<? if (!isset($fatalError)): ?>
+		<div class="scoreboardReport">
+			<ul>
+				<li class="last">
+					<h3>Created</h3>
+					<p><?= $form_model->displayField('created_at') ?></p>
+					<p class="description">
+						User: 
+						<? 
+							$userName = $form_model->displayField('created_user_name');
+							if (strlen($userName))
+								echo h($userName);
+							else 
+								echo "system";
+						?>
+					</p>
+				</li>
+			</ul>
+			<div class="clear"></div>
+		</div>
+	<? endif ?>
+
+	<? if (!isset($fatalError)): ?>
+		<div class="form400">
+			<?= Phpr_Form::openTag() ?>
+				<? $this->formRenderPreview() ?>
+
+				<?= backend_button('Return to the list', url('/system/backup')) ?>
+				<? if ($form_model->status_id == 2): ?>
+					<?= backend_button('Restore data...', array('class'=>'right', 'href'=>url('/system/backup/restore/'.$form_model->id))) ?>
+				<? endif ?>
+
+				<div class="clear"></div>
+			</form>
+		</div>
+	<? else: ?>
+		<p><a href="<?= url('system/backup') ?>">Return to the backup page</a></p>
+	<? endif ?>
+<? Phpr_View::endBlock() ?>

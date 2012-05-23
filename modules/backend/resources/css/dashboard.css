@@ -1,0 +1,163 @@
+/* @group HELPERS */
+.hide-outline {
+  outline: none;
+}
+.margin-center {
+  margin: 0 auto;
+}
+.text-left {
+  text-align: left;
+}
+.text-right {
+  text-align: right;
+}
+.text-center {
+  text-align: center;
+}
+.float-right {
+  float: right;
+}
+.float-left {
+  float: left;
+}
+.clear-both {
+  clear: both;
+}
+.clear-left {
+  clear: left;
+}
+.clear-right {
+  clear: right;
+}
+.block {
+  display: block !important;
+}
+.padding-background-clip {
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+}
+/* @end */
+/* @group MISC */
+.clear-fix:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
+}
+.clear-fix {
+  display: inline-table;
+}
+/* Hides from IE-mac \*/
+* html .clear-fix {
+  height: 1%;
+}
+.clear-fix {
+  display: block;
+}
+/* End hide from IE-mac */
+/* @end */.scoreboardReport {
+  padding-bottom: 0.3em;
+}
+.scoreboardReport ul li {
+  position: relative;
+  padding-bottom: 1em;
+}
+.scoreboardReport ul li.no_data {
+  float: none;
+  border-right: 0;
+  padding: 0;
+  margin-right: 0;
+}
+.scoreboardReport ul li.no_data p {
+  font-size: 1.1em;
+  text-align: center;
+  color: #666666;
+  font-weight: normal;
+  padding: 1em 0;
+  background: #eeeeee;
+}
+ul.dashboard_reports h2 {
+  padding-bottom: 0.3em;
+}
+ul.dashboard_reports li {
+  width: 49%;
+  display: inline-block;
+  vertical-align: top;
+  position: relative;
+  padding-top: 5px;
+  margin-bottom: 1.5em;
+}
+ul.dashboard_reports li.even {
+  margin-left: 5px;
+}
+ul.dashboard_reports .scoreboardReport {
+  text-align: center;
+}
+ul.dashboard_reports .scoreboardReport ul {
+  display: inline-block;
+  padding-top: 20px;
+  padding-bottom: 10px;
+}
+ul.dashboard_reports .scoreboardReport ul li {
+  display: block;
+  margin-bottom: 0;
+  padding-top: 0;
+  position: relative;
+  vertical-align: top;
+  width: auto;
+}
+ul.dashboard_reports .scoreboardReport ul p {
+  font-size: 6em;
+}
+div.button_header {
+  background: transparent url('../images/border_h_dotted.gif') repeat-x left bottom;
+  margin-bottom: 10px;
+  padding-bottom: 0.5em;
+}
+div.button_header h2 {
+  float: left;
+  padding-bottom: 0;
+}
+div.button_header div.button {
+  margin-top: 0;
+}
+div.button_header div.button a {
+  line-height: 100%;
+}
+.dashboard_reports li:hover a.remove_button, .scoreboardReport ul li:hover a.remove_button {
+  display: block;
+}
+.dashboard_reports li:hover, .scoreboardReport ul li:hover {
+  background: #f9f8d7;
+}
+a.remove_button {
+  position: absolute;
+  display: none;
+  width: 20px;
+  height: 20px;
+  background: transparent url(../images/close_icon.png) no-repeat left top;
+  text-indent: -10000000em;
+  top: 0;
+  right: -3px;
+  outline: none;
+}
+a.organize_btn {
+  float: right;
+  width: 62px;
+  height: 19px;
+  outline: none;
+  background: transparent url(../images/organize_btn.gif) no-repeat left top;
+  text-indent: -10000000em;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+.tabs .tabs_pages ul.simpleList {
+  padding-bottom: 0;
+}
+.tabs .tabs_pages ul.simpleList li {
+  padding-bottom: 0.3em;
+}

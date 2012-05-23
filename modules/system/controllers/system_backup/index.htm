@@ -1,0 +1,28 @@
+<? Phpr_View::beginBlock("head") ?>
+	<script type="text/javascript" src="modules/system/resources/javascript/backup_list.js"></script>
+<? Phpr_View::endBlock() ?>
+
+<? Phpr_View::beginBlock("view") ?>
+
+	<? if (!isset($fatalError)): ?>
+		<? if (!$configured): ?>
+			<p class="error">Backup system is not configured.</p>
+		<? endif ?>
+		
+		<? if (isset($configError) && $configError): ?>
+			<p class="error">There is an error in the backup system configuration. <?= h($configError) ?></p>
+		<? endif ?>
+		
+		<? if ($this->isHintVisible('backup_hint')): ?>
+			<?= Phpr_Form::openTag(array('id'=>'hint_form')) ?>
+				<div class="hint">
+					<p class="last">You can use the following URL for creating backup archives using cron jobs: <?= Phpr::$request->getRootUrl().url('system/backup/cron/') ?></p>
+					<a title="Hide this hint" href="#" class="close" onclick="return hide_tip('backup_hint', this)">Close</a>
+				</div>
+			</form>
+		<? endif ?>
+
+		<div id="page_content"><? $this->renderPartial('backup_page_content') ?></div>
+
+	<? endif ?>
+<? Phpr_View::endBlock() ?>

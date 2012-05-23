@@ -1,0 +1,30 @@
+<li>
+	<p>HTML editor toolbar has 3 rows of controls. You can drag and drop controls between rows.</p>
+	
+	<?
+		$all_controls = array_keys($form_model->controls);
+		$items1 = $form_model->list_row_controls('controls_row_1');
+		$items2 = $form_model->list_row_controls('controls_row_2');
+		$items3 = $form_model->list_row_controls('controls_row_3');
+
+		$available_controls = array_diff($all_controls, $items1, $items2, $items3);
+	?>
+	
+	<div class="editor_buttons">
+		<h3 class="round">Invisible Controls</h3>
+		<div class="scrollableList">
+			<ul id="available_controls_1">
+				<li class="separator">Separator</li>
+				<?
+					foreach ($available_controls as $item):
+				?>
+					<li class="<?= $item ?>" style="background-image: url(<?= root_url('modules/backend/resources/images/tinymce_buttons/'.$item.'.gif')?>)">
+						<?= array_key_exists($item, $form_model->controls) ? $form_model->controls[$item]['name'] : 'Unknown control' ?>
+					</li>
+				<? endforeach ?>
+			</ul>
+		</div>
+	</div>
+
+	<? $this->renderPartial('row_controls') ?>
+</li>

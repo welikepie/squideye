@@ -1,0 +1,20 @@
+<?
+	$themes = System_ColorThemeParams::list_themes();
+?>
+
+<ul class="colortheme_selector" id="theme_selector">
+	<? foreach ($themes as $id=>$theme): ?>
+		<li <? if ($id == $form_model->theme_id): ?>class="current"<? endif ?>>
+			<? if ($theme['preview_available']): ?>
+				<img class="selector" width="150" height="113" src="<?= root_url($theme['preview_path']) ?>" />
+			<? else: ?>
+				<p class="selector no_preview">Preview is not<br/>available</p>
+			<? endif ?>
+
+			<p class="name"><?= h($theme['name']) ?></p>
+			<input type="hidden" value="<?= h($id) ?>"/>
+		</li>
+	<? endforeach ?>
+</ul>
+
+<input type="hidden" name="System_ColorThemeParams[theme_id]" id="theme_id" value="<?= h($form_model->theme_id) ?>"/>

@@ -1,0 +1,12 @@
+#header_tabs {
+  background-color: #336699;
+}
+#header_tabs ul li.current a {
+  color: #336699!important;
+}
+.tabs .tabs_tabs li.active a {
+  background-color: #336699!important;
+}
+.tabs .tab_separator {
+  border-bottom-color: #336699!important;
+}

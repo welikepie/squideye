@@ -1,0 +1,61 @@
+<? $is_fullscreen = Phpr::$session->get('backend_fullscreen_mode'); ?>
+<div id="header" class="<?= $is_fullscreen ? 'hidden' : null?>">
+	<div class="container">
+		<a href="<?= url('backend') ?>">
+			<? 
+				$theme = System_ColorThemeParams::get();
+				if (!$theme->logo->count):
+			?>
+				<img class="lemonStandLogo" src="modules/backend/resources/images/header_logo.png" alt="LemonStand"/>
+				<span class="lemonStandName <? if (!strlen($theme->header_text)): ?>noHeaderText<? endif ?>">LemonStand</span>
+			<? else: ?>
+				<img class="customLogo <?= $theme->logo_border ? 'border' : null ?>" src="<?= $theme->get_logo_url() ?>" alt="Logo"/>
+			<? endif ?>
+		</a>
+		
+		<? if (strlen($theme->header_text)): ?>
+			<? if (!$theme->logo->count): ?>
+				<div class="header_separator"></div>
+			<? endif ?>
+		
+			<p class="header_text"><a href="<?= url('backend') ?>"><?= h($theme->header_text) ?></a></p>
+		<? else: ?>
+			<? if ($theme->logo->count): ?>
+				<p class="header_text"><a href="<?= url('backend') ?>">LemonStand</a></p>
+			<? endif ?>
+		<? endif ?>
+		
+		<div class="header_separator"></div>
+		
+		<p class="page_name">
+			<? 
+				if ($this->app_module_name)
+			 		echo h($this->app_module_name).' - '
+			?>
+			<?= h($this->app_page_title) ?>
+		</p>
+		
+		<div class="header_links">
+			<ul class="site_links">
+				<li class="view_site"><a href="<?= root_url('') ?>" title="Click to open the front-end website" target="_blank">View Store</a></li>
+			</ul>
+			<p class="user_welcome"><?= h(trim($this->currentUser->name)) ?></p>
+			<div id="settings_link_container"><a class="settings_link" id="settings_link" href="#" onclick="return false;">Settings</a></div>
+			<div class="invisible" id="user_controls_wrapper">
+				<div id="user_menu_connector"></div>
+				<ul id="user_controls">
+					<? if (!$this->hide_settings_links): ?>
+						<li><a href="<?= url('/system/mysettings') ?>">My settings</a></li>
+						<? if ($this->currentUser->is_administrator()): ?>
+							<li>
+								<a href="<?= url('/system/settings') ?>">System settings</a>
+							</li>
+						<? endif ?>
+					<? endif ?>
+					<li class="last"><a href="<?= url('/session/handle/destroy') ?>">Sign out</a></li>
+				</ul>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+</div>

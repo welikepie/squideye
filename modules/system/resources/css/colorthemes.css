@@ -1,0 +1,108 @@
+/* @group HELPERS */
+.hide-outline {
+  outline: none;
+}
+.margin-center {
+  margin: 0 auto;
+}
+.text-left {
+  text-align: left;
+}
+.text-right {
+  text-align: right;
+}
+.text-center {
+  text-align: center;
+}
+.float-right {
+  float: right;
+}
+.float-left {
+  float: left;
+}
+.clear-both {
+  clear: both;
+}
+.clear-left {
+  clear: left;
+}
+.clear-right {
+  clear: right;
+}
+.block {
+  display: block !important;
+}
+.padding-background-clip {
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+}
+/* @end */
+/* @group MISC */
+.clear-fix:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
+}
+.clear-fix {
+  display: inline-table;
+}
+/* Hides from IE-mac \*/
+* html .clear-fix {
+  height: 1%;
+}
+.clear-fix {
+  display: block;
+}
+/* End hide from IE-mac */
+/* @end */ul.colortheme_selector {
+  margin-top: 15px;
+  margin-bottom: -30px;
+}
+ul.colortheme_selector li {
+  padding: 0!important;
+  cursor: pointer;
+  display: inline-block !important;
+  width: 156px;
+  height: 156px;
+  vertical-align: top;
+  margin-right: 50px;
+  margin-bottom: 15px;
+}
+ul.colortheme_selector li:nth-child(3n) {
+  margin-right: 0;
+}
+ul.colortheme_selector li img {
+  display: block;
+}
+ul.colortheme_selector li .selector {
+  border: 3px solid #ccc;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+ul.colortheme_selector li.current .selector {
+  border-color: #4982D8;
+}
+ul.colortheme_selector li.current p.name {
+  color: #333;
+}
+ul.colortheme_selector p.name {
+  padding-bottom: 0;
+  text-align: center;
+  padding-top: 5px;
+  color: #666666;
+}
+ul.colortheme_selector p.no_preview {
+  width: 150px;
+  height: 73px;
+  padding-top: 40px;
+  padding-bottom: 0;
+  text-align: center;
+  line-height: 150%;
+  color: #666666;
+  background: #eee;
+}

@@ -1,0 +1,19 @@
+<p>Hi!</p>
+
+<p>There is a new comment on blog post "<?= h($post->title) ?>".</p>
+
+<p>Comment author: <?= $comment->author_name ? h($comment->author_name) : h('<not specified>') ?><br/>
+Author email: <?= $comment->author_email ? h($comment->author_email) : h('<not specified>') ?>
+<? if (strlen($comment->author_url)): ?>
+<br/>Website URL: <?= h($comment->author_url) ?>
+<? endif ?>
+</p>
+
+<p>Comment text:</p>
+
+<blockquote><?= $comment->content_html ?></blockquote>
+
+<p>You may approve or delete the comment on <a href="<?= Phpr::$request->getRootUrl().url('blog/posts/preview/'.$post->id.'?'.uniqid()) ?>">this page</a>.</p>
+
+<hr/>
+<p>This is an automatic message. Do not reply to it.</p>

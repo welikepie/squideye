@@ -1,0 +1,15 @@
+<? Phpr_View::begin_block('view') ?>
+	<h2 class="offset-top-small">Blog Settings</h2>
+
+	<? if(!isset($fatalError)): ?>
+		<div class="form-300">
+			<?= Phpr_Form::open_tag(array('id' => 'form_element')) ?>
+				<? $this->form_render($form_model) ?>
+
+				<?= backend_ajax_button('Save', 'index_onSave', array('class'=>'default'), "loadIndicator: {hideOnSuccess: true}, update: $(this).getForm().getElement('.formFlash')") ?>
+			<?= Phpr_Form::close_tag() ?>
+		</div>
+	<? else: ?>
+		<?= flash() ?>
+	<? endif ?>
+<? Phpr_View::end_block() ?>

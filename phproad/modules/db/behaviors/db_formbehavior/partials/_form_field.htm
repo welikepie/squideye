@@ -1,0 +1,43 @@
+<?
+ 	$renderMode = $this->formGetFieldRenderMode($form_field->dbName);
+	$columnDefinition = $form_field->getColDefinition();
+	
+	$dbName = $this->formGetFieldDbName($form_field->dbName, $this->viewData['form_model']);
+	$required = $this->formIsFieldRequired($form_field->dbName);
+
+	$commentText = $this->form_preview_mode ? Phpr_Util::any($form_field->previewComment, $form_field->comment) : $form_field->comment;
+	$commentTolTip = $form_field->commentTooltip;
+ ?>
+<li id="<?= $this->formGetElementId('form_field_'.$dbName, get_class($form_model)) ?>" class="field <?= $renderMode ?> <?= $form_field->formSide ?> <?= $this->form_preview_mode ? 'preview' : null ?> <?= $columnDefinition->isReference ? 'reference' : null ?> <?= $columnDefinition->isReference && $form_field->previewNoRelation ? 'previewNoRelation' : null ?> <?= $form_field->cssClassName ?>">
+	
+	<? if (!$form_field->noLabel): ?>
+		<label for="<?= $this->formGetElementId(get_class($form_model).'_'.$dbName) ?>">
+			<?= h($form_field->getColDefinition()->displayName) ?>
+			<? if ($required && !$this->form_preview_mode): ?><span class="required">*</span><? endif ?>
+	
+			<? if ($commentText && $form_field->commentPosition == 'above'): ?>
+				<span class="comment"><? if (!$form_field->commentHTML): ?><?= h($commentText) ?><? else: ?><?= $commentText ?><? endif ?> <? if ($commentTolTip): ?><a href="#" tabindex="-1" class="comment_tooltip tooltip" onclick="return false" title="<?= $commentTolTip ?>">?</a><? endif ?> </span>
+			<? endif ?>
+		</label>
+	<? endif ?>
+	
+	<? 
+		if ($form_field->titlePartial)
+			$this->renderPartial($form_field->titlePartial);
+	?>
+
+	<div id="<?= $this->formGetElementId('form_field_container_'.$dbName, get_class($form_model)) ?>" class="<?= $this->form_preview_mode ? 'previewContainer' : 'fieldContainer '.$form_field->cssClasses ?>">
+	<?
+		$this->formRenderFieldPartial($form_model, $form_field);
+	?>
+
+	<? if ($this->form_preview_mode && $columnDefinition->isReference && ($columnDefinition->referenceType == 'belongs_to') && !$form_field->previewNoRelation): ?>
+		<a class="previewLink" href="#" title="Preview" onclick="new PopupForm('<?= $this->getEventHandler('onPreviewPopup') ?>', {ajaxFields: {modelClass: '<?= $columnDefinition->referenceClassName ?>', modelId: '<?= $form_model->$dbName ?>', popupLevel: window.PopupWindows.length, previewTitle: '<?= h($form_field->getColDefinition()->displayName) ?>'}}); return false;">Preview</a>
+	<? endif ?>
+	</div>
+
+	<? if ($commentText && $form_field->commentPosition == 'below'): ?>
+		<p class="minorCommentAfter"><? if (!$form_field->commentHTML): ?><?= h($commentText) ?><? else: ?><?= $commentText ?><? endif ?></p>
+	<? endif ?>
+	<div class="clear"></div>
+</li>

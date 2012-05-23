@@ -1,0 +1,30 @@
+<div id="import_progress_form">
+	<h2>Import progress</h2>
+	<div class="content">
+		<div class="form600">
+			<? if (!isset($fatalError)): ?>
+			
+				<div id="import_info_container" class="import_progress"></div>
+
+				<script type="text/javascript">
+					$('import_progress_form').addEvent('popupLoaded', function(){
+						import_manager.process_import();
+
+						$('import_progress_form').addEvent('onClosePopup', function(){
+							if (!allow_onload)
+							{
+								alert("The import process is in progress. Please do not close this window until it is complete.");
+								throw new Exception("Update is in progress");
+							}
+						});
+					});
+				</script>
+				<div class="clear"></div>
+			<? else: ?>
+				<?= flash() ?>
+				<?= backend_button('Cancel', array('onclick'=>'return cancelPopup()')) ?>
+				<div class="clear"></div>
+			<? endif ?>
+		</div>
+	</div>
+</div>

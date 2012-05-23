@@ -1,0 +1,11 @@
+<h3>Action blog:category</h3>
+
+<p class="description">Use this action to output a blog category content. The action loads a category specified by its URL Name in the first URL segment.</p>
+
+<h4 class="separated">Variables</h4>
+<ul>
+	<li><strong>$category</strong> - contains a reference to the <a href="http://lemonstandapp.com/wiki/class_blog_category/" target="_blank">Blog_Category</a> class instance, representing a requested category. The $category variable can has the NULL value if a specified category was not found. You should check the variable value before displaying any category details or the category post list. The $post variable will not be created if the category was not found.</li>
+	<li><strong>$posts</strong> - contains a instance of the <a href="http://lemonstandapp.com/wiki/class_blog_post" target="_blank">Blog_Post</a> class class. To obtain a list of posts, you need to call the find_all() method of the $posts variable. The find_all() method returns a collection of blog posts. Each element in the collection is an instance of the <a href="http://lemonstandapp.com/wiki/class_blog_post" target="_blank">Blog_Post</a> class class.</li>
+</ul>
+
+<p class="description"><a href="http://lemonstandapp.com/wiki/blog_category_page/" target="_blank">Read more...</a></p>

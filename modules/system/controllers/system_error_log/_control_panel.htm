@@ -1,0 +1,9 @@
+<div class="toolbar">
+	<?= Phpr_Form::openTag() ?>
+		<?= backend_ctr_button('Decoder', 'new_text_document', url('/system/error_log/decoder')) ?>
+	
+		<?= backend_ctr_ajax_button('Clear the log', 'delete_document', 'index_onClear', array(), "loadIndicator: {show: false}, onBeforePost: function(){LightLoadingIndicator.show('Loading...')}, onComplete: LightLoadingIndicator.hide, confirm: 'Do you really want to delete all records from the error log?'") ?>
+
+		<div class="clear"></div>
+	</form>
+</div>

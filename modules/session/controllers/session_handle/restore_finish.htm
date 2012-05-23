@@ -1,0 +1,69 @@
+<? Phpr_View::beginBlock("head") ?>
+	<script type="text/javascript" src="modules/session/resources/javascript/restore_finish.js"></script>
+<? Phpr_View::endBlock() ?>
+
+<? Phpr_View::beginBlock("view") ?>
+	<?= Phpr_Form::openTag() ?>
+		<div class="form">
+			
+			<div id="wrapper">
+				<div id="wrapper_content">
+					<h1 class="title">LemonStand</h1>
+					<div id="form_wrapper">
+						<h2>Password Restore</h2>
+						<div class="formContainer round">
+							<div id="formContent" class="relative">
+								
+								<? if (!isset($error)): ?>
+									<div class="formFlash"></div>
+								<? else: ?>
+									<div class="formFlash"><p class="error"><?= h($error) ?></p></div>
+								<? endif ?>
+					
+								<ul class="formElements">
+									<? if (isset($error)): ?>
+										<li class="buttons">
+											<a class="login_button" href="<?= url('session/handle/create') ?>"><img src="modules/session/resources/images/btn_cancel.gif" alt="Cancel"/></a>
+							
+											<div class="clear"></div>
+										</li>
+									<? else: ?>
+										<li class="field text full">
+											<label for="Users_User_password">
+												Password
+												<span class="comment">Please enter a new password.</span>
+											</label>
+											<div class="fieldContainer"><input type="password" id="Users_User_password" name="password"/></div>
+										</li>
+										
+										<li class="field text full">
+											<label for="Users_User_password_confirm">
+												Confirmation
+												<span class="comment">Please enter password confirmation.</span>
+											</label>
+											<div class="fieldContainer"><input type="password" id="Users_User_password_confirm" name="password_confirm"/></div>
+										</li>
+
+										<li class="buttons">
+											<a class="login_button" href="#" onclick="return submit_restore()"><img src="modules/session/resources/images/btn_restore.gif" alt="Restore"/></a>
+											<a class="login_button" href="<?= url('session/handle/create') ?>"><img src="modules/session/resources/images/btn_cancel.gif" alt="Cancel"/></a>
+							
+											<div class="clear"></div>
+										</li>
+									<? endif ?>
+								</ul>
+							</div>
+							<div class="lt"></div>
+							<div class="rt"></div>
+							<div class="lb"></div>
+							<div class="rb"></div>
+						</div>
+						<div class="clear"></div>
+						<p class="copyright"><a href="http://lemonstandapp.com" target="_blank">LemonStand</a> is a product by Limewheel Creative Inc.<br/>Copyright &copy; <?= date('Y') ?> Limewheel Creative Inc. All Rights Reserved.</p>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+	</form>
+<? Phpr_View::endBlock() ?>

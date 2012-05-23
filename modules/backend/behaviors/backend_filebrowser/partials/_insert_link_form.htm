@@ -1,0 +1,41 @@
+<div>
+	<h2>Insert Link</h2>
+	<div class="content">
+		<div class="form450">
+			<?= Phpr_Form::openTag() ?>
+				<? if (!isset($fatalError)): ?>
+					<div class="formFlash"></div>
+
+						<div class="form">
+						<ul class="formElements">
+							<li class="field text">
+								<label for="link_url">URL</label>
+
+								<div class="fieldContainer">
+									<input type="text" name="link_url" id="link_url" value="<?= $link_path ?>"/>
+								</div>
+							</li>
+
+							<li class="field text">
+								<label for="link_text">Link Text</label>
+
+								<div class="fieldContainer">
+									<input type="text" name="link_text" id="link_text" value="<?= $link_path ?>"/>
+								</div>
+							</li>
+						</ul>
+					</div>
+				
+					<?= backend_button('Insert', array('onclick'=>'return filebrowser_insert_link()')) ?>
+
+					<?= backend_button('Cancel', array('onclick'=>'return cancelPopup()')) ?>
+					<div class="clear"></div>
+				<? else: ?>
+					<?= flash() ?>
+					<?= backend_button('Cancel', array('onclick'=>'return cancelPopup()')) ?>
+					<div class="clear"></div>
+				<? endif ?>
+			</form>
+		</div>
+	</div>
+</div>

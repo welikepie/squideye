@@ -1,0 +1,25 @@
+<? if ($form_element instanceof Db_FormFieldDefinition): ?>
+	<? $this->formRenderField($form_element->dbName) ?>
+	<? if ($form_element->formSide == 'right' && $form_element->comment && $form_element->commentPosition == 'below'): ?>
+		<li class="clear"><hr/></li>
+	<? endif ?>
+	
+<? elseif ($form_element instanceof Db_FormSection): ?>
+	<? $titlePresent = strlen($form_element->title) ?>
+	<li class="section <?= !$titlePresent ? 'simple_section' : null ?>">
+		<? if ($titlePresent): ?>
+			<h4><?= h($form_element->title) ?></h4>
+		<? endif ?>
+		<? if (strlen($form_element->description)): ?>
+			<p><?= h($form_element->description) ?></p>
+		<? endif ?>
+	</li>
+<? elseif ($form_element instanceof Db_FormCustomArea): ?>
+	<? if (!$this->form_preview_mode): ?>
+		<? $this->formRenderPartial('form_area_'.$form_element->id) ?>
+	<? else: ?>
+		<? $this->formRenderPartial('form_area_preview_'.$form_element->id) ?>
+	<? endif ?>
+<? elseif ($form_element instanceof Db_FormPartial): ?>
+	<? $this->renderPartial($form_element->path) ?>
+<? endif ?>

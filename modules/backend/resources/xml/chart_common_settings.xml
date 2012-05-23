@@ -1,0 +1,46 @@
+<settings> 
+	<data_type>xml</data_type>
+	<font></font>
+	<text_size></text_size>
+	<text_color></text_color>
+	<decimals_separator>.</decimals_separator>
+	<thousands_separator></thousands_separator>
+	<digits_after_decimal></digits_after_decimal>
+	<precision></precision>
+	<redraw>true</redraw>
+
+	<context_menu>
+		<default_items>
+			<zoom>false</zoom>
+			<print>false</print>
+		</default_items>
+	</context_menu>  
+
+	<strings>
+		<no_data>No data</no_data>
+	</strings>  
+	
+	<balloon>
+		<alpha>90</alpha>
+		<color>#0D8ECF</color>
+		<border_width>1</border_width>
+		<show>
+			<![CDATA[{title}: {value} <br>{description}]]>
+		</show>
+		<corner_radius>0</corner_radius>
+	</balloon>
+	
+	<indicator>
+		<color>#08608D</color>
+		<x_balloon_text_color>#FFFFFF</x_balloon_text_color>
+		<selection_color>#08608D</selection_color>
+	</indicator>
+	
+	<zoom_out_button>
+		<text_color_hover>#000000</text_color_hover>
+	</zoom_out_button>
+	
+	<error_messages>
+		<color>#CCCCCC</color>
+	</error_messages>
+</settings>

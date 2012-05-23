@@ -1,0 +1,36 @@
+#1 Created blog tables
+#2 Added comment statuses
+#3 Added URL field to the blog comments table
+#4 Added comments subscriptions table
+#5 Created new comment notification template
+#6 Date Published field type changed to Date
+#7 Subdirectories support
+#8 Blog posts now can belong to multiple categories
+#9 Minor changes in the actions documentation
+#10 Updated module description
+#11 Added the API Code field to categories
+#12 Added the Create and Close button on the Create Post page
+#13 Added the list_recent_posts() method to the Blog_Post class
+#14 Minor improvements in the user interface
+#15 Bug fix in the RSS features
+#16 Minor updates in the user Administration Area interface
+#17 API update - added the author_first_name and author_last_name fields to the Blog_Post class
+#18 Fixed a minor JavaScript bug on the Post Preview page
+#19 Technology update
+#20 Minor update on the Create/Edit Post page
+#21 Minor update in the API
+#22 Minor update in the API
+#23 Minor update in the API
+#24 Caching features added
+#25 API update - added events for extending the blog post form
+#26 Technology update
+#27 Minor improvement in the back-end user interface
+#28 Fixed a form validation error
+#29 Improvements in the blog API
+#1.0.30 Added new API events: blog:onExtendCategoryModel, blog:onExtendCategoryForm, blog:onGetCategoryFieldOptions
+#1.0.31 Minor improvement in the API
+#1.0.32 Minor improvement on Create/Edit Post page
+#1.0.33 Usability improvements
+#1.0.34 Minor usability improvements
+#1.0.35 Added post preview link to the Edit Blog Post page
+#1.0.36 Minor UI improvement on the Create/Edit Post page

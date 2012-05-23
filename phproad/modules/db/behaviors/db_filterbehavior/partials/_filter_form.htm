@@ -1,0 +1,111 @@
+<div>
+	<h2>
+		Filter<? if (!$this->viewDataElement('not_found')): ?>: <?= mb_strtolower(h($filterInfo['name'])) ?><? endif ?>
+
+	</h2>
+	<div class="content">
+		<div class="form500">
+			<?= Phpr_Form::openTag() ?>
+				<? if ($this->viewDataElement('not_found')): ?>
+					<p>Filter not found.</p>
+				<? else: ?>
+					<?
+						$is_sliding_list = $model->isExtendedWith('Db_Act_As_Tree');
+					?>
+					<p><?= isset($filterInfo['prompt']) ? h($filterInfo['prompt']) : h($this->filter_prompt) ?></p>
+
+					<div class="formFlash"></div>
+					<div id="filter_list">
+						<div class="embeddedList search500">
+							<?
+								$listColumns = Phpr_Util::splat($filter_obj->list_columns);
+								$this->list_name = $this->filterListName($model);
+							
+								$searchFields = $listColumns;
+								foreach ($searchFields as $index=>&$field)
+									$field = "@".$field;
+							?>
+						
+							<?= $this->listRender(array(
+								'list_model_class'=>get_class($model),
+								'list_no_setup_link'=>true,
+								'list_columns'=>$listColumns,
+								'list_render_as_sliding_list'=>$is_sliding_list,
+								'list_scrollable'=>false,
+								'list_custom_prepare_func'=>'filterPrepareData',
+								'list_custom_body_cells'=>PATH_APP.'/phproad/modules/db/behaviors/db_filterbehavior/partials/_filter_body_control.htm',
+								'list_custom_head_cells'=>PATH_APP.'/phproad/modules/db/behaviors/db_filterbehavior/partials/_filter_head_control.htm',
+								'list_search_fields'=>$searchFields,
+								'list_search_prompt'=>'search',
+								'list_reuse_model'=>false,
+								'list_no_form'=>true,
+								'list_record_url'=>null,
+								'list_items_per_page'=>6,
+								'list_search_enabled'=>true,
+								'list_name'=>$this->filterListName($model),
+								'filter_id'=>$filterId,
+								'list_no_js_declarations'=>true
+							)) ?>
+						</div>
+					</div>
+				
+					<h4><?= isset($filterInfo['added_list_title']) ? h($filterInfo['added_list_title']) : 'Added Filters' ?></h4>
+					
+					<div class="added_filter_list">
+						<table class="simpleList">
+							<tbody id="added_filter_list">
+								<? if (!isset($filter_checked_records) || !$filter_checked_records->count): ?>
+									<tr class="noData">
+										<td>No records added</td>
+									</tr>
+								<? else: ?>
+									<? foreach ($filter_checked_records as $record): ?>
+										<tr class="<?= Backend_Html::zebra('filter_record') ?>">
+											<td class="iconCell">
+												<a class="filter_control" href="#" onclick="return filter_delete_record(this)"><img src="phproad/modules/db/behaviors/db_filterbehavior/resources/images/remove_record.gif" alt="Remove record" title="Remove record" width="16" height="16"/></a>
+											</td>
+											<td class="last">
+												<?
+													$column_values = array();
+													foreach ($listColumns as $column)
+														$column_values[] = $record->$column;
+												
+													echo implode(', ', $column_values);
+												?>
+												<input type="hidden" name="filter_ids[]" class="record_id" value="<?= $record->id ?>"/>
+											</td>
+										</tr>
+									<? endforeach ?>
+								<? endif ?>
+							</tbody>
+						</table>
+					</div>
+					
+					<?= backend_ajax_button('Apply', $this->getEventHandler('onFilterApply'), array(), 
+						"loadIndicator: {injectInElement: true, hideOnSuccess: true}, 
+						extraFields: {filterId: '$filterId'},
+						update: 'filter_settings_content',
+						onSuccess: function(){ cancelPopup();  {$this->filter_onApply} }"
+					) ?>
+
+					<? if (!$filter_new): ?>
+						<?= backend_ajax_button('Cancel filter', $this->getEventHandler('onFilterRemove'), array('class'=>"right"),
+						"
+							extraFields: {filterId: '$filterId'},
+							loadIndicator: {injectInElement: true, hideOnSuccess: true},
+							update: 'filter_settings_content',
+							onSuccess: function(){ cancelPopup(); {$this->filter_onRemove} }
+						"
+						) ?>
+						<input type="hidden" name="filter_existing" value="1"/>
+					<? endif ?>
+				<? endif ?>
+
+				<?= backend_button('Cancel', array('onclick'=>'return cancelPopup()')) ?>
+				<div class="clear"></div>
+				<input type="hidden" name="filter_form_flag" value="1"/>
+				<input type="hidden" name="filter_id_value" value="<?= $filterId ?>"/>
+			</form>
+		</div>
+	</div>
+</div>

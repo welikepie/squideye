@@ -1,0 +1,87 @@
+.filters {
+  padding-bottom: 1.5em;
+}
+.filters h5 {
+  padding: 0.5em 0.7em;
+  margin: 0;
+  font-size: 1.1em;
+  font-weight: bold;
+  color: #333333;
+  background: #eaeaea;
+  float: left;
+}
+.filters .content {
+  background: #eaeaea;
+  padding: 0.7em 1em;
+  border-bottom: 1px solid #dddddd;
+  border-top: 1px solid #dddddd;
+  border-right: 1px solid #dddddd;
+  margin-top: -1px;
+}
+.filters .content p {
+  font-size: 1.1em;
+  padding: 0 0 0 13px;
+  margin: 0.5em 0 0 0;
+  color: #666666;
+  background: transparent url(../images/add_filter.gif) no-repeat left 0.3em;
+}
+.filters .content p.no_top_padding {
+  margin-top: 0;
+}
+.filters ul li {
+  display: block;
+  background: transparent url(../images/bullet_filter.gif) no-repeat left 0.2em;
+  font-size: 1.1em;
+  padding: 0 0 0.5em 13px;
+  color: #333333;
+}
+.filters ul li span.title {
+  color: #666666;
+}
+.filters ul li.last {
+  padding-bottom: 0;
+}
+.list_filter_container .filters {
+  padding-bottom: 1em;
+}
+div.added_filter_list {
+  height: 150px;
+  margin-bottom: 0.5em;
+  overflow: auto;
+  border: 1px solid #cccccc;
+  position: relative;
+}
+div.added_filter_list table.simpleList {
+  border-right: none!important;
+  border-left: none!important;
+}
+div.added_filter_list table.simpleList tbody tr:last-child td {
+  border-bottom: 1px solid #eaeaea;
+}
+a.filter_control img {
+  border: none;
+}
+ul.filter_switchers {
+  background: #f9f9f9;
+  padding: 3px 5px 5px 10px;
+  margin: 5px 0 3px 0;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+  border: 1px solid #cfcfcf;
+}
+ul.filter_switchers li {
+  background: transparent;
+  padding: 0;
+  margin-top: 2px;
+}
+ul.filter_switchers li input {
+  margin-left: -2px;
+}
+ul.filter_switchers li label {
+  font-size: 11px;
+  color: #666666;
+}
+td.filter_icon a, a.filter_control {
+  text-indent: 0!important;
+}

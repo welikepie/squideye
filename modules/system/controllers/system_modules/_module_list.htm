@@ -1,0 +1,30 @@
+<? $zebra_id = uniqid(); ?>
+<table class="simpleList full_width">
+	<thead class="">
+		<tr>
+			<th class="varchar current">Module</th>
+			<th class="varchar">Code</th>
+			<th class="varchar">Description</th>
+			<th class="varchar">Version</th>
+			<th class="varchar last">Developer</th>
+		</tr>
+	</thead>
+	<tbody id="update_list">
+		<? foreach ($modules as $module): 
+			$module_info = $module->getModuleInfo();
+		?>
+			<tr class="<?= Backend_Html::zebra($zebra_id) ?>">
+				<td class="varchar current"><?= h($module_info->name) ?></td>
+				<td class="varchar"><?= h($module_info->id) ?></td>
+				<td class="varchar"><?= h($module_info->description) ?></td>
+				<td class="varchar"><?= h($module_info->getVersion()) ?></td>
+				<td class="varchar last"><?= h($module_info->author) ?></td>
+			</tr>
+		<? endforeach ?>
+		<? if (!$modules): ?>
+			<tr class="noData">
+				<td colspan="5">There are no modules to display in this list.</td>
+			</tr>
+		<? endif ?>
+	</tbody>
+</table>

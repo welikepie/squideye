@@ -1,0 +1,1 @@
+alter table db_files add column is_public tinyint;

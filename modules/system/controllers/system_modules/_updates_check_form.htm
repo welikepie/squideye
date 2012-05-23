@@ -1,0 +1,39 @@
+<div id="check_updates_popup">
+	<h2>Update LemonStand</h2>
+	<div class="content">
+		<div class="form700">
+			<?= Phpr_Form::openTag(array('id'=>'load_updates_form', 'class'=>'relative')) ?>
+
+				<? if (!isset($fatalError)): ?>
+					<div id="update_information_container">
+						<p class="loading">Loading a list of available updates...</p>
+						<div class="clear"></div>
+						<?= backend_button('Cancel', array('onclick'=>'return cancelPopup()')) ?>
+					</div>
+					
+					<script type="text/javascript">
+						$('check_updates_popup').addEvent('popupLoaded', function(){
+							$('load_updates_form').sendPhpr('index_onCheckForUpdates', {
+								loadIndicator: {show: false},
+								update: 'update_information_container',
+								onComplete: realignPopups
+							});
+						});
+						$('check_updates_popup').addEvent('onClosePopup', function(){
+							if (!allow_onload)
+							{
+								alert("The update process is in progress. Please do not close this window until it is complete.");
+								throw new Exception("Update is in progress");
+							}
+						});
+					</script>
+				<? else: ?>
+					<div class="formFlash"><?= flash() ?></div>
+					<?= backend_button('Cancel', array('onclick'=>'return cancelPopup()')) ?>
+				<? endif ?>
+
+				<div class="clear"></div>
+			</form>
+		</div>
+	</div>
+</div>

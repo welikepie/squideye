@@ -1,0 +1,39 @@
+<? 
+	$listContainerId = $this->formGetElementId('form_attachments_container_'.get_class($form_model).'_'.$form_field->dbName);
+	$uploaderContainerId = $this->formGetElementId('form_uploader_container_'.get_class($form_model).'_'.$form_field->dbName);
+	$uploaderLinkId = $this->formGetElementId('form_uploader_link_'.get_class($form_model).'_'.$form_field->dbName);
+	$uploader = $this->formGetElementId('form_attachments_uploader_'.get_class($form_model).'_'.$form_field->dbName);
+?>
+
+<div id="<?= $listContainerId ?>">
+	<? $this->formRenderFileAttachments($form_field->dbName); ?>
+</div>
+
+<div class="addFileLink" id="<?= $uploader ?>">
+	<a href="#" id='<?= $uploaderLinkId ?>'><?= h($form_field->addAttachmentLabel) ?></a>
+	<div class="progressInfo">
+		<img class="overall-progress progress invisible" src="phproad/modules/db/behaviors/db_formbehavior/resources/images/progressbar.gif"/>
+	</div>
+</div>
+
+<div class="uploaderContainer" id="<?= $uploaderContainerId ?>"></div>
+
+<script type="text/javascript">
+	window.addEvent('domready', function() {
+		new FileUploader('<?= $uploader ?>', {
+			'url': '<?= $this->formGetUploadUrl($form_field->dbName) ?>', 
+			'container': $('<?= $uploaderContainerId ?>'), 
+			'target': '<?= $uploaderLinkId ?>',
+			'onUploadComplete': function(){
+				$('<?= $uploaderContainerId ?>').getForm().sendPhpr(
+					'<?= $this->getEventHandler('onUpdateFileList') ?>',
+					{
+						extraFields: {dbName: '<?= $form_field->dbName ?>'},
+						update: '<?= $listContainerId ?>',
+						loadIndicator: {show: false}
+					}
+				)
+			}
+		});
+	});
+</script>

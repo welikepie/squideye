@@ -1,0 +1,20 @@
+<? Phpr_View::beginBlock("view") ?>
+	<ul class="breadcrumbs">
+		<li><a href="<?= url('/system/mysettings') ?>">My Settings</a></li>
+		<li><?= $this->app_page_title ?></li>
+	</ul>
+	
+	<?= flash() ?>
+
+	<div class="form-400">
+		<?= Phpr_Form::openTag() ?>
+			<? $this->form_render($form_model) ?>
+
+			<?= backend_ajax_button('Save', 'index_onSave', array()) ?>
+
+			<?= backend_button('Cancel', array('href'=>url('system/mysettings'))) ?>
+
+			<div class="clear"></div>
+		</form>
+	</div>
+<? Phpr_View::endBlock() ?>

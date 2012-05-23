@@ -1,0 +1,82 @@
+<? 
+	$filtersToDisplay = array();
+	foreach ($filterSettingsInfo as $curFilterId=>$filter)
+	{
+		if (!array_key_exists($curFilterId, $this->filter_filters))
+			continue;
+			
+		$filtersToDisplay[$curFilterId] = array($this->filter_filters[$curFilterId], $filter);
+	}
+
+	$filtersToAdd = array();
+	foreach ($this->filter_filters as $id=>$filter)
+	{
+		if ($id == $this->filter_ignore_filter)
+			continue;
+			
+		if (array_key_exists($id, $filterSettingsInfo))
+			continue;
+
+		$filtersToAdd[$id] = $filter;
+	}
+?>
+
+<? if (count($filtersToDisplay)): ?>
+	<ul>
+		<? 
+			$index = 0;
+			$lastIndex = count($filtersToDisplay)-1;
+			foreach ($filtersToDisplay as $curFilterId=>$filterData): 
+
+			$filterInfo = $filterData[0];
+			$filter = $filterData[1];
+			
+			$fullText = implode(', ', array_values($filter));
+			$shortText = null;
+			if (mb_strlen($fullText) > $this->filter_desc_max_len)
+				$shortText = mb_substr($fullText, 0, $this->filter_desc_max_len).'...';
+		?>
+			<li class="<?= $lastIndex == $index ? 'last' : null ?>"><span class="title"><?= h($filterInfo['name']) ?></span>: 
+				<? if ($shortText !== null):  ?>
+					<span id="<?= $curFilterId.'_short' ?>"><?= h($shortText) ?> | <a href="#" class="hiddenLink" onclick="$('<?= $curFilterId.'_short' ?>').hide(); $('<?= $curFilterId.'_full' ?>').show(); return false;">show all</a></span>
+					<span id="<?= $curFilterId.'_full' ?>" class="hidden"><?= h($fullText) ?></span>
+				<? else: ?>
+					<?= h($fullText) ?>
+				<? endif ?>
+			| <a href="#" class="hiddenLink" onclick="new PopupForm('<?= $this->getEventHandler('onFilterLoadForm') ?>', {ajaxFields: {filter_request: 1, id: '<?= $curFilterId ?>', existing: '1'}}); return false;">modify</a></li>
+		<? 
+			$index++;
+			endforeach ?>
+	</ul>
+<? endif ?>
+
+<? if (count($filtersToAdd)): ?>
+	<p class="<?= !count($filtersToDisplay) ? 'no_top_padding' : null ?>">
+		Add filter:
+	
+		<? 	$filters = $this->filter_filters;
+			$lastIndex = count($filtersToAdd)-1;
+		
+			if ($this->ignore_filter)
+				$lastIndex--;
+		
+			$index = 0;
+			foreach ($filtersToAdd as $id=>$filter):
+		?>
+			<a href="#" onclick="new PopupForm('<?= $this->getEventHandler('onFilterLoadForm') ?>', {ajaxFields: {filter_request: 1, id: '<?= $id ?>'}}); return false;"><?= mb_strtolower(h($filter['name'])) ?></a><?= $index < $lastIndex ? ', ' : null ?>
+		<? $index++; endforeach ?>
+	</p>
+<? endif ?>
+
+<? if (count($this->filter_switchers)): ?>
+	<?= Phpr_Form::openTag(array('id'=>null)) ?>
+	<ul class="filter_switchers">
+		<? foreach ($this->filter_switchers as $filter_id=>$filter_info): ?>
+			<li>
+				<input <?= Phpr_Form::checkboxState(in_array($filter_id, $filterCheckedSwitchers)) ?> onclick="$(this).getForm().sendPhpr('<?= $this->getEventHandler('onFilterApplySwitchers') ?>', {loadIndicator: {show: false}, onSuccess: function(){ cancelPopup();  <?= $this->filter_onApply ?>}})" type="checkbox" value="1" name="filter_switchers[<?= $filter_id ?>]" id="<?= 'filter_switcher_'.$filter_id ?>"/>
+				<label for="<?= 'filter_switcher_'.$filter_id ?>"><?= h($filter_info['name']) ?></label>
+			</li>
+		<? endforeach ?>
+	</ul>
+	</form>
+<? endif ?>

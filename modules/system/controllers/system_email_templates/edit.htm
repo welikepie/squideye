@@ -1,0 +1,54 @@
+<? Phpr_View::beginBlock("head") ?>
+	<script type="text/javascript" src="modules/system/resources/javascript/emailtemplates.js?<?= module_build('system') ?>"></script>
+	<script type="text/javascript">form_handler = 'edit_onSave';</script>
+<? Phpr_View::endBlock() ?>
+
+<? Phpr_View::beginBlock("view") ?>
+	<ul class="breadcrumbs">
+		<li><a href="<?= url('/system/settings') ?>">Settings</a></li>
+		<li><a href="<?= url('/system/email_templates') ?>">Email Templates</a></li>
+		<li><?= $this->app_page_title ?></li>
+	</ul>
+
+	<?= flash() ?>
+
+	<? if (!isset($fatalError)): ?>
+		<div class="scoreboardReport">
+			<ul>
+				<li class="last">
+					<h3>Template</h3>
+					<p><?= h($form_model->code) ?></p>
+				</li>
+			</ul>
+			<div class="clear"></div>
+		</div>
+	
+		<table class="layoutTable">
+			<tr>
+				<td>
+					<?= Phpr_Form::openTag() ?>
+						<? $this->formRender() ?>
+
+						<?= backend_ajax_button('Save', 'edit_onSave', array(), "onAfterUpdate: setupVariablesSize, onAfterError: setupVariablesSize, prepareFunction: function(){phprTriggerSave();}") ?>
+						<?
+							$thisUserMail = $this->currentUser->email;
+							if (strlen($thisUserMail))
+								echo backend_ajax_button('Send test message', 'onTest', array(), "onAfterUpdate: setupVariablesSize, onAfterError: setupVariablesSize, confirm: 'Test message will be sent to your email address $thisUserMail. Continue?', loadIndicator: {hideOnSuccess: true}, hideErrorOnSuccess: false, update: $(this).getForm().getElement('.formFlash'), prepareFunction: function(){phprTriggerSave();}");
+							else
+								echo backend_ajax_button('Send test message', 'onTest', array(), "alert: 'Your email address is not defined. Please specify it in the user parameters.'");
+						?>
+
+						<?= backend_ajax_button('Cancel', 'edit_onCancel') ?>
+						<?= backend_ajax_button('Delete', 'edit_onDelete', array('class'=>"right"), "confirm: 'Do you really want to delete this template?'") ?>
+						<div class="clear"></div>
+					</form>
+				</td>
+				<td class="rightFixedColumn infoBlock">
+					<? $this->renderPartial('template_variable_list') ?>
+				</td>
+			</tr>
+		</table>
+	<? else: ?>
+		<p><a href="<?= url('/shop/email_templates') ?>">Return to the email template list</a></p>
+	<? endif ?>
+<? Phpr_View::endBlock() ?>

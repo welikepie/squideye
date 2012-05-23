@@ -1,0 +1,31 @@
+<? 
+	$listContainerId = $this->formGetElementId('form_attachments_container_'.get_class($form_model).'_'.$dbName); 
+	$listId = $this->formGetElementId('form_image_list_'.get_class($form_model).'_'.$dbName); 
+	
+	$field_definition = $form_model->find_form_field($dbName);
+	$baseUrl = root_url('/uploaded/public/');
+?>
+
+<div class="single">
+	<div class="shadow_container">
+		<div class="shadow_1">
+			<div class="shadow_2">
+				<div class="shadow_3">
+					<div class="shadow_inner" id="<?= $listId ?>">
+						<? if ($form_file_list->count): ?>
+							<? foreach ($form_file_list as $file): ?>
+								<a href="<?= $baseUrl.'/'.urlencode($file->disk_name) ?>" target="_blank"><img src="<?= $file->getThumbnailPath($field_definition->imageThumbSize, $field_definition->imageThumbSize) ?>" alt="<?= h($file->name) ?>"/></a>
+								<a href="#" onclick="return $(this).getForm().sendPhpr('<?= $this->getEventHandler('onDeleteFile') ?>', {extraFields: {dbName: '<?= $dbName ?>', fileId: '<?= $file->id ?>'}, confirm: 'Do you really want to delete this file?', update: '<?= $listContainerId ?>', loadIndicator: {show: false}});" class="delete_image hidden">Delete</a>
+							<? endforeach ?>
+						<? else: ?>
+							<div style="height: <?= $field_definition->imageThumbSize ?>px; width: <?= $field_definition->imageThumbSize ?>px">
+								<table class="no_image_label"><tr><td><?= h($field_definition->noAttachmentsLabel) ?></td></tr></table>
+							</div>
+						<? endif ?>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="clear"></div>

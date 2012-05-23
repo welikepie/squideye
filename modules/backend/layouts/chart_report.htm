@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<title><?= strlen($this->app_page_title) ? $this->app_page_title.' | ' : null ?> LemonStand</title>
+		<? $this->renderLayout('config_urls') ?>
+		<? $this->renderLayout('config_js_engine') ?>
+		<link rel="stylesheet" href="modules/backend/resources/css/backend.css?<?= module_build('backend') ?>" type="text/css"/>
+		<link rel="stylesheet" href="modules/backend/resources/css/print.css?<?= module_build('backend') ?>" type="text/css" media="print"/>
+		<link rel="stylesheet" href="phproad/resources/css/phproad.css?<?= module_build('core') ?>" type="text/css"/>
+		<?= Phpr_View::includeJavaScript() ?>
+		<link rel="stylesheet" href="phproad/modules/db/behaviors/db_formbehavior/resources/css/forms.css?<?= module_build('core') ?>" type="text/css"/>
+		
+		<script type="text/javascript" src="phproad/javascript/jquery.js"></script>
+		<script type="text/javascript">jQuery.noConflict();</script>
+
+		<?= $this->loadResources() ?>
+
+		<script type="text/javascript" src="modules/backend/resources/javascript/backend.js?<?= module_build('backend') ?>"></script>
+		<script type="text/javascript" src="modules/backend/resources/javascript/report.js?<?= module_build('backend') ?>"></script>
+		<?= Phpr_View::block("head") ?>
+
+		<? $theme = System_ColorThemeParams::get() ?>
+		<link id="theme_link" rel="stylesheet" href="modules/backend/themes/<?= $theme->theme_id ?>/css/theme.css" type="text/css"/>
+	</head>
+	<body class="<?= $this->viewDataElement('body_class') ?> <?= Phpr_Html::css_browser_selector() ?>">
+		<div id="header_elements">
+			<? $this->renderLayout(PATH_APP.'/modules/backend/layouts/header.htm') ?>
+			<? $this->renderLayout(PATH_APP.'/modules/backend/layouts/tabs.htm') ?>
+		</div>
+
+		<div id="content">
+			<!--[if IE]><fieldset class="ie_fix"><![endif]-->
+
+			<table class="report_layout">
+				<tr>
+					<td class="report_list">
+						<? 
+							$this->renderLayout(PATH_APP.'/modules/backend/layouts/report_selector.htm');
+						?>
+					</td>
+					<td class="report_content">
+						<div class="header">
+							<h3><?= $this->app_page_title ?></h3>
+
+							<? $this->renderLayout(PATH_APP.'/modules/backend/layouts/interval_selector.htm') ?>
+
+							<div class="clear"></div>
+						</div>
+
+						<? $this->renderLayout('report_filters') ?>
+						
+						<div id="chart_site" class="ie_chart_site">
+							<div id="report_chart_container">
+								<!--[if IE]><fieldset class="ie_fix"><![endif]-->
+								<div class="report_chart" id="report_chart"><? $this->renderLayout(PATH_APP.'/modules/backend/layouts/chart.htm') ?></div>
+								<!--[if IE]></fieldset><![endif]-->
+							</div>
+						</div>
+
+						<?= Phpr_View::block("view") ?>
+						
+						<div id="report_totals"><? $this->renderReportTotals() ?></div>
+						
+						<div class="report_records normalTopIndent" id="report_records"><? $this->renderLayout(PATH_APP.'/modules/backend/layouts/report_records.htm') ?></div>
+						<div class="clear"></div>
+					</td>
+				</tr>
+			</table>
+			<!--[if IE]></fieldset><![endif]-->
+		</div>
+
+		<? $this->renderLayout(PATH_APP.'/modules/backend/layouts/footer.htm') ?>
+	</body>
+</html>

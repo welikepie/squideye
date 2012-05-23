@@ -1,0 +1,15 @@
+<? if ($index == 0): ?>
+	<div class="row_controls hidden" <?= click_link($url) ?>>
+		<div class="content">
+			<ul>
+				<li class="default">
+					<a href="<?= $url.'?'.uniqid() ?>">Edit</a>
+					<div class="handle"></div>
+				</li>
+				<li><a href="<?= url('shop/categories/manage_top_products/'.$model->id.'?'.uniqid()) ?>">Manage top products</a></li>
+			</ul>
+			<div class="clear"></div>
+		</div>
+	</div>
+	<div id="comment_<?= $model->id ?>"></div>
+<? endif ?>

@@ -1,0 +1,1 @@
+alter table system_email_templates add column is_system tinyint;

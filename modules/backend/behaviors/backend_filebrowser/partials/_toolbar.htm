@@ -1,0 +1,37 @@
+<?
+	$view_modes = array(
+		'list'=>'List',
+		'thumbnails'=>'Thumbnails',
+	);
+	
+	if (!strlen($filebrowser_viewmode))
+		$filebrowser_viewmode = 'list';
+?>
+
+<? foreach ($view_modes as $id=>$name): ?>
+	<? if (strlen($filebrowser_viewmode) && $filebrowser_viewmode != $id):
+		$onclick = "return $(this).getForm().sendPhpr(
+			'".$this->getEventHandler('onFileBrowserSetViewMode')."', 
+			{extraFields: {path: '".$filebrowser_current_path."', mode: '".$id."'}, 
+			update: 'multi', loadIndicator: {show: false},
+			onBeforePost: LightLoadingIndicator.show.pass('Loading...'), 
+			onComplete: LightLoadingIndicator.hide
+			});";
+	?>
+		<li class="<?= $id ?>"><span onclick="<?= $onclick ?>"><a href="#" onclick="<?= $onclick ?>"><?= $name ?></a></span></li>
+	<? else: ?>
+		<li class="active <?= $id ?>"><span><?= $name ?></span></li>
+	<? endif ?>
+<? endforeach ?>
+
+<? if ($filebrowser_allowuploads): ?>
+	<li class="right upload" id="file_browser_upload_link">
+		<div class="addFileLink" id="filebrowser_file_uploader">
+			<a href="#" id="filebrowser_file_upload_link" onclick="new PopupForm('<?= $this->getEventHandler('onLoadResourceUploader') ?>', {ajaxFields: {dir: $('file_browser_current_path').get('value')}}); return false;">Upload file(s)</a>
+		</div>
+
+		<input type="hidden" id="file_browser_current_url" value="<?= h($this->filebrowserGetUploadUrl($filebrowser_current_path)) ?>"/>
+		<input type="hidden" id="file_browser_current_path" value="<?= h($filebrowser_current_path) ?>"/>
+		<input type="hidden" id="file_browser_navigate_handler" value="<?= $this->getEventHandler('onFileBrowserFolderClick') ?>"/>
+	</li>
+<? endif ?>

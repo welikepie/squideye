@@ -1,0 +1,22 @@
+<div id="data_preview_form">
+	<h2>Load Column Configuration</h2>
+	<div class="content">
+		<div class="form400">
+			<?= Phpr_Form::openTag() ?>
+				<p>Please upload a valid LemonStand ICF (import configuration) file.</p>
+			
+				<div class="form">
+					<? $this->formRenderFieldContainer($form_model, 'config_import'); ?>
+				</div>
+
+				<input name="edit_session_key" id="<?= $this->formGetElementId('form_session_key', get_class($form_model)) ?>" type="hidden" value="<?= $form_session_key ?>"/>
+				<input type="hidden" name="form_unique_prefix" class="form_unique_prefix" value="<?= $this->formGetUniquePrefix() ?>"/>
+				<input type="hidden" name="phpr_uploader_model_class" value="<?= $this->csv_import_config_model_class ?>"/>
+			</form>
+
+			<?= backend_button('Cancel', array('onclick'=>'return cancelPopup()')) ?>
+
+			<div class="clear"></div>
+		</div>
+	</div>
+</div>

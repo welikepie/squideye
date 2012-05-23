@@ -1,0 +1,28 @@
+<? $is_fullscreen = Phpr::$session->get('backend_fullscreen_mode'); ?>
+<div id="footer" class="<?= $is_fullscreen ? 'hidden' : null?>">
+	<? $theme = System_ColorThemeParams::get(); ?>
+	
+	<? 
+		$footer_text = $theme->footer_text;
+		$show_footer_text = strlen(trim(strip_tags($footer_text)));
+		
+		if ($show_footer_text):
+	?>
+		<div id="footer_custom_text">
+			<?= $footer_text ?>
+		</div>
+	<? endif ?>
+	
+	<? if ($theme->logo->count && !$theme->hide_footer_logos): ?>
+		<a href="http://lemonstandapp.com" target="_blank" class="footer_logo"><img src="modules/backend/resources/images/footer_logo.png" alt="LemonStand"/></a>
+	<? endif ?>
+
+	<? if (!$theme->hide_footer_logos): ?>
+		<p class="logo"><img src="modules/backend/resources/images/limewheel_logo.png" alt="Limewheel Creative Inc."/></p>
+	<? endif ?>
+	<p>
+		<a href="http://lemonstandapp.com" target="_blank">LemonStand</a> is a product by Limewheel Creative Inc.<br/>Copyright &copy; <?= date('Y') ?> Limewheel Creative Inc. All Rights Reserved.<br/>
+	    <a href="http://lemonstandapp.com/docs/ecommerce_guide/" target="_blank">Merchant Guide</a> | <a href="http://lemonstandapp.com/docs/developer_s_guide/" target="_blank">Developer Guide</a>
+	</p>	
+	<div class="clear"></div>
+</div>

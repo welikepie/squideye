@@ -1,0 +1,89 @@
+/* @group HELPERS */
+.hide-outline {
+  outline: none;
+}
+.margin-center {
+  margin: 0 auto;
+}
+.text-left {
+  text-align: left;
+}
+.text-right {
+  text-align: right;
+}
+.text-center {
+  text-align: center;
+}
+.float-right {
+  float: right;
+}
+.float-left {
+  float: left;
+}
+.clear-both {
+  clear: both;
+}
+.clear-left {
+  clear: left;
+}
+.clear-right {
+  clear: right;
+}
+.block {
+  display: block !important;
+}
+.padding-background-clip {
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+}
+/* @end */
+/* @group MISC */
+.clear-fix:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
+}
+.clear-fix {
+  display: inline-table;
+}
+/* Hides from IE-mac \*/
+* html .clear-fix {
+  height: 1%;
+}
+.clear-fix {
+  display: block;
+}
+/* End hide from IE-mac */
+/* @end */.update_list .scrollableList {
+  padding: 10px;
+  border: 1px solid #EEEEEE;
+  height: 300px;
+}
+th.version_column {
+  width: 100px;
+}
+div.update_table {
+  margin-bottom: 15px;
+}
+div.update_table.last {
+  margin-bottom: 0;
+}
+div.toolbar .layout_external {
+  background: transparent url(../images/layout_external.png) no-repeat 5px 4px;
+}
+div.toolbar .layout_system {
+  background: transparent url(../images/layout_system.png) no-repeat 5px 4px;
+}
+div.toolbar .update_license {
+  background: transparent url(../images/textfield_key.png) no-repeat 5px 4px;
+}
+.license_key_image {
+  display: block;
+  border: 2px solid #eee;
+  padding: 4px;
+  margin-bottom: 15px;
+}

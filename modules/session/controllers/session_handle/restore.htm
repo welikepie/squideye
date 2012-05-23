@@ -1,0 +1,65 @@
+<? Phpr_View::beginBlock("head") ?>
+	<script type="text/javascript" src="modules/session/resources/javascript/restore.js"></script>
+<? Phpr_View::endBlock() ?>
+
+<? Phpr_View::beginBlock("view") ?>
+	<?= Phpr_Form::openTag() ?>
+		<div class="form">
+			
+			<div id="wrapper">
+				<div id="wrapper_content">
+					<h1 class="title">LemonStand</h1>
+					<div id="form_wrapper">
+						<h2>Password Restore</h2>
+						<div class="formContainer round">
+							<div id="formContent" class="relative">
+								
+								<? if (Phpr::$config->get('LOGIN_MESSAGE')): ?>
+									<p class="warning"><?= Phpr::$config->get('LOGIN_MESSAGE') ?></p>
+								<? endif ?>
+					
+								<div class="formFlash"></div>
+					
+								<ul class="formElements">
+									<? if (!System_EmailParams::isConfigured()): ?>
+										<li class="text">
+											<p>Password restore function is disabled because email system is not configured properly. Please contact your system administrator.</p>
+										</li>
+
+										<li class="buttons">
+											<a class="login_button" href="<?= url('session/handle/create') ?>"><img src="modules/session/resources/images/btn_cancel.gif" alt="Cancel"/></a>
+							
+											<div class="clear"></div>
+										</li>
+									<? else: ?>
+										<li class="field text full">
+											<label for="login">
+												User Name
+												<span class="comment">Please specify your user name and click Restore. We will send you the password restore instructions by email.</span>
+											</label>
+											<div class="fieldContainer"><input type="text" id="login" name="login"/></div>
+										</li>
+
+										<li class="buttons">
+											<a class="fancy_button restore" href="#" onclick="return submit_restore()">Restore</a>
+											<a class="fancy_button cancel" href="<?= url('session/handle/create') ?>">Cancel</a>
+											
+											<div class="clear"></div>
+										</li>
+									<? endif ?>
+								</ul>
+							</div>
+							<div class="lt"></div>
+							<div class="rt"></div>
+							<div class="lb"></div>
+							<div class="rb"></div>
+						</div>
+						<div class="clear"></div>
+						<p class="copyright"><a href="http://lemonstandapp.com" target="_blank">LemonStand</a> is a product by Limewheel Creative Inc.<br/>Copyright &copy; <?= date('Y') ?> Limewheel Creative Inc. All Rights Reserved.</p>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+	</form>
+<? Phpr_View::endBlock() ?>

@@ -1,0 +1,1 @@
+alter table db_record_locks add column last_ping datetime;

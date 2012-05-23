@@ -1,0 +1,60 @@
+<? if ($this->list_render_as_sliding_list): 
+	$container_id = $this->listGetContainerId();
+	$navigation_handler = "return $(this).getForm().sendPhpr('".$this->getEventHandler('onListGotoNode')."', {extraFields: {nodeId: '%s'}, update: '".$container_id."', loadIndicator: {show: false}, onBeforePost: LightLoadingIndicator.show.pass('Loading...'), onComplete: LightLoadingIndicator.hide, onAfterUpdate: function(){\$('".$container_id."').fireEvent('listUpdated')}});";
+
+?>
+	<div class="list-parent-navigation">
+		<? if ($list_current_parent_id): ?>
+			<a href="#" onclick="<?= sprintf($navigation_handler, $list_upper_level_parent_id) ?>" class="up" title="Go level up">Go level up</a>
+		<? else: ?>
+			<span class="up-disabled">This is a root level</span>
+		<? endif ?>
+		
+		<ul>
+			<li>
+				<? if ($list_current_parent_id): ?>
+					<a href="#" onclick="<?= sprintf($navigation_handler, '') ?>"><?= h($this->list_root_level_label) ?></a>
+				<? else: ?>
+					<?= h($this->list_root_level_label) ?>
+				<? endif ?>
+			</li>
+			
+			<? 
+				$cnt = count($list_navigation_parents);
+				foreach ($list_navigation_parents as $index=>$navigation_item): ?>
+				<li>
+					<? if ($index < $cnt-1): ?>
+						<a href="#" onclick="<?= sprintf($navigation_handler, $navigation_item->id) ?>"><?= h($navigation_item->title) ?></a>
+					<? else: ?>
+						<?= h($navigation_item->title) ?>
+					<? endif ?>
+				</li>
+			<? endforeach ?>
+		</ul>
+	</div>
+<? endif ?>
+
+<table class="simpleList">
+	<thead class="sortable">
+		<? $this->listRenderPartial('list_head_rows') ?>
+	</thead>
+	<tbody id="<?= $this->listGetContainerId().'_body' ?>">
+		<? if ((is_object($list_data) && !$list_data->count) || (is_array($list_data) && !$list_data)): ?>
+			<tr class="noData">
+				<td colspan="<?= $list_column_count+5 ?>"><?= h($list_no_data_message) ?></td>
+			</tr>
+		<? else: ?>
+			<? $this->listRenderPartial('list_body_rows') ?>
+		<? endif ?>
+	</tbody>
+</table>
+
+<? if (!$this->list_no_interaction && $list_total_row_count > 0 && !$this->list_render_as_tree && !$this->list_no_pagination): ?>
+	<?= Backend_Html::ajaxPagination($list_pagination,
+		"$(this).getForm().sendPhpr('".$this->getEventHandler('onListPrevPage')."', {update: '".$this->listGetContainerId() ."', loadIndicator: {element: '".$this->listGetContainerId()."', hideOnSuccess: 1, src: '".$list_load_indicator."', show: false}, onBeforePost: LightLoadingIndicator.show.pass('Loading...'), onComplete: LightLoadingIndicator.hide, onSuccess: function(){\$('".$this->listGetContainerId()."').fireEvent('listUpdated')}});",
+		"$(this).getForm().sendPhpr('".$this->getEventHandler('onListNextPage')."', {update: '".$this->listGetContainerId() ."', loadIndicator: {element: '".$this->listGetContainerId()."', show: false, hideOnSuccess: 1, src: '".$list_load_indicator."'}, onBeforePost: LightLoadingIndicator.show.pass('Loading...'), onComplete: LightLoadingIndicator.hide, onSuccess: function(){\$('".$this->listGetContainerId()."').fireEvent('listUpdated')}});",
+		"$(this).getForm().sendPhpr('".$this->getEventHandler('onListSetPage')."', {extraFields: {pageIndex: %s}, update: '".$this->listGetContainerId() ."', loadIndicator: {show: false, element: '".$this->listGetContainerId()."', hideOnSuccess: 1, src: '".$list_load_indicator."'}, onBeforePost: LightLoadingIndicator.show.pass('Loading...'), onComplete: LightLoadingIndicator.hide, onSuccess: function(){\$('".$this->listGetContainerId()."').fireEvent('listUpdated')}});"
+	) ?>
+<? endif ?>
+<input type="hidden" class="list_load_indicator" value="<?= $list_load_indicator ?>"/>
+<script type="text/javascript">realignPopups();</script>

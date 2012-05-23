@@ -1,0 +1,34 @@
+<? $db_name = $form_field->dbName; ?>
+
+<div class="editor_buttons <?= $form_field->dbName == 'controls_row_3' ? 'right_controls' : null ?>">
+	<h3><?= h($form_field->getColDefinition()->displayName) ?></h3>
+	<div class="scrollableList">
+		<ul id="<?= $form_field->dbName ?>">
+			<? 
+				$items = $form_model->list_row_controls($db_name);
+				foreach ($items as $item):
+			?>
+				<? if ($item != 'separator'): ?>
+					<li class="<?= $item ?>" style="background-image: url(<?= root_url('modules/backend/resources/images/tinymce_buttons/'.$item.'.gif')?>)">
+						<?= array_key_exists($item, $form_model->controls) ? $form_model->controls[$item]['name'] : 'Unknown control' ?>
+					</li>
+				<? else: ?>
+					<li class="separator">Separator</li>
+				<? endif ?>
+			<? endforeach ?>
+		</ul>
+	</div>
+</div>
+
+<input type="hidden" id="<?= $db_name.'_value' ?>" name="System_HtmlEditorConfig[<?= $db_name ?>]" value="<?= h($form_model->$db_name) ?>"/>
+
+<script type="text/javascript">
+	window.addEvent('phprformsave', function(){
+		var items = [];
+		$('<?= $form_field->dbName ?>').getChildren().each(function(element){
+			items.push(element.className);
+		})
+	
+		$('<?= $db_name.'_value' ?>').value = items.join(',');
+	})
+</script>

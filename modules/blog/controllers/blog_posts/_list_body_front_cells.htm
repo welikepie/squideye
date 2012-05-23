@@ -1,0 +1,18 @@
+<td class="iconCell">
+	<? if ($model->new_comment_num): ?>
+		<img src="modules/blog/resources/images/comments.gif" alt="You have new comments" title="You have new comments" width="16" height="16"/>
+	<? endif ?>
+	
+	<div class="row_controls hidden">
+		<div class="content">
+			<ul>
+				<li class="default">
+					<a href="<?= $url.'?'.uniqid() ?>">Preview</a>
+					<div class="handle"></div>
+				</li>
+				<li class="icon_edit"><a href="<?= url('/blog/posts/edit/'.$model->id.'/list').'?'.uniqid().'#tab_3' ?>">Edit</a></li>
+			</ul>
+			<div class="clear"></div>
+		</div>
+	</div>
+</td>

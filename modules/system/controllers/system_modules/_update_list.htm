@@ -1,0 +1,56 @@
+<? if (isset($error)): ?>
+	<div class="error"><?= $error ?></div>
+	
+	<?= backend_button('Cancel', array('onclick'=>'return cancelPopup()')) ?>
+<? else: ?>
+<? if (!count($update_list)): ?>
+		<p>No updates found.</p>
+		
+		<?= backend_ajax_button('Force Update', 'index_onForceUpdate', array('class'=>'right'), "loadIndicator: {src: '".root_url('/phproad/resources/images/form_load_40x40.gif')."', injectInElement: true, hideOnSuccess: true}, update: 'update_information_container', confirm: 'Do you really want to update LemonStand?', prepareFunction: function(){allow_onload=false;}, onBeforeScriptEval: function(){allow_onload=true}, onAfterUpdate: realignPopups") ?>
+		
+		<?= backend_button('Close', array('onclick'=>'return cancelPopup()')) ?>
+	<? else: ?>
+		<div class="update_list">
+			<p>Updates found! Click the <strong>Update LemonStand</strong> button to update your copy of the application. The update process could take several minutes.</p>
+			
+			<!--[if IE]><fieldset class="ie_fix"><![endif]-->
+			<div class="formFlash"></div>
+			<!--[if IE]></fieldset><![endif]-->
+			
+			<div class="scrollableList">
+				<? 
+					$last_index = count($update_list)-1;
+					$index = 0;
+					foreach ($update_list as $module_code=>$update_data):  ?>
+					<h4><?= h($update_data->name) ?></h4>
+					
+					<div class="<?= $last_index == $index ? 'last' : null ?> update_table">
+						<table class="simpleList full_width">
+							<thead class="">
+								<tr>
+									<th class="current varchar version_column">Version</th>
+									<th class="varchar last">Description</th>
+								</tr>
+							</thead>
+							<tbody id="update_list">
+								<? foreach ($update_data->updates as $version=>$description): 
+								?>
+									<tr class="<?= Backend_Html::zebra('update_'.$module_code) ?>">
+										<td class="varchar current"><?= h($version) ?></td>
+										<td class="varchar last"><?= preg_replace( '/(http|ftp)+(s)?:(\/\/)((\w|\.)+)(\/)?(\S+)?/i', '<a target="_blank" href="\0">\4</a>', h($description)) ?></td>
+									</tr>
+								<? endforeach ?>
+							</tbody>
+						</table>
+					</div>
+					
+				<? 
+					$index++;
+					endforeach ?>
+			</div>
+		</div>
+		
+		<?= backend_ajax_button('Update LemonStand', 'index_onApplyUpdates', array('class'=>'right'), "update: 'update_information_container', confirm: 'Do you really want to update LemonStand?', loadIndicator: {injectInElement: true, hideOnSuccess: true}, prepareFunction: function(){allow_onload=false;}, onBeforeScriptEval: function(){allow_onload=true}, onAfterUpdate: realignPopups") ?>
+		<?= backend_button('Cancel', array('onclick'=>'return cancelPopup()')) ?>
+	<? endif ?>
+<? endif ?>

@@ -1,0 +1,48 @@
+<?
+	$columnDefinition = $form_field->getColDefinition();
+	$dbName = $this->formGetFieldDbName($form_field->dbName, $this->viewData['form_model']);
+	$options = $this->formFieldGetOptions($form_field->dbName, $this->viewData['form_model'], $form_model->$dbName); 
+?>
+<? if (count($options) > 10): ?>
+	<div class="scrollableList form">
+<? endif ?>
+	<? 
+		$optionsFound = 0;
+	
+		foreach ($options as $key=>$option)
+		{
+			$optionsFound++;
+			$name = $option;
+			$description = null;
+			if (is_array($name))
+			{
+				$keys = array_keys($name);
+				$keyNum = count($keys);
+
+				$originalName = $name;
+				$name = !$keyNum ? $value : $keys[0];
+				$description = !$keyNum ? null : $originalName[$keys[0]];
+			}
+
+	?>
+		<div class="chekcbox_option">
+			<div class="checkbox on"></div>
+			<? $this->formRenderPartial('form_preview_value', array('value'=>h($name), 'type'=>$columnDefinition->type, 'description'=>h($description))); ?>
+			<? if (!$form_field->previewNoRelation): ?>
+				<a class="previewLink" href="#" title="Просмотр" onclick="new PopupForm('<?= $this->getEventHandler('onPreviewPopup') ?>', {ajaxFields: {modelClass: '<?= $columnDefinition->referenceClassName ?>', modelId: '<?= $key ?>', popupLevel: window.PopupWindows.length, previewTitle: '<?= h($name) ?>'}}); return false;">Preview</a>
+			<? endif ?>
+		</div>
+
+	<?
+		}
+	
+		if (!$optionsFound) :
+	?>
+		<div class="noOptions">
+			<? $this->formRenderPartial('form_preview_value', array('value'=>h($form_field->relationPreviewNoOptions), 'type'=>db_text)); ?>
+		</div>
+	<? endif ?>
+
+<? if (count($options) > 10): ?>
+	</div>
+<? endif ?>

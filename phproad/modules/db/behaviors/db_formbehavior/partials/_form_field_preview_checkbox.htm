@@ -1,0 +1,3 @@
+<? $dbName = $this->formGetFieldDbName($form_field->dbName, $this->viewData['form_model']); ?>
+
+<div class="checkbox <?= $form_field->checkboxOnState == $form_model->$dbName ? 'on' : null ?>"></div>

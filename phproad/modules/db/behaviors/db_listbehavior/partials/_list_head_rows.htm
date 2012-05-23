@@ -1,0 +1,43 @@
+<tr>
+	<? if ($this->list_render_as_tree && !$this->list_no_interaction): ?>
+		<th class="expandControl"></th>
+	<? endif ?>
+	
+	<? if ($this->list_render_as_sliding_list && !$this->list_no_interaction): ?>
+		<th class="expandControl"></th>
+	<? endif ?>
+	
+	<?
+		$head_cb_option_set = isset($this->list_options['list_custom_head_cells']);
+
+		if ($this->list_custom_head_cells !== false || $head_cb_option_set)
+		{	
+			if (!strlen($this->list_custom_head_cells) && !$head_cb_option_set)
+				$this->listRenderPartial('list_head_front_cells', array(), false);
+			else
+			{
+				if (!$head_cb_option_set && strlen($this->list_custom_head_cells))
+					$this->renderPartial($this->list_custom_head_cells, null, true, true);
+				elseif (strlen($this->list_options['list_custom_head_cells']))
+					$this->renderPartial($this->list_options['list_custom_head_cells'], null, true, true);
+			}
+		}
+	?>
+	
+	<? foreach ($list_columns as $column): ?>
+		<th class="<?= $this->listCellClass($column) ?> <? if ($column->isCustom || $this->list_no_interaction || $this->list_no_sorting || $column->noSorting): ?>noSort<? endif ?> <? if($column->listNoTitle): ?>no-title<? endif ?>" <? if($column->listNoTitle): ?>title="<?= strlen(trim($column->listTitle)) ? h($column->listTitle) : h($column->displayName) ?>"<? endif ?>>
+			<? if (!$column->isCustom && !$this->list_no_interaction && !$this->list_no_sorting && !$column->noSorting): ?>
+				<a href="#" onclick="return $(this).getForm().sendPhpr('<?= $this->getEventHandler('onListColumnClick') ?>', {extraFields: {columnName: '<?= $column->dbName ?>'}, update: '<?= $this->listGetContainerId() ?>', loadIndicator: {injectInElement: true, element: '<?= $this->listGetContainerId() ?>', src: '<?= $list_load_indicator ?>', hideOnSuccess: 1, show: false}, onBeforePost: LightLoadingIndicator.show.pass('Loading...'), onComplete: LightLoadingIndicator.hide, onSuccess: function(){$('<?= $this->listGetContainerId() ?>').fireEvent('listUpdated')}});">
+			<? endif ?>
+			<? if ($column->listNoTitle): ?>
+				&nbsp;
+			<? else: ?>
+				<?= strlen(trim($column->listTitle)) ? h($column->listTitle) : h($column->displayName) ?>
+			<? endif ?>
+			<? if (!$column->isCustom && !$this->list_no_interaction && !$this->list_no_sorting && !$column->noSorting): ?></a><? endif ?>
+		</th>
+	<? endforeach ?>
+	<? if (isset($list_display_path_column) && $list_display_path_column): ?>
+		<th class="noSort">Path</th>
+	<? endif ?>
+</tr>

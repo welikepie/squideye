@@ -1,0 +1,12 @@
+<div class="controls" id="file_browser_controls">
+	<ul class="icon_list clear-fix" id="file_browser_toolbar">
+		<? $this->filebrowserRenderPartial('toolbar') ?>
+	</ul>
+	<div class="clear"></div>
+</div>
+<div class="file_list <?= $this->file_browser_file_list_class ?>" id="file_browser_file_list">
+	<? $this->filebrowserRenderPartial('file_list') ?>
+</div>
+<div class="statusbar" id="file_browser_statusbar">
+	<? $this->filebrowserRenderPartial('status_bar') ?>
+</div>

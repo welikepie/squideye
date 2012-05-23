@@ -1,0 +1,23 @@
+<?
+	$title = "";
+
+	if ($childCount == 0)
+		$src = 'tree_no_expand.gif';
+	else
+	{
+		if ($expanded)
+		{
+			$src = 'tree_collapse.gif';
+			$title = "Collapse";
+		}
+		else
+		{
+			$src = 'tree_expand.gif';
+			$title = "Expand";
+		}
+	}
+?>
+
+<td class="expandControl">
+	<a title="<?= $title ?>" href="#" onclick="return $(this).getForm().sendPhpr('<?= $this->getEventHandler('onListToggleNode') ?>', {extraFields: {nodeId: '<?= $row->id ?>', status: <?= $expanded ? 1 : 0 ?>}, update: '<?= $this->listGetContainerId() ?>', loadIndicator: {show: false}, onBeforePost: LightLoadingIndicator.show.pass('Loading...'), onComplete: LightLoadingIndicator.hide, onSuccess: function(){$('<?= $this->listGetContainerId() ?>').fireEvent('listUpdated')}});"><img class="no_menu" src="<?= 'phproad/resources/images/'.$src ?>" alt="<?= $title ?>"/></a>
+</td>

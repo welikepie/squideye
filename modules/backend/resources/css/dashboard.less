@@ -1,0 +1,117 @@
+@import "../../../../phproad/resources/css/common.less";
+
+.scoreboardReport {
+	padding-bottom: 0.3em;
+
+	ul li {
+		position: relative;
+		padding-bottom: 1em;
+	}
+
+
+	ul li.no_data {
+		float: none;
+		border-right: 0;
+		padding: 0;
+		margin-right: 0;
+
+		p {
+			font-size: 1.1em;
+			text-align: center;
+			color: #666666;
+			font-weight: normal;
+			padding: 1em 0;
+			background: #eeeeee;
+		}
+
+	}
+}
+
+ul.dashboard_reports {
+	h2 {padding-bottom: 0.3em;}
+	
+	li {
+		width: 49%;
+		display: inline-block;
+		vertical-align: top;
+		position: relative;
+		padding-top: 5px;
+		margin-bottom: 1.5em;
+		
+		&.even {margin-left: 5px;}
+	}
+	
+	.scoreboardReport {
+		text-align: center;
+
+		ul {
+			display: inline-block;
+			padding-top: 20px;
+			padding-bottom: 10px;
+
+			li {
+				display: block;
+				margin-bottom: 0;
+				padding-top: 0;
+				position: relative;
+				vertical-align: top;
+				width: auto;
+			}
+
+			p {font-size: 6em;}
+		}
+	}	
+}
+
+div.button_header {
+	background: transparent url('../images/border_h_dotted.gif') repeat-x left bottom;
+	margin-bottom: 10px;
+	padding-bottom: 0.5em;
+
+	h2 {
+		float: left;
+		padding-bottom: 0;
+	}
+
+	div.button {
+		margin-top: 0;
+
+		a {line-height: 100%;}
+	}
+}
+
+.dashboard_reports li:hover a.remove_button, .scoreboardReport ul li:hover a.remove_button {
+	display: block;
+}
+
+.dashboard_reports li:hover, .scoreboardReport ul li:hover {
+	background: #f9f8d7;
+}
+
+a.remove_button {
+	position: absolute;
+	display: none;
+	width: 20px;
+	height: 20px;
+	background: transparent url(../images/close_icon.png) no-repeat left top;
+	text-indent: -10000000em;
+	top: 0;
+	right: -3px;
+	outline: none;
+}
+
+a.organize_btn {
+	float: right;
+	width: 62px;
+	height: 19px;
+	outline: none;
+	background: transparent url(../images/organize_btn.gif) no-repeat left top;
+	text-indent: -10000000em;
+	.round(5px);
+}
+
+.tabs .tabs_pages ul.simpleList {
+	padding-bottom: 0;
+
+	li {padding-bottom: 0.3em;}
+}

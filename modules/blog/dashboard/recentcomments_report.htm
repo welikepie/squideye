@@ -1,0 +1,42 @@
+<h2>Recent Blog Comments</h2>
+
+<? 
+	$comments = Blog_Comment::getRecentComments();
+	$total = 0;
+	
+	$comments_found = $comments->count;
+?>
+
+<table class="simpleList">
+	<thead>
+		<tr>
+			<th class="current date">Date</th>
+			<th>Post</th>
+			<th>Author</th>
+			<th class="last">Comment</th>
+		</tr>
+	</thead>
+	<tbody>
+		<? if (!$comments_found): ?>
+			<tr class="noData"><td colspan="4">&lt;no comments found&gt;</td></tr>
+		<? else: ?>
+			<? foreach ($comments as $index=>$comment): 
+				$url = url('blog/comments/preview/'.$comment->id.'?'.uniqid());
+			?>
+				<tr class="<?= Backend_Html::zebra('blog_comments') ?> <?= $index == $comments->count-1 ? 'last' : null ?>">
+					<td class="link current date" <?= click_link($url) ?>><a href="<?= $url ?>"><?= $comment->created_at->format('%x') ?></a></td>
+					<td class="link" <?= click_link($url) ?>><a href="<?= $url ?>"><?= h(Phpr_Html::strTrim($comment->displayField('post'), 20)) ?></a></td>
+					<td class="link" <?= click_link($url) ?>><a href="<?= $url ?>"><?= strlen($comment->author_name) ? h(Phpr_Html::strTrim($comment->displayField('author_name'), 20)) : h('<not specified>') ?></a></td>
+					<td class="last link" <?= click_link($url) ?>><a href="<?= $url ?>"><?= h(Phpr_Html::strTrim($comment->content, 40)) ?></a></td>
+				</tr>
+			<? endforeach ?>
+		<? endif ?>
+	</tbody>
+	<tfoot>
+		<tr>
+			<td colspan="4" class="last">
+				<a href="<?= url('/blog/posts') ?>">Visit blog post list</a>
+			</td>
+		</tr>
+	</tfoot>
+</table>

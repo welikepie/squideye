@@ -1,0 +1,90 @@
+<settings>
+	<connect>true</connect>
+	
+	<data>
+		<chart>
+			<series>
+				<? 
+					$graphs = array();
+					$series = array();
+					$lastIndex = count($chart_data)-1;
+
+					foreach ($chart_data as $index=>$record)
+					{
+						$graph_key = ($index >= $lastIndex-6) ? 'active_visits' : 'visits';
+
+						$this->addToArray($graphs, $graph_key, $record, $record);
+						if ($index == $lastIndex-7)
+						{
+							$this->addToArray($graphs, 'connector', $record, $record);
+							$this->addToArray($graphs, 'connector', $chart_data[$index+1], $chart_data[$index+1]);
+						}
+
+						if (Backend_Reports::unique('series', $record->series_id)) 
+							$series[] = $record;
+					}
+					
+					foreach ($sales_data as $index=>$record)
+					{
+						$graph_key = ($index >= $lastIndex-6) ? 'active_sales' : 'sales';
+					
+						$this->addToArray($graphs, $graph_key, $record, $record);
+						if ($index == $lastIndex-7)
+						{
+							$this->addToArray($graphs, 'sales_connector', $record, $record);
+							$this->addToArray($graphs, 'sales_connector', $sales_data[$index+1], $sales_data[$index+1]);
+						}
+					
+						if (Backend_Reports::unique('series', $record->series_id)) 
+							$series[] = $record;
+					}
+
+					foreach ($series as $index=>$record):
+				?>
+					<value xid="<?= $record->series_id ?>"><?= Phpr_DateTime::parse($record->series_id, Phpr_DateTime::universalDateFormat)->format('%b %d, %Y') ?></value>
+				<? endforeach ?>
+				
+				<? if (!count($chart_data)): ?>
+					<value xid="0">0</value>
+				<? endif ?>
+			</series>
+			<graphs>
+				<? foreach ($graphs as $code=>$data):
+					if (!strlen($code))
+						continue;
+
+					$values = $data->values;
+					$params = $data->params;
+					$lastIndex = count($values)-1;
+					
+					$is_sales_graph = in_array($code, array('active_sales', 'sales', 'sales_connector'));
+
+					if (!$is_sales_graph)
+					{
+						$balloon_text = $code == 'connector' ? null : 'Visitors: {value}';
+						$fill_alpha = $code == 'active_visits' ? 12 : 0;
+						$bullet_size = $code == 'active_visits' ? 8 : 0;
+						$line_width = $code == 'active_visits' ? 3 : 2;
+						$line_color = $code == 'active_visits' ? "#0d8ecf" : "#ACCFFF";
+					} else {
+						$balloon_text = $code == 'sales_connector' ? null : 'Totals: {description}';
+						$fill_alpha = $code == 'active_sales' ? 12 : 0;
+						$bullet_size = $code == 'active_sales' ? 8 : 0;
+						$line_width = $code == 'active_sales' ? 3 : 2;
+						$line_color = $code == 'active_sales' ? "#91b60c" : "#bfd76b";
+					}
+					
+					$axis = !$is_sales_graph ? 'left' : 'right';
+					$color_hover = !$is_sales_graph ? '#0D8ECF' : '#91B60C';
+					$balloon_color = !$is_sales_graph ? '#0D8ECF' : '#7D9A13';
+				?>
+					<graph axis="<?= $axis ?>" fill_alpha="<?= $fill_alpha ?>" gid="data" color="<?= $line_color ?>" color_hover="<?= $color_hover ?>" line_width="<?= $line_width ?>" balloon_text="<?= $balloon_text ?>" bullet="round" bullet_size="<?= $bullet_size ?>" balloon_color="<?= $balloon_color ?>" >
+						<? foreach ($values as $index=>$value): ?>
+							<value <? if ($is_sales_graph): ?>description="<?= format_currency($value->record_value) ?>"<? endif ?> xid="<?= $value->series_id ?>"><?= strlen($value->record_value) ? $value->record_value : 0 ?></value>
+						<? endforeach ?>
+					</graph>
+				<? endforeach ?>
+			</graphs>
+		</chart>
+	</data>
+</settings>

@@ -1,0 +1,31 @@
+<?
+	$dbName = $this->formGetFieldDbName($form_field->dbName, $this->viewData['form_model']);
+	$state = $form_field->checkboxOnState == $form_model->$dbName ? h($form_field->checkboxOnState) : null;
+	
+	$fieldId = $this->formGetElementId($form_model_class.'_'.$form_field->dbName);
+	$hiddenFieldId = $this->formGetElementId($form_model_class.'_'.$form_field->dbName.'hidden');
+?>
+
+<input type="hidden" id="<?= $hiddenFieldId ?>" name="<?= $form_model_class ?>[<?= $dbName ?>]" value="<?= $state ?>"/>
+
+<div id="<?= $fieldId ?>" class="<?= $state === null ? 'off' : 'on' ?>"></div>
+
+<script type="text/javascript">
+	$('<?= $fieldId ?>').addEvent('click', function(){
+		var hiddenField = $('<?= $hiddenFieldId ?>');
+		var field = $('<?= $fieldId ?>');
+		if (hiddenField.value.length)
+		{
+			hiddenField.value = '';
+			field.removeClass('on');
+			field.addClass('off');
+			field.fireEvent('toggle', false);
+		} else
+		{
+			hiddenField.value = '<?= h($form_field->checkboxOnState) ?>';
+			field.removeClass('off');
+			field.addClass('on');
+			field.fireEvent('toggle', true);
+		}
+	})
+</script>

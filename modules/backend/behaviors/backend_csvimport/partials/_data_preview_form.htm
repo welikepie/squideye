@@ -1,0 +1,34 @@
+<div id="data_preview_form">
+	<h2>Column Data Preview</h2>
+	<div class="content">
+		<div class="form400">
+			<? if (!isset($fatalError)): ?>
+				<p>Column: <strong><?= h($this->csvImportGetViewColumnName($column_name)) ?></strong></p>
+				
+				<? if ($column_data_rows): ?>
+					<div class="scrollableList">
+						<table class="simpleList">
+							<tbody>
+								<? foreach ($column_data as $index=>$data): ?>
+									<tr class="<?= $index == $column_data_rows-1 ? 'last' : null ?> <?= Backend_Html::zebra('csv_column_data') ?>">
+										<td><?= h($data) ?></td>
+									</tr>
+								<? endforeach ?>
+							</tbody>
+						</table>
+					</div>
+				<? else: ?>
+					<p>This column contains no data.</p>
+				<? endif ?>
+
+				<?= backend_button('Cancel', array('onclick'=>'return cancelPopup()')) ?>
+
+				<div class="clear"></div>
+			<? else: ?>
+				<?= flash() ?>
+				<?= backend_button('Cancel', array('onclick'=>'return cancelPopup()')) ?>
+				<div class="clear"></div>
+			<? endif ?>
+		</div>
+	</div>
+</div>

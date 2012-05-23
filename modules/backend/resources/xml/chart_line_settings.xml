@@ -1,0 +1,79 @@
+<settings>
+	<connect>true</connect>
+	
+	<legend>
+		<graph_on_off>false</graph_on_off>
+		<align>left</align>
+	</legend>
+	
+	<plot_area>
+		<margins>
+			<left>50</left>
+			<top>10</top>
+			<bottom>50</bottom>
+			<right>40</right>
+		</margins>
+	</plot_area>
+	
+	<values>
+		<x>
+			<skip_last>false</skip_last>
+			<text_size>11</text_size>
+		</x>
+		<y_left>
+			<color>#666666</color>
+		</y_left>
+		<y_right>
+			<color>#666666</color>
+		</y_right>
+	</values>
+	
+	<grid>
+		<x>
+			<approx_count>5</approx_count> 
+		</x>
+		<y_left>
+			<dashed>true</dashed>
+			<dash_length>1</dash_length>
+			<approx_count>4</approx_count>
+		</y_left>
+		<y_right>
+			<dashed>true</dashed>
+			<dash_length>1</dash_length>
+			<approx_count>4</approx_count>
+		</y_right>
+	</grid>
+	
+	<axes>
+		<x>
+			<width>1</width>
+		</x>
+		
+		<y_left>
+			<alpha>0</alpha>
+			<integers_only>true</integers_only>
+		</y_left>
+		
+		<y_right>
+			<alpha>0</alpha>
+			<integers_only>true</integers_only>
+		</y_right>
+	</axes>
+	
+	<balloon>
+		<corner_radius>0</corner_radius>
+		<border_width>1</border_width>
+	</balloon>
+	
+	<indicator>                                                 <!-- INDICATOR -->
+		<enabled>true</enabled>                                       <!-- [true] (true / false) -->
+		<zoomable></zoomable>                                     <!-- [true] (true / false) -->
+		<color>#0D8ECF</color>                                           <!-- [#BBBB00] (hex color code) line and x balloon background color -->
+		<line_alpha></line_alpha>                                 <!-- [100] (0 - 100) -->
+		<selection_color></selection_color>                       <!-- [#BBBB00] (hex color code) -->
+		<selection_alpha></selection_alpha>                       <!-- [25] (0 - 100) -->
+		<x_balloon_enabled></x_balloon_enabled>                   <!-- [true] (true / false) -->
+		<x_balloon_text_color>#FFFFFF</x_balloon_text_color>             <!-- [text_color] (hex color code) -->
+	</indicator>
+	
+</settings>

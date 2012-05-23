@@ -1,0 +1,62 @@
+<? 
+	$dbName = $this->formGetFieldDbName($form_field->dbName, $this->viewData['form_model']);
+	$options = $this->formFieldGetOptions($form_field->dbName, $this->viewData['form_model']); 
+	
+	$container_id = $dbName.'_cb_container';
+?>
+
+<? if (count($options) > 10): ?>
+
+<p class="last">Select: <a href="#" onclick="$('<?= $container_id ?>').getElements('input.checkbox').each(function(cb){cb.cb_check();}); return false;">all</a>, <a href="#" onclick="$('<?= $container_id ?>').getElements('input.checkbox').each(function(cb){cb.cb_uncheck()}); return false;">none</a></p>
+
+<div class="scrollableList form" id="<?= $container_id ?>">
+<? endif ?>
+	<? 
+		$fieldName = $form_field->dbName;
+		$index = 0;
+
+		foreach ($options as $value=>$name): 
+			$index++;
+			$description = null;
+			if (is_array($name))
+			{
+				$keys = array_keys($name);
+				$keyNum = count($keys);
+
+				$originalName = $name;
+				if ($keyNum == 4)
+				{
+					$name = $originalName[0];
+
+					$description = $originalName[1];
+					$level = $originalName[2];
+				} else
+				{
+					$name = !$keyNum ? $value : $keys[0];
+					$description = !$keyNum ? null : $originalName[$keys[0]];
+				
+					if ($keyNum == 2)
+						$level = $originalName[$keys[1]];
+				}
+			}
+		
+			$fieldId = $index > 1 ? $form_model_class.'_'.$dbName.'_'.$index : $form_model_class.'_'.$dbName;
+			$fieldId = $this->formGetElementId($fieldId);
+			$checked = $this->formOptionState($form_field->dbName, $value, $this->viewData['form_model']);
+			$level = isset($level) ? $level : 0;
+	?>
+		<div class="option" style="<?= $level > 0 ? 'padding-left:'.(10*$level).'px' : null ?>">
+			<input <?= Phpr_Form::checkboxState($checked) ?> type="checkbox" id="<?= $fieldId ?>" name="<?= $form_model_class ?>[<?= $dbName ?>][]" value="<?= h($value) ?>" class="checkbox"/>
+			<label class="choice" for="<?= $fieldId ?>">
+				<?= $form_field->optionsHtmlEncode ? h($name) : $name ?>
+				<? if (strlen($description)): ?><span class="description"><?= h($description) ?></span><? endif ?>
+			</label>
+		</div>
+	<? endforeach ?>
+<? if (count($options) > 10): ?>
+</div>
+<? endif ?>
+
+<? if (!count($options) && $form_field->noOptions): ?>
+	<p class="last"><?= h($form_field->noOptions) ?></p>
+<? endif ?>

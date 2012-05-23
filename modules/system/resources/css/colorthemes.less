@@ -1,0 +1,51 @@
+@import "../../../../phproad/resources/css/common.less";
+
+ul.colortheme_selector {
+	margin-top: 15px;
+	margin-bottom: -30px;
+	
+	li {
+		padding: 0!important;
+		cursor: pointer;
+		display: inline-block!important;
+		width: 156px;
+		height: 156px;
+		vertical-align: top;
+		margin-right: 50px;
+		margin-bottom: 15px;
+		
+		&:nth-child(3n) {margin-right: 0;}
+
+		img {display: block;}
+
+		.selector {
+			border: 3px solid #ccc;
+			.round(3px);
+		}
+
+		&.current {
+			.selector {border-color: #4982D8;}
+			p.name {color: #333;}
+		}
+	}
+	
+	p {
+		&.name {
+			padding-bottom: 0;
+			text-align: center;
+			padding-top: 5px;
+			color: #666666;
+		}
+		
+		&.no_preview {
+			width: 150px;
+			height: 73px;
+			padding-top: 40px;
+			padding-bottom: 0;
+			text-align: center;
+			line-height: 150%;
+			color: #666666;
+			background: #eee;
+		}
+	}
+}

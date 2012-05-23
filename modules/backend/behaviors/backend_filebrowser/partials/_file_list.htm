@@ -1,0 +1,59 @@
+<ul>
+	<? foreach ($filebrowser_files as $index=>$file): ?>
+		<? 
+			$handler = $this->filebrowser_onFileClick;
+
+			$ext = null;
+			$item_class = null;
+			if ($file->type == 'folder' || $file->type == 'up')
+			{
+				$handler = "return $(this).getForm().sendPhpr(
+					'".$this->getEventHandler('onFileBrowserFolderClick')."', 
+					{extraFields: {path: '".$file->path."'}, 
+					update: 'multi', 
+					loadIndicator: {show: true, hideOnSuccess: true}});";
+			} else
+			{
+				if ($filebrowser_viewmode == 'thumbnails')
+					$item_class = 'thumbnail';
+
+				$thumb_url = $this->filebrowserGetFileThumb($file->path);
+				$thumb_exists = $thumb_url !== null && substr($thumb_url, -8) != '_err.jpg';
+				
+				$pathInfo = pathinfo($file->path);
+				$ext = isset($pathInfo['extension']) ? strtolower($pathInfo['extension']) : null;
+
+				if (!strlen($handler))
+					$handler = "filebrowser_insert_content('%s', '$file->type', event, '".Phpr::$router->action."'); return false;";
+					
+				if (strpos($handler, '%s') !== false)
+					$handler = sprintf($handler, $file->path);
+			}
+		?>
+	
+		<li class="<?= $file->type.' '.$item_class ?> <?= $ext ?> <?= Backend_Html::zebra($this->listGetName()) ?>">
+			<!--[if IE]><fieldset class="ie_fix"><![endif]-->
+			<a href="<?= Phpr::$request->getRootUrl().$file->path ?>" onclick="<?= $handler ?>" title="<?= h($file->name) ?>">
+				<? if ($item_class == 'thumbnail'): ?>
+					<? if ($thumb_exists): ?>
+						<img src="<?= root_url($thumb_url) ?>" />
+					<? else: ?>
+						<span class="file_icon">&nbsp;</span>
+					<? endif ?>
+					<span class="filename"><?= h($file->name, 32) ?></span>
+					<span class="fileinfo"><?= Phpr_Files::fileSize($file->size) ?></span>
+					<? if (isset($file->title)): ?>
+						<span class="filetitle"><?= h($file->title) ?></span>
+					<? endif ?>
+					<span class="clear">&nbsp;</span>
+				<? else: ?>
+					<?= h($file->name) ?>
+					<? if (isset($file->title)): ?>
+						<span class="filetitle"><?= h($file->title) ?></span>
+					<? endif ?>
+				<? endif ?>
+			</a>
+			<!--[if IE]></fieldset><![endif]-->
+		</li>
+	<? endforeach ?>
+</ul>

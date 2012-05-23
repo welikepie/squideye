@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings> 
+	<depth>10</depth>
+	<angle>45</angle>
+
+	<column>
+		<type>clustered</type>
+		<width>80</width> 
+		<spacing>10</spacing> 
+		<grow_time>1</grow_time>
+		<grow_effect>strong</grow_effect> 
+		<sequenced_grow>true</sequenced_grow>
+		<balloon_text> 
+			<![CDATA[{title}: {value}]]>
+		</balloon_text>
+		<alpha>80</alpha>
+		<hover_brightness>-10</hover_brightness>
+	</column>
+
+	<plot_area>
+		<margins>
+			<top>10</top>
+			<left>60</left>
+			<right>7</right>
+		</margins>
+	</plot_area>
+
+	<grid> 
+		<category> 
+			<alpha>20</alpha> 
+			<dashed>true</dashed>
+			<dash_length>1</dash_length>
+		</category>
+		<value> 
+			<alpha>20</alpha> 
+			<dashed>true</dashed>
+			<dash_length>1</dash_length>
+		</value>
+	</grid>
+
+	<values> 
+		<category> 
+			<color>444</color>
+		</category>
+		<value> 
+			<min>0</min> 
+		</value>
+	</values>
+
+	<axes> 
+		<category> 
+			<color>#E7E7E7</color> 
+			<width>1</width> 
+		</category>
+		<value> 
+			<color>#E7E7E7</color> 
+			<width>1</width> 
+		</value>
+	</axes> 
+
+	<legend>
+		<x>0</x>
+		<enabled></enabled>
+		<align>left</align>
+		<border_alpha>0</border_alpha>
+		<margins>0</margins>
+	</legend> 
+</settings>

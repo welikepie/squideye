@@ -1,0 +1,8 @@
+<?
+	$dbName = $this->formGetFieldDbName($form_field->dbName, $this->viewData['form_model']);
+?>
+<div class="button">
+	<a href="#" onclick="new PopupForm('<?= $this->getEventHandler('onFindFormRecord') ?>', {ajaxFields: {db_name: '<?= $form_field->dbName ?>'}}); return false;">Find</a>
+</div>
+
+<div id="<?= $this->formGetRecordFinderContainerId($form_model_class, $form_field->dbName) ?>"><? $this->formRenderPartial('record_finder_record', array('form_model_class'=>$form_model_class)) ?></div>

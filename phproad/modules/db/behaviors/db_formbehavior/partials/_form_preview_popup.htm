@@ -1,0 +1,18 @@
+<?
+	$popupLevel = $this->viewDataElement('popupLevel', 0);
+	$containerClass = $popupLevel % 2 ? 'form450' : 'form400';
+?>
+
+<div class="<?= $containerClass ?>">
+	<h2><?= $title ?></h2>
+	<div class="content">
+		<? if ($modelObj): ?>
+			<? $this->formRenderPreview($modelObj) ?>
+		<? else: ?>
+			<p>Record not found.</p>
+		<? endif ?>
+
+		<?= backend_button('Close', array('onclick'=>'return cancelPopup()')) ?>
+		<div class="clear"></div>
+	</div>
+</div>

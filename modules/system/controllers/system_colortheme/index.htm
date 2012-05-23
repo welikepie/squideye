@@ -1,0 +1,44 @@
+<? Phpr_View::beginBlock("head") ?>
+	<link rel="stylesheet" href="modules/system/resources/css/colorthemes.css?<?= module_build('system') ?>" type="text/css"/>
+	
+	<script type="text/javascript">
+		window.addEvent('domready', function(){
+			var theme_items = [];
+			
+			$('theme_selector').getElements('li').each(function(li){
+				theme_items.push(li);
+				li.addEvent('click', function(){
+					theme_items.each(function(element){element.removeClass('current')});
+					li.addClass('current');
+					$('theme_id').value = li.getElement('input').value;
+					
+					$('theme_link').destroy();
+					new Asset.css(ls_root_url('/modules/backend/themes/'+$('theme_id').value+'/css/theme.css'), {id: 'theme_link'});
+				});
+			});
+		})
+	</script>
+<? Phpr_View::endBlock() ?>
+
+<? Phpr_View::beginBlock("view") ?>
+	<ul class="breadcrumbs">
+		<li><a href="<?= url('/system/settings') ?>">Settings</a></li>
+		<li><?= $this->app_page_title ?></li>
+	</ul>
+	
+	<?= flash() ?>
+
+	<? if (!isset($fatalError)): ?>
+		<div class="form600">
+			<?= Phpr_Form::openTag() ?>
+				<? $this->formRender() ?>
+
+				<?= backend_ajax_button('Save', 'index_onSave', array(), "prepareFunction: function(){phprTriggerSave();}") ?>
+				<?= backend_ajax_button('Cancel', 'index_onCancel') ?>
+				<div class="clear"></div>
+			</form>
+		</div>
+	<? else: ?>
+		<p><a href="<?= url('/system/settings') ?>">Return to the settings page</a></p>
+	<? endif ?>
+<? Phpr_View::endBlock() ?>

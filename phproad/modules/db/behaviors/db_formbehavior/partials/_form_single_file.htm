@@ -1,0 +1,21 @@
+<?
+	$listContainerId = $this->formGetElementId('form_attachments_container_'.get_class($form_model).'_'.$dbName); 
+	$baseUrl = $form_field->fileDownloadBaseUrl ? $form_field->fileDownloadBaseUrl : '/ls_backend/files/get/';
+	if(isset($form_field->renderOptions['allow_delete']) && $form_field->renderOptions['allow_delete'] !== false)
+		$allow_delete = true;
+	else $allow_delete = false;
+?>
+
+<? if ($form_file_list->count): 
+	$file = $form_file_list[0];
+?>
+	<p>Uploaded file: <a href="<?= $baseUrl.$file->id.'/'.urlencode($file->name) ?>" target="_blank"><?= h($file->name) ?></a> (<?= Phpr_Files::fileSize($file->size) ?>)  <span id="file_custom_message_<?= get_class($form_model) ?>_<?= $dbName ?>"></span>
+	<? if ($allow_delete): ?>
+		| <a href="#" class="hiddenLink" onclick="return $(this).getForm().sendPhpr('<?= $this->getEventHandler('onDeleteFile') ?>', {extraFields: {dbName: '<?= $dbName ?>', fileId: '<?= $file->id ?>'}, confirm: 'Do you really want to delete this file?', update: '<?= $listContainerId ?>', loadIndicator: {show: false}});">delete</a>
+	<? endif ?>
+	</p>
+<? else: ?>
+	<? if ($form_field->noAttachmentsLabel): ?>
+		<p><?= h($form_field->noAttachmentsLabel) ?></p>
+	<? endif ?>
+<? endif ?>

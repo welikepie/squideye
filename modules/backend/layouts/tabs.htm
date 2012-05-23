@@ -1,0 +1,220 @@
+<?
+	$menu_mode = Backend_AppearanceConfiguration::create()->menu_style;
+
+	$module_id = $this->app_module ? $this->app_module : Phpr::$router->param('module');
+	$currentTab = Core_ModuleManager::findTab($module_id, $this->app_tab);
+
+	if (!$currentTab)
+		$currentTab = Core_ModuleManager::findTab('backend', 'dashboard');
+
+	$tabs = Core_ModuleManager::listTabs();
+	$moduleId = strtolower(Phpr::$router->param('module'));
+	$tabLastIndex = count($tabs)-1;
+	
+	$is_fullscreen = Phpr::$session->get('backend_fullscreen_mode');
+?>
+
+<div id="header_tabs">
+	<div class="top_shadow">
+		<?= Phpr_Form::openTag(array('id'=>'backend_header_form')) ?>
+			<? if ($currentTab): ?>
+				<p><a href="javascript:;" id="menu_trigger"><?= h($currentTab->caption) ?></a></p>
+
+				<div class="current_module_name <? if (!$currentTab->secondLevelTabs): ?>no_tabs<? endif ?>"><?= $this->override_module_name ? h($this->override_module_name) : h($currentTab->caption) ?></div>
+				<? if ($currentTab->secondLevelTabs): ?>
+					<ul>
+						<? 
+							foreach ($currentTab->secondLevelTabs as $pageId=>$pageTab):
+							$isCurrent = $currentTab->id == $this->app_tab && $this->app_page == $pageId;
+						?>
+							<li class="<?= $isCurrent ? 'current' : null ?>">
+								<a href="<?=  url($currentTab->moduleId.'/'.$pageTab[1]) ?>" id="<?= 'tab_link_'.$currentTab->id.'_'.$pageId ?>"><?= h($pageTab[0]) ?></a>
+						
+								<? if (isset($pageTab[2]) && $cnt = count($pageTab[2])): ?>
+									<div class="submenu_wrapper invisible">
+										<ul>
+											<? 
+												$index = 0;
+												foreach ($pageTab[2] as $url=>$caption): 
+											?>
+												<li class="<?= ($cnt-1) == $index ? 'last' : null ?>"><a href="<?= url($currentTab->moduleId.'/'.$url) ?>"><?= h($caption) ?></a></li>
+											<? 
+												$index++;
+												endforeach;
+											?>
+										</ul>
+									</div>
+								<? endif ?>
+							</li>
+						<? endforeach ?>
+					</ul>
+				<? endif ?>
+			<? else: ?>
+				<p><a href="javascript:;" id="menu_trigger"><?= h($this->app_page_title) ?></a></p>
+			<?endif?>
+		</form>
+		
+		<a id="toggle_backend_fullscreen" class="<?= $is_fullscreen ? 'on' : null ?>" href="#" title="Toggle fullscreen mode" onclick="return backend_toggle_fullscreen();">Toggle fullscreen mode</a>
+		<input type="hidden" value="<?= $is_fullscreen ?>" id="backend_fullscreen_enabled"/>
+
+		<div class="clear"></div>
+	</div>
+</div>
+
+<div id="module_tabs_wrapper" class="invisible">
+	<div id="module_tabs">
+		<div class="main_menu_wrapper">
+			<div id="main_menu_connector"></div>
+			<?= Phpr_Form::openTag(array('id'=>'main-menu-form')) ?>
+				<ul class="top_tabs <?= $menu_mode ?>">
+					<? 
+						$lastIndex = count($tabs)-1;
+						$notifications = Core_ModuleManager::listModulesMenuNotifications();
+						$counter = 0;
+					
+						/*
+						 * Group tabs
+						 */
+					
+						$prev_tab = null;
+						$tab_groups = array();
+						$tabs_updated = $tabs;
+						
+						if ($menu_mode != 'two-level')
+						{
+							foreach ($tabs as $tab)
+							{
+								if (!$prev_tab && !$tab->secondLevelTabs)
+								{
+									$prev_tab = $tab;
+									continue;
+								}
+
+								if ($tab->secondLevelTabs || $notifications[$tab->moduleId])
+								{
+									$prev_tab = null;
+									continue;
+								}
+
+								$prev_tab_key = $prev_tab->moduleId.'-'.$prev_tab->id;
+
+								if (!array_key_exists($prev_tab_key, $tab_groups))
+									$tab_groups[$prev_tab_key] = array();
+
+								$tab_groups[$prev_tab_key][] = $tab;
+								foreach ($tabs_updated as $index=>$current_tab)
+								{
+									if ($current_tab->moduleId == $tab->moduleId && $current_tab->id == $tab->id)
+									{
+										unset($tabs_updated[$index]);
+										break;
+									}
+								}
+							}
+						}
+					
+						/*
+						 * Display tabs
+						 */
+					
+						$displayed_notifications = array();
+
+						foreach ($tabs_updated as $tab): 
+							$tab_key = $tab->moduleId.'-'.$tab->id;
+							$has_grouped_tabs = isset($tab_groups[$tab_key]);
+					?>
+							<li 
+								class="top_tab <?= $counter == 0 ? 'first' : null ?> <?= $counter == $lastIndex ? 'last' : null ?> <?= $tab->id == $this->app_tab ? 'current' : null ?> <?= (!$tab->secondLevelTabs && !$has_grouped_tabs) ? 'single' : null ?>"
+							>
+								<? if (!$has_grouped_tabs): ?>
+									<a 
+										class="clear-fix tab-link" 
+										href="<?= url($tab->moduleId.'/'.$tab->url) ?>"
+										<? if ($menu_mode == 'two-level'): ?>style="padding-right: <?= (count($notifications[$tab->moduleId])+1)*20 ?>px!important"<? endif ?>
+									><?= h($tab->caption) ?></a>
+								<? else: ?>
+									<ul class="tab_groups">
+										<li><a href="<?= url($tab->moduleId.'/'.$tab->url) ?>"><?= h($tab->caption) ?></a></li>
+										<? foreach ($tab_groups[$tab_key] as $grouped_tab): ?>
+											<li><a href="<?= url($grouped_tab->moduleId.'/'.$grouped_tab->url) ?>"><?= h($grouped_tab->caption) ?></a></li>
+										<? endforeach ?>
+									</ul>
+								<? endif ?>
+							
+								<? 
+									if ($notifications[$tab->moduleId] && !array_key_exists($tab->moduleId, $displayed_notifications)): 
+										$displayed_notifications[$tab->moduleId] = 1;
+										
+										$notifications_visible = false;
+										foreach ($notifications[$tab->moduleId] as $notification)
+										{
+											$notification_id = null;
+											if ($notification['closable'] && $notification['id'])
+												$notification_id = 'menu-notification-'.$notification['id'];
+												
+											if (!$notification_id || $this->isHintVisible($notification_id))
+											{
+												$notifications_visible = true;
+												break;
+											}
+										}
+
+										if ($notifications_visible):
+								?>
+										<ul class="module-notifications">
+											<? foreach ($notifications[$tab->moduleId] as $notification):
+												$notification_id = null;
+												if ($notification['closable'] && $notification['id'])
+													$notification_id = 'menu-notification-'.$notification['id'];
+											?>
+												<? if (!$notification_id || $this->isHintVisible($notification_id)): ?>
+													<li 
+														<? if ($notification_id): ?>id="<?= $notification_id ?>"<? endif ?> 
+														class="<? if ($menu_mode != 'two-level'): ?>clear-fix<? endif ?> <? if (!$notification['link']): ?>no-link<? endif ?>"
+														<? if ($menu_mode == 'two-level'): ?>
+															title="<?= h($notification['text']) ?>"
+														<? endif ?>
+													>
+														<? if ($notification['link']): ?><a <? if ($menu_mode != 'two-level'): ?>class="clear-fix"<? endif ?> href="<?= $notification['link'] ?>"><? endif ?>
+														<img src="<?= root_url('modules/'.$tab->moduleId.'/'.$notification['icon']) ?>"/>
+														<span><?= h($notification['text']) ?></span>
+														<? if ($notification['link']): ?></a><? endif ?>
+														<? if ($notification['closable'] && $notification['id']): ?>
+															<a href="#" onclick="return hide_tip('<?= $notification_id ?>', this, $('<?= $notification_id ?>'))" class="close-notification" title="Hide">Hide</a>
+														<? endif ?>
+													</li>
+												<? endif ?>
+											<? endforeach; ?>
+										</ul>
+									<? endif ?>
+								<? endif ?>
+							
+								<? if ($tab->secondLevelTabs): 
+									$lastSubTabIndex = count($tab->secondLevelTabs)-1;
+									$subtabCounter = 0;
+								?>
+									<div class="subtabs-wrapper">
+										<div class="subtabs-connector"></div>
+										
+										<ul class="subtabs">
+										<? foreach ($tab->secondLevelTabs as $subtab): ?>
+											<li class="<?= $subtabCounter == $lastSubTabIndex ? 'last' : null ?>"><a href="<?=  url($tab->moduleId.'/'.$subtab[1]) ?>"><?= h($subtab[0]) ?></a></li>
+										<? 
+											$subtabCounter++;
+											endforeach ?>
+										</ul>
+									</div>
+								<? endif ?>
+								<div class="clear"></div>
+							</li>
+					<? 
+						$counter++;
+					endforeach ?>
+				</ul>
+			</form>
+			<div class="clear"></div>
+		</div>
+	</div>
+</div>
+
+<? $this->renderLayout('warnings') ?>

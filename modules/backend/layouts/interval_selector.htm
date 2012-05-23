@@ -1,0 +1,41 @@
+<div class="interval_selector" id="report_interval_selector">
+	<?= Phpr_Form::openTag(array('id'=>'interval_form')) ?>
+		<? 
+			$intStart = $this->get_interval_start(); 
+			$intEnd = $this->get_interval_end(); 
+			$intType = $this->get_interval_type(); 
+			$intRanges = $this->get_interval_ranges();
+		?>
+	
+		<h4>
+			<? if ($intStart != $intEnd): ?>
+				<span class="type">Interval</span> <span class="interval"><?= $intStart ?> - <?= $intEnd ?></span>
+			<? else: ?>
+				<span class="type">Report date</span> <span class="interval"><?= $intStart ?></span>
+			<? endif ?>
+		</h4>
+		<input type="hidden" name="interval_start" class="start" value="<?= $intStart ?>"/>
+		<input type="hidden" name="interval_end" class="end" value="<?= $intEnd ?>"/>
+		<input type="hidden" name="interval_type" class="type" value="<?= $intType ?>"/>
+		<input type="hidden" name="interval_ranges" class="ranges" value="<?= $intRanges ?>"/>
+		<a class="trigger" href="#">&nbsp;</a>
+	</form>
+</div>
+
+<script type="text/javascript">
+	function dateRangeUpdated()
+	{
+		return $('interval_form').sendPhpr('onSetRange', 
+			{
+				loadIndicator: {
+					show: false
+				},
+				onSuccess: function(){
+					updateReportData(false)
+				}
+			}
+		);
+	}
+		
+	<?= Backend_Reports::intervalSelector('report_interval_selector') ?>
+</script>

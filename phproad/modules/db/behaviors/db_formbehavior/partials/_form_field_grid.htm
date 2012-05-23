@@ -1,0 +1,153 @@
+<?
+	$dbName = $this->formGetFieldDbName($form_field->dbName, $this->viewData['form_model']);
+	$fieldId = $this->formGetElementId($form_model_class.'_'.$form_field->dbName);
+	
+	$table_container_id = $fieldId.'table_container';
+	$delete_btn_id = $fieldId.'delete_btn';
+	$add_btn_id = $fieldId.'add_btn';
+	
+	$no_toolbar = array_key_exists('no_toolbar', $form_field->gridSettings) ? $form_field->gridSettings['no_toolbar'] : false;
+	$allow_adding_rows = array_key_exists('allow_adding_rows', $form_field->gridSettings) ? $form_field->gridSettings['allow_adding_rows'] : true;
+	$allow_deleting_rows = array_key_exists('allow_deleting_rows', $form_field->gridSettings) ? $form_field->gridSettings['allow_deleting_rows'] : true;
+	$no_sorting = array_key_exists('no_sorting', $form_field->gridSettings) ? $form_field->gridSettings['no_sorting'] : false;
+?>
+
+<? if (!$no_toolbar): ?>
+	<div class="toolbar">
+		<? if ($allow_adding_rows): ?>
+			<a id="<?= $add_btn_id ?>" class="imageLink table_row_insert img_noBottomPading" title="Inserts a row below a current row. Hotkey: ctrl + i" href="javascript:;" onclick="GridControlManager.get_control('<?= $fieldId ?>').insert_row(); return false;">Insert row</a>
+		<? endif ?>
+		<? if ($allow_adding_rows): ?>
+			<a id="<?= $delete_btn_id ?>" class="imageLink table_row_delete disabled img_noBottomPading" title="Deletes a current row. Hotkey: ctrl + d" href="javascript:;" onclick="GridControlManager.get_control('<?= $fieldId ?>').delete_row(); return false;">Delete row</a>
+		<? endif ?>
+		<a class="imageLink table_save img_noBottomPading tooltip" title="Hold down the <strong>ALT</strong> key to export a semicolon separated file" href="javascript:;" onclick="return $(this).getForm().sendPhpr('<?= $this->getEventHandler('onSaveFormGridCsv') ?>', {
+			loadIndicator: {show: false},
+			onBeforePost: LightLoadingIndicator.show.pass('Saving...'), 
+			onComplete: LightLoadingIndicator.hide,
+			onFailure: popupAjaxError,
+			extraFields: {'dbName': '<?= $dbName ?>', 'iwork': (new Event(event).alt ? 0 : 1)}
+		});">Save as CSV</a>
+		<a class="imageLink folder_table img_noBottomPading" href="javascript:;" onclick="new PopupForm('<?= $this->getEventHandler('onLoadFormGridCsvPopup') ?>', {ajaxFields: $merge($('<?= $table_container_id ?>').getForm().fieldsToHash(), {'dbName': '<?= $dbName ?>', 'fieldId': '<?= $fieldId ?>'})}); return false;">Import CSV</a>
+	
+		<div class="clear"></div>
+	</div>
+<? endif ?>
+
+<input type="hidden" name="<?= $form_model_class.'['.$form_field->dbName.']' ?>" value=""/>
+
+<div class="grid_container">
+	<table class="grid simpleList">
+		<thead>
+			<tr>
+				<? 
+					$last_index = count($form_field->gridColumns)-1;
+					$index = 0;
+					foreach ($form_field->gridColumns as $column=>$info):
+					$title = array_key_exists('title', $info) ? $info['title'] : $column;
+					$align = array_key_exists('align', $info) ? $info['align'] : 'left';
+					$width = array_key_exists('width', $info) ? $info['width'] : null;
+				?>
+					<th <? if ($width): ?>width="<?= $width ?>"<? endif ?> class="<?= $align ?> <?= $index == $last_index ? 'last' : null ?>"><?= h($title) ?></th>
+				<? 
+					$index++;
+					endforeach ?>
+				<!-- <th class="controls"></th> -->
+			</tr>
+		</thead>
+	</table>
+	
+	<div class="backend_scroller" id="<?= $table_container_id ?>">
+		<? $this->formRenderPartial('form_grid_table', array(
+			'form_model_class'=>$form_model_class,
+			'dbName'=>$dbName,
+		)) ?>
+	</div>
+</div>
+
+<script type="text/javascript">
+	window.addEvent('domready', function(){
+		var gc_options = {
+			autocomplete_config: [],
+			no_toolbar: <?= $no_toolbar ? 'true' : 'false' ?>,
+			allow_adding_rows: <?= $allow_adding_rows ? 'true' : 'false' ?>,
+			allow_deleting_rows: <?= $allow_deleting_rows ? 'true' : 'false' ?>,
+			no_sorting: <?= $no_sorting ? 'true' : 'false' ?>
+		};
+
+		<?
+			$index = 0;
+			foreach ($form_field->gridColumns as $column=>$info)
+			{
+				if (isset($info['autocomplete']))
+				{
+					$type = isset($info['autocomplete']['type']) ? $info['autocomplete']['type'] : 'json';
+					$depends_on = isset($info['autocomplete']['depends_on']) ? $info['autocomplete']['depends_on'] : '';
+					$autowidth = isset($info['autocomplete']['autowidth']) ? $info['autocomplete']['autowidth'] : '';
+					$autowidth = $autowidth ? 1 : 0;
+					
+					if ($depends_on)
+						echo "var gc_token_hash = new Hash();";
+
+					if (isset($info['autocomplete']['tokens']))
+					{
+						$tokens = $info['autocomplete']['tokens'];
+
+						if (!$depends_on)
+						{
+							foreach ($tokens as &$token)
+								$token = str_replace("'", "\'", $token);
+
+							$tokens = "['".implode("','", $tokens)."']";
+						} else
+						{
+							foreach ($tokens as $token_key=>$key_tokens)
+							{
+								foreach ($key_tokens as &$token)
+									$token = str_replace("'", "\'", $token);
+
+								$key_tokens = "['".implode("','", $key_tokens)."']";
+								echo "gc_token_hash.set('".$token_key."', ".$key_tokens.");\n";
+							}
+							
+							$tokens = 'gc_token_hash';
+						}
+					}
+					else
+						$tokens = '[]';
+
+					echo "gc_options.autocomplete_config.push({'index': ".$index.", 'type': '".$type."', 'tokens': ".$tokens.", depends_on: '".$depends_on."', 'autowidth': ".$autowidth."});\n";
+				}
+				$index++;
+			}
+		?>
+		
+		var init_grid = function() {
+			var gc = new GridControl('<?= $fieldId ?>', gc_options);
+			<? if (!$no_toolbar && $allow_deleting_rows): ?>
+				gc.addEvent('deleteEnabled', function(){
+					$('<?= $delete_btn_id ?>').removeClass('disabled');
+				});
+				gc.addEvent('addEnabled', function(){
+					$('<?= $add_btn_id ?>').removeClass('disabled');
+				});
+				gc.addEvent('addDisabled', function(){
+					$('<?= $add_btn_id ?>').addClass('disabled');
+				});
+				gc.addEvent('deleteDisabled', function(){
+					$('<?= $delete_btn_id ?>').addClass('disabled');
+				});
+
+				gc.init_toolbar();
+			<? endif ?>
+		}
+		
+		
+		var thisTab = $('<?= $table_container_id ?>').getTab();
+		if (thisTab)
+		{
+			thisTab.addEvent('onTabClick', function() {
+				init_grid();
+			});
+		} else init_grid();
+	});
+</script>

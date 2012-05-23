@@ -1,0 +1,72 @@
+<div class="form400">
+	<? if (!$completed): ?>
+		<?= Phpr_Form::openTag(array('enctype'=>'multipart/form-data')) ?>
+			<p>Вы можете импортировать данные из предварительно подготовленного файла Microsoft Excel.</p>
+		
+			<p><a class="csv_template_link" href="<?= $this->list_csv_template_url ?>">Загрузить шаблон файла</a></p>
+		
+			<p>Чтобы подготовить данные, загрузите шаблон файла на диск вашего компьютера и откройте его в Microsoft Excel. Затем:</p>
+		
+			<ul class="simpleList bullets">
+				<li>Заполните таблицу, не изменяя последовательность колонок.</li>
+				<li>Удалите вторую строку таблицы. В этой строке находятся комментарии.</li>
+				<li>Сохраните файл в формате CSV (разделители - запятые).</li>
+				<li>Загрузите сохраненный файл с помощью формы ниже.</li>
+			</ul>
+		
+			<div class="form">
+			
+				<? if ($this->viewDataElement('form_error')): ?>
+					<p class="error formFlash"><?= h($form_error) ?></p>
+				<? endif ?>
+
+				<ul class="formElements">
+					<li class="field full">
+						<label for="import_file">
+							Файл
+							<span class="comment">Выберите файл .CSV для импорта данных.</span>
+						</label>
+						<div class="fieldContainer">
+							<input type="file" name="file" id="import_file"/>
+						</div>
+					</li>
+				</ul>
+			</div>
+
+			<?= backend_button('Импортировать данные', array('href'=>'#', 'onclick'=>"$(this).getForm().submit(); return false;")) ?>
+			<?= backend_button('Отмена', $this->list_csv_cancel_url) ?>
+			<input type="hidden" name="postback" value="1"/>
+
+			<div class="clear"></div>
+		</form>
+	<? else: ?>
+		<p>Импорт данных завершен. Импортировано записей: <strong><?= $success ?></strong>, ошибок: <strong><?= count($errors) ?></strong>.</p>
+		
+		<? if (count($errors)): ?>
+			<p>Ниже находится список ошибок.</p>
+			
+			<table class="simpleList bottomOffset">
+				<thead>
+					<tr>
+						<th>Строка</th>
+						<th class="last">Ошибка</th>
+					</tr>
+				</thead>
+
+				<tbody>
+					<? foreach ($errors as $line=>$text): ?>
+						<tr>
+							<td><?= $line ?></td>
+							<td class="last"><?= h($text) ?></td>
+						</tr>
+					<? endforeach ?>
+				</tbody>
+			</table>
+		<? endif ?>
+
+		<?= backend_button('Вернуться в список', $this->list_csv_cancel_url) ?>
+		<?= backend_button('Импортировать другой файл', $this->list_csv_import_url) ?>
+		<div class="clear"></div>
+		
+	<? endif ?>
+</div>

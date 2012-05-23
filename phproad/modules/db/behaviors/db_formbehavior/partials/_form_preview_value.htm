@@ -1,0 +1,18 @@
+<div class="preview <?= $type ?> <? if ($form_field->previewHelp): ?>previewHelp<? endif ?>">
+	<? if ($form_field->previewLink): ?><a href="<?= $form_field->previewLink ?>" target="_blank"><? endif ?>
+	<?= strlen($value) ? $value : "&nbsp;" ?>
+	<? if ($form_field->previewLink): ?></a><? endif ?>
+	
+	<? if (isset($description) && strlen($description)): ?>
+		<span><?= $description ?></span>
+	<? endif ?>
+	
+	<? if ($form_field->previewHelp): ?>
+		<a href="javascript:;" class="tooltip previewHelp" title="<?= h($form_field->previewHelp) ?>">Form field help information</a>
+	<? endif ?>
+	
+	<div class="lt"></div>
+	<div class="rt"></div>
+	<div class="rb"></div>
+	<div class="lb"></div>
+</div>

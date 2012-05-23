@@ -1,0 +1,65 @@
+<? Phpr_View::beginBlock("head") ?>
+	<link rel="stylesheet" href="modules/system/resources/css/system.css?<?= module_build('core') ?>" type="text/css"/>
+<? Phpr_View::endBlock() ?>
+
+<? Phpr_View::beginBlock("view") ?>
+	<ul class="breadcrumbs">
+		<li><a href="<?= url('/system/modules') ?>">Modules &amp; updates</a></li>
+		<li><?= $this->app_page_title ?></li>
+	</ul>
+	
+	<?= flash() ?>
+
+	<? if (!isset($fatalError)): ?>
+		<div class="form400">
+			<? if ($license_change_num < Core_UpdateManager::allowed_license_change_num): ?>
+				<p>On this page you can update the license details of this LemonStand installation. You can change the license details only <?= Core_UpdateManager::allowed_license_change_num ?> times per installation. Please enter the license details in the form below. You can find the License Key and other license information on the License Details page, in the <a href="https://lemonstandapp.com/myaccount">My Account</a> area:
+				</p>
+
+				<img class="license_key_image" src="<?= root_url('modules/system/resources/images/license_key.png') ?>"/>
+				
+				<div class="hint">
+  				<p class="last">If you are switching to a commerce license, please force update the application after updating the license information.</p>
+  			</div>
+			
+				<?= Phpr_Form::openTag(array('id'=>'email_form')) ?>
+					<div class="form">
+						<div class="formFlash"></div>
+
+						<ul class="formElements">
+							<li class="field text left">
+								<label for="serial_number">Serial Number <span class="required">*</span></label>
+								<div class="fieldContainer">
+									<input type="text" name="serial_number" id="serial_number" class="varchar" value="" autocomplete="off"/>
+								</div>
+							</li>
+
+							<li class="field text right">
+								<label for="holder_name">Holder Name <span class="required">*</span></label>
+								<div class="fieldContainer">
+									<input type="text" name="holder_name" id="holder_name" class="varchar" value="" autocomplete="off"/>
+								</div>
+							</li>
+						
+							<li class="field text full">
+								<label for="license_key">License Key <span class="required">*</span></label>
+								<div class="fieldContainer">
+									<input type="text" name="license_key" id="license_key" class="varchar" value="" autocomplete="off"/>
+								</div>
+							</li>
+						</ul>
+						<div class="clear"></div>
+					</div>
+					<?= backend_ajax_button('Apply', 'update_license_onApply') ?>
+				<? else: ?>
+					<p>We are sorry, you cannot change the license details of this LemonStand installation more than <?= Core_UpdateManager::allowed_license_change_num ?> times.</p>
+				<? endif ?>
+
+				<?= backend_button('Cancel', array('href'=>url('system/modules'))) ?>
+				<div class="clear"></div>
+			</form>
+		</div>
+	<? else: ?>
+		<p><a href="<?= url('/system/settings') ?>">Return to the settings page</a></p>
+	<? endif ?>
+<? Phpr_View::endBlock() ?>

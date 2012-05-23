@@ -1,0 +1,90 @@
+<? 
+	$this->onBeforeChartRender();
+
+	$chartType = $this->getChartType();
+	$chartTypes = $this->getChartTypes();
+?>
+
+<div class="chart_controls">
+	<?= Phpr_Form::openTag(array('id'=>'chart_form')) ?>
+		<? $this->renderPartial(PATH_APP.'/modules/'.$this->getModuleId().'/controllers/'.strtolower(get_class($this)).'/_chart_controls.htm') ?>
+		<ul class="chart_selector">
+			<li class="label">Chart:</li>
+			<? foreach ($chartTypes as $type): ?>
+				<li class="button <?= $type ?>">
+					<a href="#" onclick="return $('chart_form').sendPhpr('index_onSetChartType', {extraFields: {chart_type: '<?= $type ?>'}, update: $('report_chart'), loadIndicator: {element: $('report_chart'), hideOnSuccess: 1}});
+					" class="<?= $type == $chartType ? 'current' : null ?>">Chart type</a>
+				</li>
+			<? endforeach ?>
+		</ul>
+
+		<div class="clear"></div>
+	</form>
+	
+	<? if ($this->viewDataElement('chartNote')): ?>
+		<p class="chartNote"><?= h($this->viewData['chartNote']) ?></p>
+	<? endif ?>
+</div>
+
+<div class="chart_container" id="chart_container" style="height: <?= $this->getChartHeight().'px' ?>">
+	<script type="text/javascript" src="modules/backend/resources/javascript/swfobject.js"></script>
+
+	<div id="flashcontent" class="flashcontent">
+		<span>Please update your Flash player : <a href="http://get.adobe.com/flashplayer/">http://get.adobe.com/flashplayer/</a> </span>
+	</div>
+
+	<?
+		$chartFiles = array(
+			Backend_ChartController::rt_stacked_column=>'amcolumn.swf',
+			Backend_ChartController::rt_column=>'amcolumn.swf',
+			Backend_ChartController::rt_line=>'amline.swf',
+			Backend_ChartController::rt_pie=>'ampie.swf',
+		);
+
+		$chartFile = $chartFiles[$chartType];
+	?>
+
+	<script type="text/javascript">
+		var so = new SWFObject("<?= root_url('/modules/backend/resources/swf/'.$chartFile) ?>", "amchart", "100%", "100%", "8", "#FFFFFF");
+		so.addVariable("path", escape("<?= root_url('/modules/backend/resources/swf/') ?>"));
+		so.addVariable("settings_file", 
+			encodeURIComponent("<?= root_url('/modules/backend/resources/xml/chart_common_settings.xml?').time() ?>")+',' +
+			encodeURIComponent("<?= root_url('/modules/backend/resources/xml/chart_'.$chartType.'_settings.xml?'.time()) ?>")+','+ 
+			encodeURIComponent("<?= $this->getDataPath().'?'.time() ?>")
+		);
+		so.addParam("wmode", "transparent");
+
+		so.addVariable("loading_settings", "Loading chart settings...");
+		so.addVariable("loading_data", "Loading data...");
+		so.addVariable("chart_id", "amchart");
+
+		so.write("flashcontent");
+	
+		window.flashMovie = null;
+		function amChartInited (chart_id)
+		{
+			window.flashMovie = document.getElementById(chart_id);
+		}
+	</script>
+	<div class="handle" id="chart_handle"></div>
+</div>
+
+<script type="text/javascript">
+	$('chart_handle').addEvent('mousedown', showChartSubstitution);
+
+	new Drag($('chart_container'), {
+		'handle': $('chart_handle'),
+		'modifiers': {'x': '', 'y': 'height'},
+		'limit': {'y': [200, 1000]},
+		onStart: function(){ 
+			window.flashMovie.setParam('redraw', false);
+		},
+		onComplete: function(){
+			window.flashMovie.setParam('redraw', true);
+			hideChartSubstitution();
+
+			var containerHeight = $('chart_container').getSize().y;
+			$('chart_form').sendPhpr('index_onSetChartHeight', {extraFields: {'height': containerHeight}, loadIndicator: {show: false}});
+		}
+	});
+</script>

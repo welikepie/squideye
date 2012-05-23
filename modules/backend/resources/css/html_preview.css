@@ -1,0 +1,96 @@
+div.html_preview {
+  border: 2px solid #cccccc;
+  margin-top: 10px;
+  overflow: auto;
+  height: 300px;
+}
+div.html_preview_content {
+  padding: 10px;
+}
+div.html_preview_content p, div.html_preview_content ul, div.html_preview_content ol {
+  font-family: Arial, Verdana, Helvetica, sans-serif !important;
+  padding-bottom: 6px !important;
+  font-size: 12px !important;
+  color: #333333 !important;
+  line-height: 150% !important;
+}
+div.html_preview_content h1 {
+  color: #000000 !important;
+  padding-bottom: 5px !important;
+  padding-top: 0 !important;
+  margin: 0 !important;
+  font-family: Arial, Verdana, Helvetica, sans-serif !important;
+  font-size: 20px !important;
+  font-weight: normal !important;
+}
+div.html_preview_content h2 {
+  color: #000000 !important;
+  padding-bottom: 5px !important;
+  padding-top: 0 !important;
+  margin: 0 !important;
+  font-family: Arial, Verdana, Helvetica, sans-serif !important;
+  font-size: 17px !important;
+  font-weight: normal !important;
+}
+div.html_preview_content h3 {
+  color: #000000 !important;
+  padding-bottom: 5px !important;
+  padding-top: 0 !important;
+  margin: 0 !important;
+  font-family: Arial, Verdana, Helvetica, sans-serif !important;
+  font-size: 15px !important;
+  font-weight: normal !important;
+}
+div.html_preview_content h4 {
+  color: #000000 !important;
+  padding-bottom: 5px !important;
+  padding-top: 0 !important;
+  margin: 0 !important;
+  font-family: Arial, Verdana, Helvetica, sans-serif !important;
+  font-size: 12px !important;
+  font-weight: bold !important;
+}
+div.html_preview_content h5 {
+  color: #000000 !important;
+  padding-bottom: 5px !important;
+  padding-top: 0 !important;
+  margin: 0 !important;
+  font-family: Arial, Verdana, Helvetica, sans-serif !important;
+}
+div.html_preview_content table {
+  border-collapse: collapse !important;
+  margin-bottom: 12px !important;
+  border: 1px solid #cccccc !important;
+}
+div.html_preview_content table th, div.html_preview_content table td {
+  font-family: Arial, Verdana, Helvetica, sans-serif !important;
+  font-size: 11px !important;
+  color: #333333 !important;
+  padding: 3px 5px !important;
+  border-right: 1px solid #cccccc !important;
+  vertical-align: top;
+}
+div.html_preview_content table th.number, div.html_preview_content table td.number {
+  text-align: right !important;
+}
+div.html_preview_content table thead {
+  background-color: transparent !important;
+}
+div.html_preview_content table thead th {
+  background-color: #eeeeee !important;
+  border-bottom: 1px solid #cccccc !important;
+  border-top: 2px solid #666666;
+  font-weight: normal !important;
+  color: #000000 !important;
+}
+div.html_preview_content p:last-child {
+  padding-bottom: 0 !important;
+}
+div.html_preview_content ol li {
+  list-style-type: decimal !important;
+  list-style-position: inside !important;
+}
+div.html_preview_content ul li {
+  list-style-type: disc !important;
+  list-style-position: inside !important;
+}

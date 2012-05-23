@@ -1,0 +1,9 @@
+<div class="toolbar">
+	<? if ($this->currentUser->isAdministrator()): ?>
+		<?= backend_ctr_button('Add block', 'new_document', url('/cms/content/create')) ?>
+		<div class="separator">&nbsp;</div>
+		<?= backend_ctr_button('Delete selected', 'delete_document', array('href'=>'#', 'onclick'=>"return delete_selected()")) ?>
+	<? endif ?>
+
+	<div class="clear"></div>
+</div>

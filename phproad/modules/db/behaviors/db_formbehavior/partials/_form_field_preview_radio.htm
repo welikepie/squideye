@@ -1,0 +1,25 @@
+<? 
+	$columnDefinition = $form_field->getColDefinition();
+	$dbName = $this->formGetFieldDbName($form_field->dbName, $this->viewData['form_model']);
+	$options = $this->formFieldGetOptions($form_field->dbName, $this->viewData['form_model'], $form_model->$dbName); 
+	$name = null;
+	$description = null;
+
+	$optionValue = null;
+	if ($options)
+	{
+		$name = $options;
+		$description = null;
+		if (is_array($name))
+		{
+			$keys = array_keys($name);
+			$keyNum = count($keys);
+			
+			$originalName = $name;
+			$name = !$keyNum ? $value : $keys[0];
+			$description = !$keyNum ? null : $originalName[$keys[0]];
+		}
+	}
+	
+	$this->formRenderPartial('form_preview_value', array('value'=>h($name), 'type'=>$columnDefinition->type, 'description'=>h($description)));
+?>

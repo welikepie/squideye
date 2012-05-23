@@ -1,0 +1,14 @@
+<? Phpr_View::beginBlock("head") ?>
+	<link rel="stylesheet" href="modules/system/resources/css/system.css?<?= module_build('core') ?>" type="text/css"/>
+<? Phpr_View::endBlock() ?>
+
+<? Phpr_View::beginBlock("view") ?>
+	<ul class="breadcrumbs">
+		<li><a href="<?= url('/system/settings') ?>">Settings</a></li>
+		<li><?= $this->app_page_title ?></li>
+	</ul>
+
+	<?= flash() ?>
+
+	<?= $this->listRender(array('list_control_panel'=>'control_panel')) ?>
+<? Phpr_View::endBlock() ?>

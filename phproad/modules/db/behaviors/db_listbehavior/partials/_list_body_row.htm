@@ -1,0 +1,101 @@
+<?
+	$url = $this->listFormatRecordUrl($row);
+	$onClick = $this->listFormatRecordOnClick($row);
+	$cellOnClick = $this->listFormatCellOnClick($row);
+	
+	$list_display_path_column = isset($list_display_path_column) && $list_display_path_column;
+	
+	if ($this->list_render_as_tree)
+	{
+		$expanded = $this->list_no_interaction ? true : $this->listNodeIsExpanded($row);
+		$list_data = $row->list_children($list_sort_column);
+	}
+	
+?>
+
+<tr class="<?= Backend_Html::zebra($this->listGetName()) ?> <?= $this->listGetRowClass($row) ?>">
+	<? if ($this->list_render_as_tree && !$this->list_no_interaction): ?>
+		<? $this->listRenderPartial('list_body_expand_control', array('expanded'=>$expanded, 'childCount'=>count($list_data), 'row'=>$row)) ?>
+	<? endif ?>
+
+	<? if ($this->list_render_as_sliding_list && !$this->list_no_interaction): ?>
+		<? $this->listRenderPartial('list_body_folder_control', array('childCount'=>$this->listGetRecordChildrenCount($row), 'row'=>$row)) ?>
+	<? endif ?>
+
+	<?
+		$body_cb_option_set = isset($this->list_options['list_custom_body_cells']);
+		if ($this->list_custom_body_cells !== false || $body_cb_option_set)
+		{
+			if (!strlen($this->list_custom_body_cells) && !$body_cb_option_set)
+				$this->listRenderPartial('list_body_front_cells', array('model'=>$row, 'url'=>$url), false);
+			else
+			{
+				if (!$body_cb_option_set && strlen($this->list_custom_body_cells))
+					$this->renderPartial($this->list_custom_body_cells, array('model'=>$row), true, true);
+				elseif (strlen($this->list_options['list_custom_body_cells']))
+					$this->renderPartial($this->list_options['list_custom_body_cells'], array('model'=>$row), true, true);
+			}
+		}
+	?>
+
+	<? foreach ($list_columns as $index=>$column): 
+		$cellStyle = null;
+		if ($this->list_render_as_tree && $list_tree_level > 0 && $index == 0)
+			$cellStyle = 'style="padding-left: '.(20*$list_tree_level).'px"';
+			
+		$cellOnClickHandler = null;
+		if ($url && $this->list_handle_row_click)
+			$cellOnClickHandler = "if (event.which != 2) window.location.href = '".$url."'";
+			
+		if ($onClick)
+			$cellOnClickHandler = $cellOnClick.'; '.$cellOnClickHandler;
+			
+		if ($cellOnClickHandler)
+			$cellOnClickHandler = 'onclick="'.$cellOnClickHandler.'"';
+	?>
+		<td <?= $cellStyle ?> class="<?= $this->listCellClass($column) ?> <?= $url ? 'link' : null ?> <? if($column->listNoTitle): ?>no-title<? endif ?>" <?= $cellOnClickHandler ?>>
+			<?
+				if (!array_key_exists($column->dbName, $this->list_cell_individual_partial)):
+			?>
+				<?
+					if ($this->list_cell_partial !== false)
+					{
+						if (!strlen($this->list_cell_partial))
+							$this->listRenderPartial('list_cell_partial', array('model'=>$row, 'index'=>$index, 'column'=>$column, 'url'=>$url), false);
+						else
+							$this->renderPartial($this->list_cell_partial, array('model'=>$row, 'index'=>$index, 'column'=>$column, 'url'=>$url), true, true);
+					}
+				?>
+			
+				<? if ($url): ?><a <?= $onClick ?> href="<?= $url.'?'.uniqid() ?>"><? endif ?>
+				<? if ($column->type !== db_bool): ?>
+					<?= h($row->displayField($column->dbName, 'list')) ?>
+				<? else: ?>
+					<? $this->listRenderPartial('list_bool_column', array('value'=>$row->{$column->dbName})); ?>
+				<? endif ?>
+				<? if ($url): ?></a><? endif ?>
+			<? else: ?>
+				<? $this->renderPartial($this->list_cell_individual_partial[$column->dbName], array('model'=>$row, 'index'=>$index, 'column'=>$column, 'url'=>$url)) ?>
+			<? endif ?>
+		</td>
+	<? endforeach ?>
+	<? if ($list_display_path_column): ?>
+		<td class="last <?= $url ? 'link' : null ?>">
+			<? if ($url): ?><a <?= $onClick ?> href="<?= $url.'?'.uniqid() ?>"><? endif ?>
+			<? 
+				$parents = $this->listGetNavigationParents($row, $row->$list_model_parent_field);
+				$last_parent_index = count($parents)-1;
+				foreach ($parents as $parent_index=>$parent):
+			?>
+				<?= h($parent->title) ?>
+				<? if ($parent_index < $last_parent_index): ?><span class="list-parent-separator">/</span><? endif ?>
+			<? endforeach ?>
+			<? if ($url): ?></a><? endif ?>
+		</td>
+	<? endif ?>
+</tr>
+
+<?
+	if ($this->list_render_as_tree && $expanded)
+		$this->listRenderPartial('list_body_rows', array('list_data'=>$list_data, 'list_tree_level'=>$list_tree_level+1));
+?>

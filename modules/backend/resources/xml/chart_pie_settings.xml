@@ -1,0 +1,18 @@
+<settings> 
+	<animation>
+		<start_time>2</start_time>
+		<start_effect>strong</start_effect>
+		<sequenced>true</sequenced>
+		<pull_out_time>1.5</pull_out_time>
+		<pull_out_effect>Bounce</pull_out_effect>
+	</animation>
+
+	<pie>
+		<alpha>90</alpha>
+		<gradient>linear</gradient>
+		<hover_brightness>-10</hover_brightness>
+		
+	    <radius>25%</radius>
+	    <inner_radius>30%</inner_radius>
+	</pie>
+</strong>

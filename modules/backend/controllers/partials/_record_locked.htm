@@ -1,0 +1,47 @@
+<?
+	$record_name = isset($record_name) ? $record_name : 'record';
+	$message = 'Another user (%s) is editing this '.$record_name.'. The edit session started %s.';
+		
+	$mins = $lock->get_age_mins();
+	$allowed_steal_interval = 0;
+?>
+
+<?= Phpr_Form::openTag() ?>
+	<div class="lock_message">
+		<p>
+			<?= sprintf(h($message), $lock->created_user_name, $lock->get_age_str()) ?>
+			<? if ($mins > $allowed_steal_interval): ?>
+				<br/>You can steal the lock to edit the <?= $record_name ?>. In this case user <?= h($lock->created_user_name) ?> will not be able to save changes.
+			<? endif ?>
+		</p>
+
+		<? if ($mins > $allowed_steal_interval): ?>
+			<? if ($lock->record_id): ?>
+				<?= backend_ajax_button('Steal the lock', 'edit_onStealLock', array(), "confirm: 'Are you sure?',
+				onBeforePost: LightLoadingIndicator.show.pass('Loading...'), 
+				loadIndicator: {show: false},
+				onComplete: LightLoadingIndicator.hide,
+				extraFields: {url: window.location.href, record_id: '".$lock->record_id."'}, 
+				update: 'multi'") ?>
+			<? else: ?>
+				<?= backend_ajax_button('Steal the lock', 'onStealLock', array(), "confirm: 'Are you sure?',
+				onBeforePost: LightLoadingIndicator.show.pass('Loading...'), 
+				loadIndicator: {show: false},
+				onComplete: LightLoadingIndicator.hide,
+				extraFields: {url: window.location.href, 'hash': '".$lock->non_db_hash."'}, 
+				update: 'multi'") ?>
+			<? endif ?>
+		<? endif ?>
+		<? if (!isset($cancel_url)): ?>
+			<?= backend_ajax_button('Cancel', 'edit_onCancel', array(), "
+			onBeforePost: LightLoadingIndicator.show.pass('Loading...'), 
+			loadIndicator: {show: false},
+			onComplete: LightLoadingIndicator.hide,
+			update: 'multi'") ?>
+		<? else: ?>
+			<?= backend_button('Cancel', $cancel_url) ?>
+		<? endif ?>
+		<div class="clear"></div>
+	</div>
+	<input type="hidden" id="phpr_lock_mode" value="1"/>
+</form>

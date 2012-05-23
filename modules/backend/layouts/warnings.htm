@@ -1,0 +1,70 @@
+<?
+	$file = @file_get_contents(PATH_APP.'/modules/shop/models/shop_order.php');
+
+	$dev_edition = strlen($file) && strpos($file,'<?php') === false;
+
+	$license_key = Db_ModuleParameters::get('core', 'license_key');
+	
+	if ($license_key && $dev_edition):
+?>
+	<div class="system_message_container">
+		<div class="limited_version_message">
+			<a href="https://lemonstandapp.com/myaccount/order-license-by-key/<?= $license_key ?>">You're using a limited developer's version of LemonStand. Click here to upgrade to a commercial version if you're ready to go live and start taking orders.</a>
+		</div>
+	</div>
+<? endif ?>
+
+<?
+	$email_configured = System_EmailParams::isConfigured();
+	$uploaded_writable = is_writable(PATH_APP.'/uploaded') && is_writable(PATH_APP.'/uploaded/thumbnails') && is_writable(PATH_APP.'/uploaded/public');
+	$temp_writable = is_writable(PATH_APP.'/temp');
+	$shipping_configured = Shop_ShippingParams::isConfigured();
+
+	$resources_writable = is_writable(PATH_APP.'/resources');
+	
+	if ($resources_writable)
+	{
+		$subdirs = Phpr_Files::listSubdirectories(PATH_APP.'/resources/');
+		foreach ($subdirs as $subdir)
+		{
+			if (!is_writable($subdir))
+			{
+				$resources_writable = false;
+				break;
+			}
+		}
+	}
+	
+	$invalid_enc_key = Phpr_SecurityFramework::create()->salted_hash('lemonstand') != Db_ModuleParameters::get('core', 'enc_test');
+?>
+
+<? if (!$shipping_configured || !$email_configured || !$uploaded_writable || !$temp_writable || !$resources_writable || $invalid_enc_key): ?>
+	<div class="system_message_container">
+		<div class="system_message_panel system_warning">
+			<h3>System Configuration Tips</h3>
+		
+			<p>There are issues you need to pay attention to in order to configure the system properly.</p>
+		
+			<ul>
+				<? if (!$email_configured): ?>
+					<li>Email system is not configured. Please <a href="<?= url('/system/email') ?>">click here</a> to fix the problem.</li>
+				<? endif ?>
+				<? if (!$temp_writable): ?>
+					<li>Directory <strong>/temp</strong> is not writable for PHP. Please set corresponding permissions for Apache user on this directory.</li>
+				<? endif ?>
+				<? if (!$uploaded_writable): ?>
+					<li>Directory <strong>/uploaded</strong> or its subdirectories is not writable for PHP. Please set corresponding permissions for Apache user on this directory.</li>
+				<? endif ?>
+				<? if (!$resources_writable): ?>
+					<li>Directory <strong>/resources</strong> or its subdirectories is not writable for PHP. Please set corresponding permissions for Apache user on this directory.</li>
+				<? endif ?>
+				<? if ($invalid_enc_key): ?>
+					<li>The encryption key used to encrypt data in the database do not match the encryption key used in your copy of LemonStand. Please log into the Configuration Tool and change the encryption key immediately, to prevent possible data loss.</li>
+				<? endif ?>
+				<? if (!$shipping_configured): ?>
+					<li>Shipping parameters are not configured. Please <a href="<?= url('/shop/shipping_settings/') ?>">click here</a> to open the Shipping Configuration page and set the shipping origin location and the weight and dimension units.</li>
+				<? endif ?>
+			</ul>
+		</div>
+	</div>
+<? endif ?>

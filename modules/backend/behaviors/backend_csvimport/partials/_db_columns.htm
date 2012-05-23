@@ -1,0 +1,16 @@
+<? 
+	$columns = $this->csvImportGetDbColumns();
+	$column_matches = isset($column_matches) ? $column_matches : array();
+
+?>
+<ul class="db_columns">
+	<? foreach ($columns as $column): 
+		foreach ($column_matches as $match_column_name=>$db_matches)
+		{
+			if (in_array($column->dbName, $db_matches))
+				continue 2;
+		}
+	?>
+		<? $this->csvImportRenderPartial('db_column', array('column'=>$column)) ?>
+	<? endforeach ?>
+</ul>

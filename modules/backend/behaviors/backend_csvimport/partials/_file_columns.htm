@@ -1,0 +1,61 @@
+<? if (!isset($file_columns)): ?>
+	<div class="csv_upload_prompt">
+		Please upload a valid CSV file
+	</div>
+	<input type="hidden" value="1" id="no_csv_flag"/>
+<? else:
+	$hidden_columns = isset($hidden_columns) ? $hidden_columns : array();
+	$column_matches = isset($column_matches) ? $column_matches : array();
+	$db_columns = $this->csvImportGetDbColumns();
+?>
+	<ul class="file_columns">
+		<? foreach ($file_columns as $index=>$column):
+			$internal_name = $index.'|'.(post('first_row_titles') ? $column : null);
+		
+			$is_hidden = false;
+			foreach ($hidden_columns as $hidden_column)
+			{
+				$is_hidden = $this->csvImportIsNameMatch($column, $index, $hidden_column);
+				if ($is_hidden)
+					break;
+			}
+			
+			$matches = array();
+			foreach ($column_matches as $match_column_name=>$db_matches)
+			{
+				if ($this->csvImportIsNameMatch($column, $index, $match_column_name))
+				{
+					$matches = $db_matches;
+					break;
+				}
+			}
+
+		?>
+			<li class="file_column <?= $is_hidden ? 'hidden' : null ?> <?= $matches ? 'match' : null ?>">
+				<span class="column_name">
+					<a href="#" title="Ignore this column" class="ignore_column" onclick="return import_manager.hide_file_column(this)">Ignore this column</a>
+					<span><a href="#" onclick="return import_manager.show_column_data(<?= $index ?>)"><?= post('first_row_titles') ? h($this->csvImportGetViewColumnName($column)) : 'Column #'.($index+1) ?></a></span>
+				</span>
+				<ul class="drop_container">
+					<? 
+						foreach ($matches as $match)
+						{
+							$db_column = isset($db_columns[$match]) ? $db_columns[$match] : null;
+							if (!$db_column)
+								continue;
+
+							$this->csvImportRenderPartial('db_column', array('column'=>$db_column, 'column_match_value'=>$db_column->dbName, 'column_match_name'=>'column_match['.$internal_name.'][]'));
+						}
+					?>
+				</ul>
+				<div class="clear"></div>
+				<input type="hidden" value="<?= $index ?>" class="file_column_index"/>
+				<input type="hidden" class="file_column_name" value="<?= post('first_row_titles') ? h($column) : null ?>"/>
+				<input type="hidden" class="file_column_display_name" value="<?= post('first_row_titles') ? h($this->csvImportGetViewColumnName($column)) : 'Column #'.($index+1) ?>"/>
+				
+				<input type="hidden" name="hidden_column[<?= $internal_name ?>]" value="<?= $is_hidden ? '1' : null ?>" class="hidden_column"/>
+			</li>
+		<? endforeach ?>
+	</ul>
+<? endif ?>
+<input type="hidden" id="import_csv_preview_field_index" name="import_csv_preview_field_index" value=""/>

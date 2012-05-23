@@ -1,0 +1,27 @@
+<div id="visit_stats">
+	<? $this->renderPartial('visit_stats') ?>
+</div>
+
+<? 
+	$reports = $this->getVisibleReportsInfo();
+?>
+
+<?= Phpr_Form::openTag(array('id'=>'dashboard_reports_form')) ?>
+	<ul class="dashboard_reports" id="dashboard_reports">
+		<? 
+			$index = 0;
+			foreach ($reports as $code=>$report_info):
+				if (!isset($report_info['partial']) || !file_exists($report_info['partial']))
+					continue;
+
+				$index++;
+			?>
+			<li class="<?= $index % 2 ? null : 'even' ?>">
+				<a class="remove_button" href="#" onclick="return dashboard_hide_report(this)" title="Hide report">Hide</a>
+				<input type="hidden" name="visible_reports[]" value="<?= h($code) ?>"/>
+
+				<div class="container"><? $this->renderPartial($report_info['partial']) ?></div>
+			</li>
+		<? endforeach ?>
+	</ul>
+</form>

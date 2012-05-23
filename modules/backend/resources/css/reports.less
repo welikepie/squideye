@@ -1,0 +1,328 @@
+@import "../../../../phproad/resources/css/common.less";
+
+h2.reportPageHeader {
+	float: left;
+	font-size: 2.5em;
+}
+
+h2 span.report_details {font-size: 11px;}
+
+div#visit_stats {padding-bottom: 1em;}
+
+div#report_totals .scoreboardReport {
+	padding-bottom: 0;
+}
+
+/*
+ * Reports layout
+ */
+
+.report_layout {
+	border-collapse: collapse;
+	width: 100%;
+	
+	td {
+		vertical-align: top;
+		text-align: left;
+	}
+}
+
+.report_content {
+	padding-left: 1.5em;
+	
+	.header h3 {
+		font-size: 15px;
+		color: #333;
+		font-weight: normal;
+		float: left;
+		padding-bottom: 0.5em;
+		padding-top: 3px;
+	}
+
+	.scoreboardReport {margin-top: 1.5em;}
+	
+	.substitution {
+		background: #eee;
+	}
+}
+
+/*
+ * Report list
+ */
+
+.report_list {
+	width: 150px;
+	
+	h2.section-title {
+		font-weight: normal;
+		color: #333;
+		padding: 15px 0 10px 0;
+		background-image: none;
+		margin-right: 35px;
+		
+		&.first {
+			padding-top: 5px;
+		}
+	}
+	
+	.sidebar-selector {
+		&.list-section {
+			background-position: 10px top;
+		}
+	} 
+}
+
+/*
+ * Interval selector
+ */
+
+.interval_selector {
+	float: right;
+	background: #f6f6f6;
+	border: 1px solid #cccccc;
+	position: relative;
+	padding-right: 21px;
+	
+	h4 {
+		color: #666;
+		padding: 0.3em 0.6em 0.2em;
+		font-size: 1.2em;
+		font-weight: normal;
+		
+		span.interval {
+			color: #444;
+			font-size: 1.5em;
+			font-weight: bold;
+			margin-top: 0.05em;
+			display: block;
+		}
+	}
+
+	a.trigger {
+		display: block;
+		position: absolute;
+		text-indent: -10000em;
+		background: #f0f0f0 url(../images/interval_selector.gif) no-repeat center center;
+		border-left: 1px solid #cccccc;
+		width: 20px;
+		height: 100%;
+		right: 0;
+		top: 0;
+		outline: none;
+	}
+
+	div.datePickerWrapper {
+		margin-right: -1px;
+		width: 490px;
+	}
+
+	.control_panel {
+		height: 2.1em;
+		margin-top: 0.5em;
+		border-top: 1px dotted #ccc;
+		
+		.last {margin-right: 0!important;}
+	}
+
+	.calendar_button {
+		margin-top: 0.4em;
+		margin-right: 0.5em;
+		float: right;
+		padding: 0.4em 0.5em 0.3em 0.5em;
+		background: #AAA;
+		color: white!important;
+		text-decoration: none;
+		font-size: 1.1em;
+		
+		&:hover {background-color: #cc9933;}
+	}
+
+	div.datePickerSliderConainer {border: 1px solid #ccc!important;}
+
+	div.type_selector {
+		float: left;
+		width: 80px;
+		
+		h5 {
+			font-size: 1.2em;
+			font-weight: bold;
+			color: #666666;
+			margin-bottom: 0.5em;
+		}
+		
+		p {
+			font-size: 1.1em;
+			padding: 0 0 0.2em 0;
+			margin: 0;
+			
+			a {
+				display: block;
+				color: #666666;
+				padding: 1px 0 1px 5px;
+				margin-left: -5px;
+				text-decoration: none;
+				outline: none;
+				
+				&:hover {
+					background: #3E99CA!important;
+					color: white!important;
+				}
+				
+				&.current {
+					font-weight: bold;
+					color: #333;
+					background: transparent url(../images/interval_marker.gif) no-repeat right center;
+				}
+			}
+		}
+	}
+
+	div.picker_panel {
+		float: right;
+		height: 142px;
+		border-left: 1px dotted #ccc;
+		padding-left: 10px;
+		width: 372px;
+		
+		label {
+			font-size: 1.1em;
+			margin-right: 1em;
+			color: #333;
+		}
+
+		label.to {margin-left: 1em;}
+	}
+}
+
+/*
+ * Filter list
+ */
+
+div.filters_container .filters h5 {margin-top: -2em;}
+
+/*
+ * Chart controls
+ */
+
+div.chart_controls {
+	padding-bottom: 1em;
+	
+	.controls li {
+		float: left;
+		font: normal 1.1em Arial, Verdana, sans-serif;
+		margin-right: 0.5em;
+
+		label {
+			margin-top: 0.3em;
+			float: left;
+			color: #333;
+		}
+	}
+}
+
+ul.chart_selector {
+	float: right;
+	
+	li {
+		float: left;
+		padding: 2px;
+		margin-left: 3px;
+		
+		&.button {border: 1px solid #ccc;}
+		&.label {
+			font: normal 1.1em Arial, Verdana, sans-serif;
+			padding-top: 0.3em;
+			color: #333333;
+		}
+		
+		a {
+			text-indent: -1000000em;
+			width: 16px;
+			height: 14px;
+			background-repeat: no-repeat;
+			background-position: left top;
+			float: left;
+			outline: none;
+		}
+
+		&.stacked_column a {
+			background-image: url(../images/chart_stacked_column_inactive.gif);
+			&.current {background-image: url(../images/chart_stacked_column.gif);}
+		}
+
+		&.line a {
+			background-image: url(../images/chart_line_inactive.gif);
+			&.current {background-image: url(../images/chart_line.gif);}
+		}
+
+		&.pie a {
+			background-image: url(../images/chart_pie_inactive.gif);
+			&.current {background-image: url(../images/chart_pie.gif);}
+		}
+
+		&.column a {
+			background-image: url(../images/chart_column_inactive.gif);
+			&.current {background-image: url(../images/chart_column.gif);}
+		}
+	}
+}
+
+ul.time_unit_selector {
+	float: right;
+	margin-right: 1em;
+	font: normal 1.1em Arial, Verdana, sans-serif;
+	
+	li {
+		padding-top: 0.1em;
+		float: left;
+		color: #333333;
+		margin-left: 0.3em;
+
+		&.current {font-weight: bold;}
+	}
+}
+
+p.chartNote {
+	margin-top: 1em;
+	margin-bottom: 1em;
+	padding: 0.6em 1em 0.6em 33px;
+	background: #eaeaea url('../images/chart_note.gif') no-repeat 9px 0.7em;
+	border: 1px solid #DDDDDD;
+}
+
+/*
+ * Report container
+ */
+
+div.flashcontent {
+	height: 100%;
+	position: relative;
+
+	span {
+		font-size: 1.2em;
+		color: #333;
+	}
+}
+
+div.chart_container {
+	position: relative;
+	height: 300px;
+	
+	.handle {
+		height: 5px;
+		width: 100%;
+		background-color: #ccc;
+		cursor: move;
+		bottom: 0;
+	}
+}
+
+#report_records {margin-top: 5px;}
+
+.report_records td.checkbox, 
+.report_records th.checkbox {
+	display: none;
+}
+
+.webkit .interval_selector .control_panel {height: 20px!important;}
+.opera .interval_selector .control_panel {height: 18px!important;}

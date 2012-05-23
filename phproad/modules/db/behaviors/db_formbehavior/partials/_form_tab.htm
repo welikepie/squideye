@@ -1,0 +1,37 @@
+<? 
+	$collapsable = $this->formListCollapsableElements($form_tab_elements);
+	$non_collapsable = $this->formListNonCollapsableElements($form_tab_elements);
+
+	if ($collapsable):
+		$visible = $this->formIsCollapsableAreaVisible($tab_index);
+?>
+	<div class="form-collapsable-area <?= $visible ? null : 'collapsed' ?>">
+		<div class="form-collapsable-area-content">
+			<ul class="formElements">
+			<? foreach ($collapsable as $element): ?>
+				<? 
+					if ($this->form_preview_mode && $element instanceof Db_FormFieldDefinition && $element->noPreview)
+				 		continue;
+				?>
+	
+				<? $this->formRenderPartial('form_element', array('form_element'=>$element)) ?>
+			<? endforeach ?>
+			</ul>
+			<div class="clear"></div>
+		</div>
+		
+		<span class="collapse-control tooltip" title="<?= $visible ? 'Hide' : 'Show' ?>" onclick="$(this).getForm().sendPhpr('<?= $this->getEventHandler('onFormToggleCollapsableArea') ?>', {extraFields: {'collapsable_tab_index': '<?= $tab_index ?>', 'current_expand_status': '<?= $visible ? 1 : 0 ?>'}, loadIndicator: {show: false}}); phpr_update_collapsable_status(this)"><?= $visible ? 'Hide' : 'Show' ?></span>
+	</div>
+<? endif ?>
+
+<ul class="formElements">
+<? foreach ($non_collapsable as $element): ?>
+	<? 
+		if ($this->form_preview_mode && $element instanceof Db_FormFieldDefinition && $element->noPreview)
+	 		continue;
+	?>
+	
+	<? $this->formRenderPartial('form_element', array('form_element'=>$element)) ?>
+<? endforeach ?>
+</ul>
+<div class="clear"></div>

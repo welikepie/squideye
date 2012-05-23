@@ -1,0 +1,24 @@
+<? if ($index == 0 && $can_manage_comments): ?>
+	<div class="row_controls hidden">
+		<div class="content">
+			<ul>
+				<li class="default">
+					<a href="<?= $url.'?'.uniqid() ?>">Preview</a>
+					<div class="handle"></div>
+				</li>
+
+				<? if ($model->status_code == Blog_Comment_Status::status_new): ?>
+					<li><a href="#" onclick="new Event(event).stop(); return update_comment_status(this, '<?= $model->id ?>', 'Do you really want to approve this comment?', '<?= Blog_Comment_Status::status_approved ?>')">Approve</a></li>
+				<? endif ?>
+
+				<? if ($model->status_code != Blog_Comment_Status::status_deleted): ?>
+					<li><a href="#" onclick="new Event(event).stop(); return update_comment_status(this, '<?= $model->id ?>', 'Do you really want to delete this comment?', '<?= Blog_Comment_Status::status_deleted ?>')">Delete</a></li>
+				<? else: ?>
+					<li><a href="#" onclick="new Event(event).stop(); return update_comment_status(this, '<?= $model->id ?>', 'Do you really want to restore this comment?', '<?= Blog_Comment_Status::status_approved ?>')">Restore</a></li>
+				<? endif ?>
+			</ul>
+			<div class="clear"></div>
+		</div>
+	</div>
+	<div id="comment_<?= $model->id ?>"></div>
+<? endif ?>

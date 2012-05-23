@@ -1,0 +1,19 @@
+<? Phpr_View::beginBlock("head") ?>
+	<link rel="stylesheet" href="phproad/modules/db/behaviors/db_formbehavior/resources/css/forms.css" type="text/css"/>
+<? Phpr_View::endBlock() ?>
+
+<? Phpr_View::beginBlock("view") ?>
+	<?= flash() ?>
+
+	<ul class="imageItemList offsetTop">
+		<li>
+			<div>
+				<img src="modules/system/resources/images/full_page.png" alt="Access log"/>
+				<h3><a href="<?= url('system/access_log') ?>">Access Log</a></h3>
+				<p>A list of successful user logins.</p>
+				<div class="clear"></div>
+			</div>
+		</li>
+	</ul>
+	<div class="clear"></div>
+<? Phpr_View::endBlock() ?>

@@ -1,0 +1,21 @@
+TinyMCE misses two features required for LemonStand. Those features have been added (hacked) to editor_template_src.js and editor_template.js files of the advanced theme.
+
+1. Custom cookie name for saving editor size. 
+
+Line 86 (function init) - added default value:
+
+    theme_advanced_resizing_cookie_name : null, // Cookie name for storing the editor size
+
+Line 661 (function renderUI) - used cookie name value and invoked theme_advanced_after_resize callback:
+
+    ed.execCallback("theme_advanced_after_resize", s);
+    var cookie_name = s.theme_advanced_resizing_cookie_name ? s.theme_advanced_resizing_cookie_name : "TinyMCE_" + ed.id + "_size";
+    Cookie.setHash(cookie_name, {
+        cw : w,
+        ch : h
+    });
+
+Line 882 (function _addStatusBar) - used cookie name value:
+
+    cookie_name = s.theme_advanced_resizing_cookie_name ? s.theme_advanced_resizing_cookie_name : "TinyMCE_" + ed.id + "_size",
+    o = Cookie.getHash(cookie_name), c = DOM.get(ed.id + '_tbl');

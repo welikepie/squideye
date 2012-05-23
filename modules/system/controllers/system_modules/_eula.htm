@@ -1,0 +1,48 @@
+<? $data = Core_EulaManager::get_saved_eula_data() ?>
+
+<div class="license-agreement">
+	<div class="hint">
+		<p class="last">
+			The LemonStand End User License Agreement has changed. Please carefully read it. You must accept the new EULA before updating the Software.
+		</p>
+	</div>
+
+	<p class="agreement-content"><?= nl2br(h($data['c'])) ?></p>
+
+	<div class="form">
+		<div class="form_page">
+			<ul class="formElements">
+				<li class="field checkbox full">
+					<label for="agree">I agree with all the Terms of the License Agreement</label>
+
+					<div class="fieldContainer">
+						<input type="checkbox" class="checkbox" value="1" name="agree" id="agree">
+					</div>
+
+					<div class="clear"></div>
+				</li>
+			</ul>
+			<div class="clear"></div>
+		</div>
+	</div>
+
+	<?= backend_ajax_button(
+		'Continue', 
+		'index_onContinueEula', 
+		array(), "
+			loadIndicator: {injectInElement: true}, 
+			prepareFunction: function(){allow_onload=false;}, 
+			onBeforeScriptEval: function(){allow_onload=true;},
+			onFailure: popupAjaxError,
+			preCheckFunction: function(){ 
+				if (!$('agree').checked) {
+					alert('You must agree to the License Agreement to continue.');
+					return false;
+				} 
+				return true;
+			}
+	") ?>
+	
+	<?= backend_button('Close', array('onclick'=>'return cancelPopup()')) ?>
+</div>
+<input type="hidden" name="force" value="<?= isset($force) ? $force : 0 ?>"/>

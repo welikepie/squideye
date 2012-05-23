@@ -1,0 +1,11 @@
+<div class="toolbar">
+	<? if ($configured && !(isset($configError) && $configError)): ?>
+		<?= backend_ctr_button('Create archive', 'new_document', url('/system/backup/create')) ?>
+		<?= backend_ctr_button('Restore data from file', 'document_import', url('/system/backup/filerestore')) ?>
+	<? endif ?>
+	<div class="separator">&nbsp;</div>
+	<?= backend_ctr_button('Delete selected', 'delete_document', array('href'=>'#', 'onclick'=>"return delete_selected()")) ?>
+	<div class="separator">&nbsp;</div>
+	<?= backend_ctr_button('Configure backup system', 'congif', url('/system/backup/setup')) ?>
+	<div class="clear"></div>
+</div>

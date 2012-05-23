@@ -1,0 +1,21 @@
+<div class="form">
+	<? $this->formRenderFieldContainer($form_model, 'csv_file'); ?>
+	
+	<ul class="formElements">
+		<li class="field checkbox offsetTop">
+			<label for="first_row_titles">First row in the CSV file contains column titles</label>
+			<div class="fieldContainer ">
+				<input type="hidden" class="checkbox" value="" name="first_row_titles"/>
+				<input onclick="import_manager.on_first_row_updated(this)" type="checkbox" class="checkbox" value="1" name="first_row_titles" id="first_row_titles" checked="checked"/>
+			</div>
+
+			<p class="minorCommentAfter">Use this checkbox if the first row in your CSV file contains column titles. Then it will be ignored during the import.</p>
+			<div class="clear"></div>
+		</li>
+	</ul>
+</div>
+
+<input name="edit_session_key" id="<?= $this->formGetElementId('form_session_key', get_class($form_model)) ?>" type="hidden" value="<?= $form_session_key ?>"/>
+<input type="hidden" name="form_unique_prefix" class="form_unique_prefix" value="<?= $this->formGetUniquePrefix() ?>"/>
+<input type="hidden" name="phpr_uploader_model_class" value="<?= $this->csv_import_config_model_class ?>"/>
+<input type="hidden" value="<?= $this->getEventHandler('')?>" id="csv_import_handler_name"/>

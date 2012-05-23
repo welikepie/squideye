@@ -1,0 +1,7 @@
+<li>
+	<span class="<?= $this->csvImportIsRequired($column) ? 'required' : null ?>">
+		<?= h(strlen($column->listTitle) ? $column->listTitle : $column->displayName) ?>
+		<input type="hidden" class="db_column_name" value="<?= $column->dbName ?>"/>
+		<input type="hidden" class="column_match" value="<?= isset($column_match_value) ? $column_match_value : null ?>" <? if (isset($column_match_name) && $column_match_name): ?>name="<?= $column_match_name ?>"<? endif ?>/>
+	</span>
+</li>

@@ -1,0 +1,79 @@
+<? Phpr_View::beginBlock("head") ?>
+	<script type="text/javascript" src="modules/blog/resources/javascript/preview.js"></script>
+<? Phpr_View::endBlock() ?>
+
+<? Phpr_View::beginBlock("view") ?>
+	<ul class="breadcrumbs">
+		<li><a href="<?= url('/blog/posts') ?>">Posts</a></li>
+		<li><?= $this->app_page_title ?></li>
+	</ul>
+	
+	<? if (!isset($fatalError)): ?>
+
+		<div class="scoreboardReport">
+			<ul>
+				<li>
+					<h3>Created By</h3>
+					<p><?= h($form_model->created_user_name) ?></p>
+					<p class="description">
+						at: <?= $form_model->displayField('created_at') ?>
+					</p>
+				</li>
+				<? if ($form_model->updated_at): ?>
+					<li>
+						<h3>Last update by</h3>
+						<p><?= h($form_model->updated_user_name) ?></p>
+						<p class="description">
+							at: <?= $form_model->displayField('updated_at') ?>
+						</p>
+					</li>
+				<? endif ?>
+				<li>
+					<h3>Status</h3>
+					<p>
+						<?= $form_model->is_published ? 'Published' : 'Not published' ?>
+					</p>
+					<? if ($form_model->is_published): ?>
+						<p class="description">
+							publish date: <?= $form_model->displayField('published_date') ?>
+						</p>
+					<? endif ?>
+				</li>
+				<li class="last">
+					<h3>Comments</h3>
+					<p>
+						<?= $form_model->comment_num ?>
+					</p>
+					<? if ($form_model->is_published): ?>
+						<p class="description">
+							email subscribers: <?= $form_model->displayField('email_subscribers') ?>
+						</p>
+					<? endif ?>
+				</li>
+			</ul>
+			<div class="clear"></div>
+		</div>
+	
+		<div class="form800">
+			<h2 class="separated">Post</h2>
+			
+			<?= Phpr_Form::openTag(array('id'=>'form_element')) ?>
+				<? $this->formRenderPreview() ?>
+
+				<?= backend_button('Return to the post list', url('/blog/posts')) ?>
+				<? if ($can_manage_posts): ?>
+					<?= backend_button('Edit post', array('href'=>url('/blog/posts/edit/'.$form_model->id).'?'.uniqid().'#tab_3', 'class'=>'right')) ?>
+				<? endif ?>
+				<div class="clear"></div>
+			</form>
+			
+			<h2 class="separated offsetTop" id="comments">Comments</h2>
+			
+			<div id="comment_list"><? $this->renderPartial('comment_list') ?></div>
+		</div>
+	<? else: ?>
+		<?= flash() ?>
+		
+		<p><a href="<?= url('/blog/posts') ?>">Return to the post list</a></p>
+	<? endif ?>
+<? Phpr_View::endBlock() ?>

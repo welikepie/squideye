@@ -1,0 +1,16 @@
+<?
+	$listContainerId = $this->formGetElementId('form_attachments_container_'.get_class($form_model).'_'.$dbName); 
+	$baseUrl = $form_field->fileDownloadBaseUrl ? $form_field->fileDownloadBaseUrl : '/ls_backend/files/get/';
+?>
+
+<? if ($form_file_list->count): ?>
+	<ul class="fileList">
+		<? foreach ($form_file_list as $file): ?>
+			<li>
+				<a href="<?= $baseUrl.$file->id.'/'.urlencode($file->name) ?>" target="_blank"><?= h($file->name) ?></a> (<?= Phpr_Files::fileSize($file->size) ?>) | <a href="#" class="hiddenLink" onclick="return $(this).getForm().sendPhpr('<?= $this->getEventHandler('onDeleteFile') ?>', {extraFields: {dbName: '<?= $dbName ?>', fileId: '<?= $file->id ?>'}, confirm: 'Do you really want to delete this file?', update: '<?= $listContainerId ?>', loadIndicator: {show: false}});">delete</a>
+			</li>
+		<? endforeach ?>
+	</ul>
+<? else: ?>
+	<p>There are no files uploaded</p>
+<? endif ?>

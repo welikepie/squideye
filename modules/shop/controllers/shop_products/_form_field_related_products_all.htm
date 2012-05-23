@@ -1,0 +1,23 @@
+<li>
+	<div id="related_list" class="clear relative">
+		<? $this->renderPartial('related_list') ?>
+	</div>
+
+	<p class="addDocument img_noBottomPading"><a href="#" onclick="new PopupForm('onLoadAddRelatedForm', {ajaxFields: $('related_product_id').getForm()}); return false;">Add related product(s)</a></p>
+	<input type="hidden" name="related_product_id" id="related_product_id" value=""/>
+
+	<script type="text/javascript">
+		function updateRelatedList()
+		{
+			$('related_list').getForm().sendPhpr(
+				'onUpdateRelatedList',
+				{
+					update: 'related_list',
+					loadIndicator: {
+						show: false
+					}
+				}
+			)
+		}
+	</script>
+</li>

@@ -1,0 +1,132 @@
+<div id="image_insert_popup">
+	<h2>Insert Image</h2>
+	<div class="content">
+		<div class="form450">
+			<?= Phpr_Form::openTag() ?>
+				<? if (!isset($fatalError)): ?>
+					<div class="image_insert_form">
+						<div class="left">
+							<? if ($thumb_path): ?>
+								<img src="<?= root_url($thumb_path) ?>" alt=""/>
+							<? endif ?>
+						</div>
+						<div class="right">
+							<div class="formFlash"></div>
+
+							<div class="form">
+								<ul class="formElements">
+									<li class="field radio full reference">
+										<label for="Users_User_role_id">Size</label>
+										<div class="fieldContainer">
+											<div class="option">
+												<input checked="checked" type="radio" class="radio" value="orig" name="image_size" id="image_size_full"/>
+												<label for="image_size_full" class="choice">Original size - <?= $width ?> x <?= $height ?></label>
+											</div>
+											<div class="option">
+												<input type="radio" class="radio" value="manual" name="image_size" id="image_size_manual"/>
+												<label for="image_size_manual" class="choice">Specify size</label>
+											</div>
+										</div>
+									</li>
+									
+									<li class="field dropdown left">
+										<label for="image_width_option">Width</label>
+
+										<div class="fieldContainer">
+											<select disabled="disabled" class="image_size_control" name="image_width_option" id="image_width_option">
+													<option value="scale">Scale</option>
+													<option value="exact">Value</option>
+											</select>
+										</div>
+									</li>
+									<li class="field text right">
+										<label for="image_width_value">Value</label>
+
+										<div class="fieldContainer">
+											<input disabled="disabled" type="text" name="image_width_value" id="image_width_value" class="image_size_control number" value="<?= $width ?>"/>
+										</div>
+									</li>
+									
+									<li class="field dropdown left">
+										<label for="image_height_option">Height</label>
+
+										<div class="fieldContainer">
+											<select disabled="disabled" class="image_size_control" name="image_height_option" id="image_height_option">
+													<option value="scale">Scale</option>
+													<option value="exact">Value</option>
+											</select>
+										</div>
+									</li>
+									<li class="field text right">
+										<label for="image_height_value">Value</label>
+
+										<div class="fieldContainer">
+											<input disabled="disabled" type="text" name="image_height_value" id="image_height_value" class="image_size_control number" value="<?= $height ?>"/>
+										</div>
+									</li>
+
+									<li class="field text">
+										<label for="image_alt_text">Image ALT text</label>
+
+										<div class="fieldContainer">
+											<input type="text" name="image_alt_text" id="image_alt_text" class="text" value=""/>
+										</div>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div class="clear"></div>
+					
+					<script type="text/javascript">
+						$('image_insert_popup').addEvent('popupLoaded', function() {
+							$('image_size_full').addEvent('click', function(){
+								$('image_insert_popup').getElements('.image_size_control').each(function(element){
+									element.set('disabled', $('image_size_full').checked);
+									element.select_update();
+								})
+							});
+							$('image_size_manual').addEvent('click', function(){
+								$('image_insert_popup').getElements('.image_size_control').each(function(element){
+									element.set('disabled', !$('image_size_manual').checked);
+								 	$('image_width_value').set('disabled', $('image_width_option').get('value') == 'scale');
+									$('image_height_value').set('disabled', $('image_height_option').get('value') == 'scale');
+									element.select_update();
+								})
+							});
+							
+							$('image_height_option').addEvent('change', function(){
+								$('image_height_value').set('disabled', $('image_height_option').get('value') == 'scale');
+								if ($('image_height_option').get('value') != 'scale')
+									$('image_height_value').focus();
+							});
+							 
+							$('image_width_option').addEvent('change', function(){
+							 	$('image_width_value').set('disabled', $('image_width_option').get('value') == 'scale');
+								if ($('image_width_value').get('value') != 'scale')
+									$('image_width_value').focus();
+							});
+						});
+					</script>
+
+					<?= backend_ajax_button('Add', $insert_action, array(), "
+						loadIndicator: {show: false},
+						onAfterUpdate: function(){
+							filebrowser_insert_image();
+						},
+						update: 'image_file_result'
+					") ?>
+										
+					<?= backend_button('Cancel', array('onclick'=>'return cancelPopup()')) ?>
+					<input type="hidden" name="image_path" value="<?= $image_path ?>"/>
+					<div class="hidden" id="image_file_result"></div>
+					<div class="clear"></div>
+				<? else: ?>
+					<?= flash() ?>
+					<?= backend_button('Cancel', array('onclick'=>'return cancelPopup()')) ?>
+					<div class="clear"></div>
+				<? endif ?>
+			</form>
+		</div>
+	</div>
+</div>

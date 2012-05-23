@@ -1,0 +1,54 @@
+<div id="find_record_form">
+	<h2><?= $title ?></h2>
+	<div class="content">
+		<div class="form700 relative">
+			<?= Phpr_Form::openTag() ?>
+				<? if (!isset($fatalError)): ?>
+					<div class="embeddedList search700">
+						<?
+							$listOptions = $this->formPrepareRecordFinderList($model, $formField);
+						?>
+		
+						<?= $this->listRender($listOptions) ?>
+					</div>
+
+					<input type="hidden" name="record_finder_flag" id="record_finder_flag" value="1"/>
+					<input type="hidden" name="db_name" value="<?= $db_name ?>"/>
+				
+					<?= backend_button('Cancel', array('onclick'=>'return cancelPopup()')) ?>
+					
+					<script type="text/javascript">
+						$('find_record_form').addEvent('popupLoaded', function(){
+							window.recordFinderRecordClicked = false;
+						});
+					
+						function recordFinderUpdateRecord(recordId)
+						{
+							if (window.recordFinderRecordClicked)
+								return;
+							
+							window.recordFinderRecordClicked = true;
+							
+							$('record_finder_flag').getForm().sendPhpr('<?= $this->getEventHandler('onSetRecordFinderRecord')?>', {
+								extraFields: {'recordId': recordId},
+								update: '<?= $this->formGetRecordFinderContainerId(get_class($model), post('db_name')) ?>',
+								loadIndicator: {show: true, injectInElement: true},
+								onSuccess: function() {
+									window.fireEvent('phpr_recordfinder_update', ['<?= $columnName ?>']);
+									cancelPopup();
+								}
+							});
+							
+							return false;
+						}
+					</script>
+				<? else: ?>
+					<?= flash() ?>
+					<?= backend_button('Cancel', array('onclick'=>'return cancelPopup()')) ?>
+					<div class="clear"></div>
+				<? endif ?>
+				<div class="clear"></div>
+			</form>
+		</div>
+	</div>
+</div>

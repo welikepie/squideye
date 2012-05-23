@@ -1,0 +1,89 @@
+<?
+	$fieldId = $this->formGetElementId($form_model_class.'_'.$form_field->dbName);
+	$bodyId = $fieldId.'body';
+	$disabled_id = $fieldId.'_editing_disabled';
+
+	$fieldName = $form_model_class.'['.$form_field->dbName.'][%row%][%column%]';
+	$disabledFieldName = $form_model_class.'['.$form_field->dbName.'][disabled]';
+	$serializedFieldName = $form_model_class.'['.$form_field->dbName.'][serialized]';
+
+	$data = $form_model->$dbName;
+	if (!is_array($data) || !count($data))
+	{
+		$data = array();
+		
+		$row = array();
+		foreach ($form_field->gridColumns as $code=>$info)
+			$row[] = null;
+
+		for ($i = 1; $i <= 3; $i++)
+			$data[] = $row;
+	}
+	
+	$row_num = count($data);
+	$row_indexes = array_keys($data);
+	
+	$last_index = count($form_field->gridColumns)-1;
+	$data_index_is_key = array_key_exists('data_index_is_key', $form_field->gridSettings) ? $form_field->gridSettings['data_index_is_key'] : false;
+
+	$allow_disabling_manual = array_key_exists('allow_disable_manual_edit', $form_field->gridSettings) ? $form_field->gridSettings['allow_disable_manual_edit'] : false;
+?>
+
+<? if ($row_num <= $this->form_grid_max_rows || !$allow_disabling_manual): ?>
+	<table class="grid simpleList" id="<?= $fieldId ?>">
+		<tbody id="<?= $bodyId ?>">
+			<? for ($i = 1; $i <= $row_num; $i++): 
+			?>
+			<tr>
+				<? 
+					$index = 0;
+					foreach ($form_field->gridColumns as $column=>$info): ?>
+					<?
+						$align = array_key_exists('align', $info) ? $info['align'] : 'left';
+						$read_only = array_key_exists('read_only', $info) ? $info['read_only'] : false;
+						$row = $data[$row_indexes[$i-1]];
+						$value = array_key_exists($column, $row) ? $row[$column] : null;
+					
+						$row_index = !$data_index_is_key ? $i : $row_indexes[$i-1];
+			
+						$thisFieldName = str_replace('%row%', $row_index, $fieldName);
+						$thisFieldName = str_replace('%column%', $column, $thisFieldName);
+					?>
+	
+					<td class="<?= $align ?> <?= $read_only ? 'read_only' : null ?> <?= $index == $last_index ? 'last' : null ?>"><div class="container"><? if (!$read_only): ?><input autocomplete="off" id="<?= $fieldId.'_'.$row_index.'_'.$column ?>" name="<?= $thisFieldName ?>" value="<?= h($value) ?>" type="text"/><? else: ?><?= h($value) ?><? endif ?></div></td>
+				<? 
+					$index++;
+					endforeach ?>
+			</tr>
+			<? endfor ?>
+		</tbody>
+	</table>
+<? else: ?>
+	<p class="noData">We're sorry, but the table contains too many rows to be displayed. The maximum displayed rows is <?= $this->form_grid_max_rows ?>. Manually editing this table has been disabled due to performance considerations. Please continue editing and uploading the CSV file to manage the content. You can save this table at any time below.</p>
+	
+	<input type="hidden" id="<?= $disabled_id ?>" value="1" name="<?= $disabledFieldName ?>"/>
+	
+	<? 
+		$values = array();
+		for ($i = 1; $i <= $row_num; $i++)
+		{
+			foreach ($form_field->gridColumns as $column=>$info)
+			{
+				$row = $data[$row_indexes[$i-1]];
+				$row_index = !$data_index_is_key ? $i : $row_indexes[$i-1];
+
+				$value = array_key_exists($column, $row) ? $row[$column] : null;
+
+				$read_only = array_key_exists('read_only', $info) ? $info['read_only'] : false;
+				if ( !$read_only )
+				{
+					if (!array_key_exists($row_index, $values))
+						$values[$row_index] = array();
+
+					$values[$row_index][$column] = $value;
+				}
+			}
+		}
+	?>
+	<input type="hidden" name="<?= $serializedFieldName ?>" value="<?= h(serialize($values)) ?>"/>
+<? endif ?>

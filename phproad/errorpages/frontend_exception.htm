@@ -1,0 +1,10 @@
+<p>We're sorry, something went wrong. Please contact customer support.</p>
+
+<? if(Phpr::$config->get('DISPLAY_ERROR_LOG_ID') && isset($error->log_id)): ?>
+	<p>Include this log ID number: <?= $error->log_id ?>.</p>
+<? endif ?>
+
+<? if(Phpr::$config->get('DISPLAY_ERROR_LOG_STRING')): ?>
+	<h4>Encrypted error details</h4>
+	<p><?= implode("<br />", str_split(Phpr_ErrorLog::encode_error_details($error), 64)) ?></p>
+<? endif ?>

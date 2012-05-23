@@ -1,0 +1,97 @@
+<div class="medium">
+	<h2>List Setup</h2>
+	<div class="content">
+		<p <? if (count($columns) <= 10): ?>class="dashSeparator"<? endif ?>>Use checkboxes to select columns you want to see in the list. You can change position of columns by dragging them up or down.</p>
+
+		<?= Phpr_Form::openTag(array('id'=>$this->listGetPopupFormId())) ?>
+			<? if (count($columns) > 10): ?>
+				<div class="listColumnsScroller">
+			<? endif ?>
+
+			<ul class="simpleList checkboxes sortable" id="listColumnsList">
+				<? foreach ($columns as $column): ?>
+				<?
+					$inVisibleList = in_array($column->dbName, $visibleColumns);
+					$inInvisibleList = in_array($column->dbName, $invisibleColumns); 
+
+					$isVisible = $inVisibleList || !$inInvisibleList;
+					if (!$inVisibleList && !$inInvisibleList && !$column->defaultVisible)
+						$isVisible = false;
+
+				?>
+					<li>
+						<input value="1" name="list_visible_colums[<?= $column->dbName ?>]" type="checkbox" <?= Phpr_Form::checkboxState($isVisible) ?>/><?= strlen($column->listTitle) ? h($column->listTitle) : h($column->displayName) ?>
+						<input value="<?= $column->dbName ?>" name="ordered_list[]" type="hidden"/>
+					</li>
+				<? endforeach ?>
+			</ul>
+			
+			<? if (count($columns) > 10): ?>
+				</div>
+			<? endif ?>
+			
+			<? if (!$this->list_render_as_tree && !$this->list_no_interaction && !$this->list_no_pagination): ?>
+				<div class="form">
+					<ul class="formElements">
+						<li class="field dropdown full">
+							<label for="list_recordsperpage">
+								Records per page
+								<span class="comment">Select the number of records per page to display. Please note that high number of records on a single page can reduce LemonStand's performance.</span>
+							</label>
+
+							<div class="fieldContainer">
+								<select name="records_per_page" id="list_recordsperpage" autocomplete="off">
+									<?
+										$records_per_page_options = array(20, 40, 80, 100, 120);
+										if (!in_array($records_per_page, $records_per_page_options))
+											$records_per_page_options[] = $records_per_page;
+									
+										sort($records_per_page_options);
+									
+										foreach ($records_per_page_options as $option_value):
+									?>
+										<option <?= option_state($option_value, $records_per_page) ?> value="<?= $option_value ?>"><?= $option_value ?></option>
+									<? endforeach ?>
+								</select>
+							</div>
+
+							<div class="clear"></div>
+						</li>
+					</ul>
+				</div>
+			<? endif ?>
+		</form>
+		
+		<script type="text/javascript">
+			new Sortables11('listColumnsList', {
+				onDragStart: function(element, ghost){
+					ghost.destroy();
+					element.addClass('drag');
+				},
+				onDragComplete: function(element, ghost){
+					element.removeClass('drag');
+					this.trash.destroy();
+				}				
+			});
+		</script>
+		
+		<?= backend_button('Save', 
+			array('onclick'=>"return cancelPopup()"), 
+			$this->getEventHandler('onApplyListSettings'), "
+				update: '{$this->listGetContainerId()}',
+				onSuccess: function(){\$('".$this->listGetContainerId()."').fireEvent('listUpdated')},
+				loadIndicator: {
+					element: '{$this->listGetContainerId()}',
+					src: '{$list_load_indicator}',
+					hideOnSuccess: 1,
+					show: false
+				},
+				onBeforePost: LightLoadingIndicator.show.pass('Loading...'), onComplete: LightLoadingIndicator.hide
+			",
+			$this->listGetPopupFormId() 
+		) ?>
+
+		<?= backend_button('Cancel', array('onclick'=>'return cancelPopup()')) ?>
+		<div class="clear"></div>
+	</div>
+</div>

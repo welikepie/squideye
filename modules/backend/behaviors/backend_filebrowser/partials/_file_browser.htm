@@ -1,0 +1,10 @@
+<?= Phpr_Form::openTag(array('id'=>null)) ?>
+	<div class="filebrowser_container" id="file_browser">
+		<? $this->filebrowserRenderPartial('file_browser_content') ?>
+	</div>
+	<? if ($this->filebrowser_absoluteUrls): ?>
+		<input type="hidden" id="file_browser_root_url" value="<?= h(Phpr::$request->getRootUrl()) ?>"/>
+	<? else: ?>
+		<input type="hidden" id="file_browser_root_url" value=""/>
+	<? endif ?>
+</form>

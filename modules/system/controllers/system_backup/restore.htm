@@ -1,0 +1,47 @@
+<? Phpr_View::beginBlock("view") ?>
+	<ul class="breadcrumbs">
+		<li><a href="<?= url('system/backup') ?>">Backup or Restore</a></li>
+		<li><a href="<?= url('system/backup/preview/'.$archive_id) ?>">Archive</a></li>
+		<li><?= $this->app_page_title ?></li>
+	</ul>
+	
+	<?= flash() ?>
+
+	<? if (isset($fatalError)): ?>
+		<p><a href="<?= url('/system/backup/preview/'.$id)?>">Return to the archive preview page.</a></p>
+	<? else: ?>
+		<div class="form400">
+			<div class="scoreboardReport">
+				<ul>
+					<li class="last">
+						<h3>Archive</h3>
+						<p><?= $archive->displayField('created_at') ?></p>
+						<p class="description">
+							User: 
+							<? 
+								$userName = $archive->displayField('created_user_name');
+								if (strlen($userName))
+									echo h($userName);
+								else 
+									echo "system";
+							?>
+						</p>
+					</li>
+				</ul>
+				<div class="clear"></div>
+			</div>
+		
+			<?= Phpr_Form::openTag() ?>
+				<div class="formFlash"></div>
+			
+				<p><strong>Important!</strong> Data from the archive will replace all records in the database, including sales data, license information and user accounts.</p>
+				<p>LemonStand automatically creates a backup archive before restoring data. The archive file will be placed to the <strong><?= System_Backup_Params::get()->backup_path ?></strong> folder. The archive file name has the <strong>before_restore</strong> prefix.
+				</p>
+
+				<?= backend_button('Cancel', url('/system/backup/preview/'.$archive->id)) ?>
+				<?= backend_ajax_button('Restore data', 'restore_onRestore', array('class'=>'right'), "confirm: 'Do you really want to restore data from the archive?'") ?>
+				<div class="clear"></div>
+			</form>
+		</div>
+	<? endif ?>
+<? Phpr_View::endBlock() ?>

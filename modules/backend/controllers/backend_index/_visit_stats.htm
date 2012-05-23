@@ -1,0 +1,38 @@
+<div class="button_header separated">
+	<h2>Statistics for last 7 days</h2>
+	
+	<a href="#" class="organize_btn" onclick="new PopupForm('index_onDashboardSetup'); return false;"></a>
+	
+	<div class="clear"></div>
+</div>
+
+<?= Phpr_Form::openTag(array('id'=>'dashboard_indicators_form')) ?>
+	<div class="scoreboardReport">
+		<?
+			$statistics = $this->evalStatistics();
+			$indicators = $this->getVisibleIndicatorsInfo();
+			$indicator_num = count($indicators);
+			$index = -1;
+		?>
+
+		<ul id="visits_stats">
+			<? foreach ($indicators as $code=>$indicator_info): 
+				if (!isset($indicator_info['partial']) || !file_exists($indicator_info['partial']))
+					continue;
+
+				$index++;
+			?>
+				<li class="<?= $index == ($indicator_num-1) ? 'last' : null ?>">
+					<a class="remove_button" href="#" onclick="return dashboard_hide_indicator(this)" title="Hide indicator">Hide</a>
+					<input type="hidden" name="visible_indicators[]" value="<?= h($code) ?>"/>
+					<? $this->renderPartial($indicator_info['partial'], array('statistics'=>$statistics)) ?>
+				</li>
+			<? endforeach ?>
+
+			<? if (!$indicator_num): ?>
+				<li class="no_data"><p>&lt;no indicators added&gt;</p></li>
+			<? endif ?>
+		</ul>
+		<div class="clear"></div>
+	</div>
+</form>

@@ -1,0 +1,18 @@
+#1 Created users and rights tables
+#3 Created group description field
+#4 Created user groups
+#5 Created admin user
+#7 Created create/update footprints in the users table
+#8 Added user permissions table
+#9 Added user last login field
+#10 Improved password restore feature
+#11 Minor fixes in the base classes
+#12 Technology update
+#13 Minor update in the module naming
+#14 Added some database indexes
+#15 Technology update
+#16 Minor update in the user management
+#17 Minor update in the bases classes
+#18 Added Photo field to the User form
+#19 Added new API events: core:onExtendUserModel, core:onExtendUserForm
+#20 Added new API event: core:onGetUserFieldOptions

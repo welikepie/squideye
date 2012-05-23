@@ -1,0 +1,178 @@
+#1 Created report dates table and data
+#2 The LemonStand logo now is a link to the website root
+#3 Added "Override existing files" checkbox to the resource file uploader
+#4 Popup forms appearance improved
+#5 Added loading indicator in the file upload form
+#6 Resource files are now reloading after application update
+#7 Minor change in the upload form
+#8 Added a separate permission control for the dashboard page
+#9 Fixed minor bug in the menu links
+#10 Minor improvement in the header appearance
+#11 Popup windows appearance improved
+#12 Added available updates message
+#13 Fixed minor error in the email configuration form
+#14 Minor fix in the flash-based reports
+#15 Minor update in the user interface
+#16 Subdirectories support 
+#17 Minor improvements in the lists appearance
+#18 Minor improvements in the user interface
+#19 Minor fixes in the tree view styling
+#20 Minor improvements in the user interface
+#21 Minor fix in the back-end AJAX error highlighting feature
+#22 Minor improvements in the user interface
+#23 Updates in the system configuration warnings
+#24 Added scrolling on the checkbox list fields
+#25 Fixed minor error which was causing exception on the Dashboard page 
+#26 Global hint system added
+#27 Minor improvements in the dashboard appearance
+#28 Integrated the CodeMirror syntax highlighter
+#29 Added some details to the shipping configuration warning message
+#30 Minor improvements in the administration area design
+#31 Minor improvement in the administration area design
+#32 Minor improvement in the administration area appearance
+#33 Added the CSV import feature
+#34 The CSV import now treats the "y" value as ON for boolean-type columns.
+#35 Minor improvements in the Administration Area user interface
+#36 Improvements in the popup hints user interface
+#37 Minor improvements in the Administration Area user interface
+#38 Minor improvements in the Administration Area user interface
+#39 Minor improvements in the Administration Area JavaScript engine
+#40 Minor improvements in the Administration Area user interface
+#41 Minor improvements in the Administration Area user interface
+#42 Minor improvements in the Administration Area user interface
+#43 Minor improvements in the Administration Area user interface
+#44 More Dashboard configuration options added
+#45 Minor fix in the dashboard report
+#46 Minor update on the Dashboard page
+#47 Minor improvement in the Administration Area user interface
+#48 Minor improvement in the Administration Area user interface
+#49 Minor improvement in the Administration Area user interface
+#50 Minor improvement in the Administration Area user interface
+#51 Minor improvement in the Administration Area user interface
+#52 Minor improvement in the Administration Area user interface
+#53 Minor improvement in the Administration Area user interface
+#54 Minor improvement in the Administration Area user interface
+#55 Minor improvement in the Administration Area user interface
+#56 Minor improvement in the Administration Area user interface
+#57 Minor improvement in the Administration Area user interface
+#58 Minor improvement in the Administration Area user interface
+#59 Minor improvements in the printing feature
+#60 URL separators are now configurable with the $CONFIG['URL_SEPARATOR'] parameter
+#61 Minor improvement in the Administration Area user interface
+#62 Minor improvement in the Administration Area user interface
+#63 Minor improvement in the Administration Area user interface
+#64 Minor improvements in the Administration Area user interface
+#65 Minor updates in the user Administration Area interface
+#66 Minor updates CSV import feature
+#67 Updated Administration Area menu
+#68 Added the Toggle Fullscreen Mode feature to the Administration Area
+#69 Minor improvements in the Administration Area user interface
+#70 Minor updates in the Administration Area user interface
+#71 Minor updates in the Administration Area user interface
+#72 Minor updates in the Administration Area user interface
+#73 Fixed a minor bug in the pagination
+#72 Minor updates in the Administration Area user interface
+#73 Minor updates in the Administration Area user interface
+#74 Minor updates in the Administration Area user interface
+#75 Minor updates in the Administration Area user interface
+#76 Minor updates in the Administration Area user interface
+#77 Technology update
+#78 Minor fix in the CSV import base class
+#79 Minor updates in the Administration Area user interface
+#80 Fixed the flash overlapping issue
+#81 Removed the link to Limewheel Creative Inc. in the Administration Area footer
+#82 Minor updates in the Administration Area user interface
+#83 Minor updates in the Administration Area user interface
+#84 Minor updates in the Administration Area user interface
+#85 File browser Insert Image feature now supports image ALT attribute
+#86 Minor updates in the Administration Area user interface
+#87 Minor updates in the Administration Area user interface
+#88 Minor updates in the Administration Area user interface
+#89 Minor updates in the Administration Area user interface
+#90 Minor updates in the Administration Area user interface
+#91 Minor updates in the Administration Area user interface
+#92 Minor updates in the Administration Area user interface
+#93 Added some new system events
+#94 Improvements in the CSV Import user interface
+#95 Minor updates in the Administration Area user interface
+#96 Minor consistency fix in the module naming
+#97 Minor fix in the base classes
+#98 Minor improvement in the Administration Area user interface
+#99 Minor improvement in the Administration Area user interface
+#100 Minor improvement in the Administration Area user interface
+#101 Minor improvement in the reports system
+#102 Minor improvement in the Administration Area user interface
+#103 Fixed a bug on the My Settings page (it was blank or displaying an error message for some users)
+#104 Minor improvement in the Administration Area user interface
+#105 Minor update in the API
+#106 Technology update
+#107 Minor updates in the Administration Area user interface
+#108|1.1.8 Update in the version numbering
+#109|1.1.9 Minor update in the back-end classes
+#110|1.1.10 Minor updates in the Administration Area user interface
+#111|1.1.11 Minor updates in the Administration Area user interface
+#112|1.1.12 Minor updates in the Administration Area user interface
+#113|1.1.13 Added new API event: backend:onControllerReady
+#114|1.1.14 Added new API event: backend:onBeforeRenderPartial, backend:onBeforeRenderPage
+#115|1.1.15 Minor improvement in the Administration Area user interface
+#116|1.1.16 Removed update notifications and system warnings from printed pages (packing slips, invoices, etc.)
+#117|1.1.17 Minor improvement in the Administration Area user interface
+#118|1.1.18 Minor improvement in the Administration Area user interface
+#119|1.1.19 Minor improvement in the Administration Area user interface
+#120|1.1.20 Minor improvement in the Administration Area user interface
+#121|1.1.21 Minor improvement in the Administration Area user interface
+#122|1.1.22 Minor improvement in the Administration Area user interface
+#123|1.1.23 Added documentation links to the Administration Area footer
+#124|1.1.24 Minor improvements in the Administration Area user interface
+#125|1.1.25 Minor improvements in the Administration Area user interface
+#126|1.1.26 Minor improvements in the Administration Area user interface
+#127|1.1.27 Improvement in the automatic URL generating 
+#128|1.1.28 Minor improvements in the Administration Area user interface
+#129|1.1.29 Minor fix in the Administration Area user interface
+#130|1.1.30 Minor fix in the Administration Area user interface
+#131|1.1.31 Minor improvements in the Administration Area user interface
+#132|1.1.32 Minor improvements in the Administration Area user interface
+#133|1.1.33 Minor improvements in the Administration Area user interface
+#134|1.1.34 Minor improvements in the Administration Area user interface
+#135|1.1.35 Minor improvements in the Administration Area user interface
+#136|1.1.36 Minor improvements in the Administration Area user interface
+#137|1.1.37 Technology update
+#1.2.0 Multiple improvements in the Administration Area user interface
+#1.2.1 Minor fix in the list filter UI
+#1.2.2 Minor fix in the Administration Area UI
+#1.2.3 Minor update in Grey Matter back-end theme
+#1.2.4 Minor improvement in the back-end settings model class. Fixed a bug where Google Analytics error message would visible even when Google Analytics tracking is not enabled.
+#1.2.5 Minor fix in the Administration Area UI
+#1.2.6 Minor update in the Administration Area UI
+#1.2.7 Minor improvements in the Administration Area user interface
+#1.2.8 Minor improvements in the Administration Area user interface
+#1.3.0 Built-in code editor replaced with Ace editor.
+#1.3.1 Minor improvement in the Administration Area user interface
+#1.3.2 Minor improvement in the Administration Area user interface
+#1.3.3 Minor fix in the Administration Area JavaScript framework
+#1.4.0 Built-in file browser now displays theme resources directory in addition to the website resources directory.
+#1.4.1 Minor improvements in the Administration Area user interface
+#1.5.0 Multiple usability improvements in the Administration Area
+#1.6.0 Usability improvements in the Administration Area
+#1.7.1 Added cascading main menu (can be enabled on the My Settings/Appearance page). Minor improvements in the Administration Area user interface.
+#1.7.2 Fixed form tabs styling in Windows/Chrome
+#1.7.3 Improvement in URL name generating - replacing the & (ampersand) character in names with 'and' word in URLs.
+#1.7.4 Minor improvements in the Administration Area user interface
+#1.7.5 Minor improvements in the Administration Area user interface
+#1.7.6 Minor improvements in the Administration Area user interface
+#1.7.7 Minor improvements in the base classes.
+#1.7.8 Minor improvements in the Administration Area user interface
+#1.7.9 Fixed a bug on the My Settings page where personal settings were applying globally
+#1.7.10 Added new API event: onCustomEvent
+#1.7.11 Minor improvements in the Administration Area user interface
+#1.7.12 Added new API event: backend:onBeforeRenderLayout
+#1.7.13 Minor update in the Administration Area UI
+#1.7.14 Minor update in the Administration Area UI
+#1.7.15 Minor improvements in the Administration Area UI
+#1.8.0 Multiple improvements and fixes in the Administration Area UI
+#1.8.1 Minor update in the Administration Area UI
+#1.8.2 Minor fix in the Administration Area UI
+#1.8.3 Minor fix in the Administration Area UI
+#1.8.4 Minor fix in the Administration Area UI
+#1.8.5 Minor fix in the Administration Area UI
+#1.8.6 Minor improvement in the CSV import function. 

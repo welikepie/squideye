@@ -1,0 +1,51 @@
+<script type="text/javascript">
+	var lemonstand_root_dir = '<?= Phpr::$request->getSubdirectory() ?>';
+</script>
+
+<link rel="stylesheet" type="text/css" href="modules/cms/resources/css/error.css" />
+<link rel="stylesheet" type="text/css" href="phproad/thirdpart/chosen/chosen.css" />
+
+<script type="text/javascript" src="phproad/thirdpart/syntaxhighlighter/scripts/shCore.js"></script>
+<script type="text/javascript" src="phproad/thirdpart/syntaxhighlighter/scripts/shBrushPhp.js"></script>
+<script type="text/javascript" src="phproad/thirdpart/syntaxhighlighter/scripts/shBrushXml.js"></script>
+
+<link type="text/css" rel="stylesheet" href="phproad/thirdpart/syntaxhighlighter/styles/shCore.css"/>
+<link type="text/css" rel="stylesheet" href="phproad/thirdpart/syntaxhighlighter/styles/shThemeDefault.css"/>
+
+<script type="text/javascript">
+	SyntaxHighlighter.all();
+	SyntaxHighlighter.defaults.gutter = true;
+</script>
+
+<ul class="breadcrumbs">
+	<li><a href="<?= url('/system/settings') ?>">Settings</a></li>
+	<li><a href="<?= url('/system/error_log') ?>">Error Log</a></li>
+	<li><?= $this->app_page_title ?></li>
+</ul>
+
+<? if(!isset($fatalError)): ?>
+	<?= Phpr_Form::open_tag() ?>
+		<p>Please paste your encoded error string below and click Decode.</p>
+		<div class="form">
+			<ul class="formElements">
+				<li class="textarea">
+					<textarea id="encoded_string" name="encoded_string" class="small"></textarea>
+				</li>
+			</ul>
+		</div>
+		
+		<?= backend_ajax_button('Decode', 'decoder_onDecode', array('class'=>'default'), "loadIndicator: {hideOnSuccess: true}, update: 'error-details', onAfterUpdate: function() { SyntaxHighlighter.highlight(); }") ?>
+		<?= backend_button('Return to the error list', url('/system/error_log')) ?>
+		<div class="clear"></div>
+	<?= Phpr_Form::close_tag() ?>
+<? else: ?>
+	<?= flash() ?>
+	<p><a href="<?= url('/system/error_log') ?>">Return to the error list</a></p>
+<? endif ?>
+
+<br />
+
+<div id="error-details">
+</div>
+
+<div class="clear"></div>

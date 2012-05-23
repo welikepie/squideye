@@ -1,0 +1,36 @@
+<? Phpr_View::beginBlock("view") ?>
+	<? if (!isset($fatalError)): ?>
+		<ul class="breadcrumbs">
+			<li><a href="<?= url('/blog/posts') ?>">Posts</a></li>
+			<li><a href="<?= url('/blog/posts/preview/'.$form_model->post_id) ?>">Post</a></li>
+			<li><?= $this->app_page_title ?></li>
+		</ul>
+	
+		<div class="form600">
+			<?= Phpr_Form::openTag(array('id'=>'form_element')) ?>
+				<? $this->formRenderPreview() ?>
+
+				<?= backend_button('Return to the post', url('/blog/posts/preview/'.$form_model->post_id.'?'.uniqid())) ?>
+				
+				<? if ($can_manage_comments): ?>
+					<? if ($form_model->status_code == Blog_Comment_Status::status_new): ?>
+						<?= backend_ajax_button('Approve', 'preview_onSetCommentStatus', array(), 'extraFields: {status: \''. Blog_Comment_Status::status_approved.'\'}, confirm: \'Do you really want to approve this comment?\'') ?>
+					<? endif ?>
+
+					<? if ($form_model->status_code != Blog_Comment_Status::status_deleted): ?>
+						<?= backend_ajax_button('Delete', 'preview_onSetCommentStatus', array(), 'extraFields: {status: \''. Blog_Comment_Status::status_deleted.'\'}, confirm: \'Do you really want to delete this comment?\'') ?>
+					<? else: ?>
+						<?= backend_ajax_button('Restore', 'preview_onSetCommentStatus', array(), 'extraFields: {status: \''. Blog_Comment_Status::status_approved.'\'}, confirm: \'Do you really want to restore this comment?\'') ?>
+					<? endif ?>
+
+					<?= backend_button('Edit Comment', array('href'=>url('/blog/comments/edit/'.$form_model->id.'?'.uniqid()), 'class'=>'right')) ?>
+				<? endif ?>
+				<div class="clear"></div>
+			</form>
+		</div>
+	<? else: ?>
+		<?= flash() ?>
+		
+		<p><a href="<?= url('/blog/posts') ?>">Return to the post list</a></p>
+	<? endif ?>
+<? Phpr_View::endBlock() ?>
