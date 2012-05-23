@@ -12,3 +12,4 @@ Game Plan
 * Do the same for standard Login procedure
 * Ensure the automatic login in case of any social networks being available
 * Integrate Single Sign-On with both shop and tattoo submission service
+* Social registration will require submission of an email address
