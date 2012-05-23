@@ -35,4 +35,4 @@ Game Plan
 Notes
 -----
 
-Nothing at a time.
+Since the designs used for printing ar going to be stored as vector graphics, should we give the customer ability to specify the dimensions of the print? Vector scales nicely and they might require bigger or smaller versions for whatever body parts.
