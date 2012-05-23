@@ -1,3 +1,4 @@
 # LemonStand-specific ignores
 logs/*.txt
 temp/*
+uploaded/*
