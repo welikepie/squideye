@@ -6,7 +6,7 @@ RewriteEngine on
 # You may need to uncomment the following line on some hosting environments, 
 # for example on unitedhosting.co.uk
 # RewriteBase /
-RewriteBase /inkless
+RewriteBase /squideye
 
 #
 # Do not allow executing any PHP scripts
