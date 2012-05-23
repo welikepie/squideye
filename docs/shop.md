@@ -24,8 +24,11 @@ Game Plan
 
 * **[DONE]** Set up LemonStand infrastructure
 * Add dummy products to the database
-* Configure payment, shipping, billing options
 
+* Code the UK Royal Mail Shipping module
+* Obtain credentials for payment services
+
+* Configure payment, shipping, billing options
 * Build temporary site design
 * Create product pages (bulk & view)
 * Ensure proper pagination and sorting
@@ -34,5 +37,12 @@ Game Plan
 
 Notes
 -----
+
+UK Royal Mail - is there API or should I go with data scraping?
+
+Possibly needed extensions to LemonStand:
+
+* [Product Minimum Quantity](http://lemonstandapp.com/marketplace/module/meminqty/) (paid) / [Minimum Order Amount](http://lemonstandapp.com/marketplace/module/minorderamount/) (free)
+* [Optional Product SKU](http://lemonstandapp.com/marketplace/module/optionalsku/) (free)
 
 Since the designs used for printing ar going to be stored as vector graphics, should we give the customer ability to specify the dimensions of the print? Vector scales nicely and they might require bigger or smaller versions for whatever body parts.
