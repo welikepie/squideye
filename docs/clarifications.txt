@@ -5,8 +5,8 @@ Q: What the name of the shop, the company details are going to be?
 A: The name, temporarily, is Squideye.
 
 Q: What's the scale of the trade going to be? UK, GB, EU, Europe, International?
-A: 
+A: Aiming for all of the above
 
 Q: What limits would be put on the orders?
    Do we enforce some sort of maximum/miminum limitation on the order, e.g. need to order at least 10 copies of a tattoo?
-A: 
+A: nope, a product in the store will be either say 5-10 copies of the same tattoo or it will be a collection of differnt ones buddled together, all represented as one item to the customer though
