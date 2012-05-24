@@ -1,11 +1,11 @@
 TO-DO List:
 -----------
 
-* Set up dummy data in the test shop
+* *[CURRENT]* Set up dummy data in the test shop
 * Run through the ordering process
   * Set up minimum quantity of the tattoos ordered
-  * Set up the shipping system
-     * Code the UK Royal Mail shipping module
+  * *[CURRENT]* Set up the shipping system
+     * **[DONE]** Code the UK Royal Mail shipping module
   * Set up the payment system
 * Build basic site interface, as specced in `shop.md`
 * Set up full order route, as specified [here](http://lemonstandapp.com/docs/configuring_the_order_route_and_user_roles/)
