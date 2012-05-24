@@ -1,0 +1,3 @@
+[submodule "modules/royalmail"]
+	path = modules/royalmail
+	url = git@github.com:D1SoveR/LemonStand_RoyalMail.git
