@@ -1,7 +1,7 @@
 TO-DO List:
 -----------
 
-* *[CURRENT]* Set up dummy data in the test shop
+* **[DONE]** Set up dummy data in the test shop
 * Run through the ordering process
   * Set up minimum quantity of the tattoos ordered
   * *[CURRENT]* Set up the shipping system

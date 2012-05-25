@@ -23,13 +23,13 @@ Game Plan
 ---------
 
 * **[DONE]** Set up LemonStand infrastructure
-* *[CURRENT]* Add dummy products to the database
+* **[DONE]** Add dummy products to the database
 
 * **[DONE]** Code the UK Royal Mail Shipping module
 * Obtain credentials for payment services
 
 * Configure payment, shipping, billing options
-* Build temporary site design
+* *[CURRENT]* Build temporary site design
 * Create product pages (bulk & view)
 * Ensure proper pagination and sorting
 * Set up search functionality
