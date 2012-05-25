@@ -1,0 +1,148 @@
+SHOP CONFIGURATION
+==================
+
+Shop -> Categories
+------------------
+
+Set up following categories for the placement of products:
+
+* Patterns
+  * Tribal
+  * Gothic
+* Animals & Creatures
+  * Insects
+  * Predators
+  * Magical
+* Writing
+
+Shop -> Products
+----------------
+
+Each product should have single SVG file uploaded, with the actual design of the tattoo.
+Each product should have grouped products of different sizes. Assuming the top size would
+be single A4 page, we are looking at 1 per page, 4 per page, 16 per page, 64 per page
+(might depend on oroginal tattoo dimensions).
+
+Shop -> Products -> Product Types
+---------------------------------
+
+Create the new product type, "Print", with API code "print" and following settings:
+
+* Is Default
+* Enable files (each product will carry single SVG file)
+* Enable shipping (we can keep weight of single page (or its fraction for small tattoos; used to compute weight of the package)
+* Enable grouped products (grouping will allow for different prices and shipping stats for small and big tattoos)
+
+Shop -> Products -> Product Groups
+----------------------------------
+
+Create new product group, named "Featured Tattoos" with ID "featured_products".
+
+Shop -> Tax Classes
+-------------------
+
+**!! NEEDS TO BE TAKEN CARE OF !!**
+
+Shop -> Shipping Options
+------------------------
+
+Add following shipping types to handle shipping:
+
+* UK Royal Mail with name "Royal Mail":
+  * Enabled on the front-end website
+  * Description: "Domestic UK Royal Mail services." or something similar
+  * Handling fee: 0.00 **(should there be handling fee?)**
+  * LemonStand API code: "domestic"
+  * Available only in United Kingdom
+
+* UK Royal Mail with name "Parcelforce Worldwide":
+  * Enabled on the front-end website
+  * Description: "International UK Royal Mail services." or something similar
+  * Handling fee: 1.00 **(to be revised)**
+  * LemonStand API code: "international"
+  * Available everywhere
+
+Shop -> Payment Methods
+-----------------------
+
+**PLENTY TO SET HERE - DISCUSS WITH ARRAN**
+
+Settings -> Statistics and Dashboard
+------------------------------------
+
+Enable Google Analytics integration, set it with specified GA credentials.  
+Disable built-in page statistics.
+
+Settings -> CMS Settings
+------------------------
+
+Enable file-based templates, set the path to templates directory as "{APP}/templates" and ".php" as extension.
+
+Settings -> E-Mail Settings
+---------------------------
+
+Set the "Email Method" to "SMTP", sender name as "Squideye" and sender address as "shop@squideye.com".  
+Set the SMTP access credentials according to whatever set-up has been provided.
+
+Settings -> Customize
+---------------------
+
+Upload the Squideye logo once it's done.
+
+Settings -> Currency
+--------------------
+
+Set the currency international code to "GBP" and ISO 4217 to "826".
+
+Settings -> Countries and States
+--------------------------------
+
+Disable every country except for United Kingdom, which will be enabled.  
+Once the business expands, we might start doing international business.
+
+**THIS PART NEEDS TO BE VERIFIED**
+
+Settings -> Shipping Configuration
+----------------------------------
+
+Set the shipping origin to following:
+
+* Country: United Kingdom
+* State: England/London
+* Street Address: 31 Mill St **(might need more info)**
+* Zip Code: SE1 **(get full post code of Arran's)**
+* City: London
+
+Set the sender to:
+
+* First name: Arran
+* Last name: Ross-Paterson
+* Company: Squideye
+* Phone: **WHATEVER TO BE USED HERE**
+
+Set units to:
+
+* Weight units: Kilograms
+* Dimension units: Centimeters
+
+Settings -> Company Information
+-------------------------------
+
+Set company name to "Squideye" and company address and contact to:
+
+31 Mill Street, London  
+SE1, United Kingdom
+
+E-Mail: shop@squideye.com
+Phone: **NUMBER HERE**
+
+Upload company logo on the "Logo" tab.  
+Prepare invoice and packing slip templates.
+
+Settings -> eCommerce Settings
+------------------------------
+
+Set "Cart Settings" to Sum.  
+Configure "Tax" tab **(how?)**.
+
+At "Categories" tab, check both "Enable category URL nesting" and "Prepend parent category URL".
