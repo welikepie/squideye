@@ -10,6 +10,7 @@ Set up following categories for the placement of products:
   * Tribal
   * Gothic
 * Animals & Creatures
+  * Dragons
   * Insects
   * Predators
   * Magical
