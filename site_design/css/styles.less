@@ -1,0 +1,199 @@
+@base:           16px;
+@siteWidth:      1000px;
+@mobileWidth:    600px;
+
+@background:     white;
+@navBackground:  #999;
+@headBackground: #666;
+
+// MIX-INS
+.box-shadow (@x: 0, @y: 0, @blur: 1px, @radius: 1px, @color: #000) {
+	box-shadow: @arguments;
+	-moz-box-shadow: @arguments;
+	-webkit-box-shadow: @arguments;
+}
+
+html { background-color: #F5F5F5; }
+body {
+	display: block;
+	width: 100%;
+	max-width: @siteWidth;
+	margin: 0 auto;
+	
+	// Nice background shadow
+	.box-shadow(0, 0, 30px, 4px, rgba(0,0,0,0.1));
+
+	// Global text settings
+	color: #333;
+	font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+	font-size: @base * 0.8;
+	font-style: normal;
+	line-height: 1.25;
+	text-align: justify;
+	
+	background-color: @background;
+	// Set basic parameters for the main elements
+	> * { padding: @base; position: relative; }
+}
+
+// PAGE HEADER
+
+body > header {
+
+	overflow: auto;
+	z-index: 1;
+	
+	background-color: @headBackground;
+	
+	> div.account-controls {
+		float: right;
+		p {
+			float: left;
+			color: white;
+			
+			a {
+				color: white;
+				&:hover, &:focus {
+					color: #BBB;
+				}
+			}
+			
+			+ p:before {
+				content: '   |   ';
+				color: #CCC;
+				white-space: pre;
+			}
+		}
+	}
+
+}
+
+// TOP NAVIGATION BAR
+// The <nav> tag is set-up to display as table element,
+// whereas links are set to display as table cells. That's the
+// easiest way to have them display horizontally and stretch to
+// utilise the entire available space no matter the number of elements.
+
+body > nav {
+
+	display: table;
+	width: 100%;
+	padding: 0 25% 0 0; // VIEWPORT-SPECIFIC
+	z-index: 3;
+	
+	background-color: @navBackground;
+	
+	> a {
+		display: table-cell;
+		height: @base * 2;
+		
+		color: @background;
+		font-size: @base;
+		line-height: 1;
+		text-decoration: none;
+		text-align: center;
+		vertical-align: middle;
+		
+		border-left: 1px solid lighten(@navBackground, 20%);
+		border-right: 1px solid darken(@navBackground, 15%);
+		
+		&:hover, &:focus, &.current {
+			color: @navBackground;
+			background-color: @background;
+			border-color: @background;
+		}
+	}
+
+}
+
+// Extend navigation for full-width pages
+body.full-width > nav { padding-right: 0; }
+
+// MAIN PAGE SECTION
+
+body > section#main {
+	width: 75%;  // VIEWPORT-SPECIFIC
+	float: left; // VIEWPORT-SPECIFIC
+	z-index: 2;
+	
+	.box-shadow(4px, 0, 30px, -4px, rgba(0,0,0,0.1));
+	min-height: 500px;
+}
+
+// The content area should occupy full-width for full-width pages.
+body.full-width > section#main { width: 100%; float: none; }
+
+// SIDEBAR
+
+body > section#sidebar {
+	width: 25%;  // VIEWPORT-SPECIFIC
+	float: left; // VIEWPORT-SPECIFIC
+	padding-left: @base * 2; // VIEWPORT-SPECIFIC
+	min-height: 500px;
+	z-index: 1;
+}
+
+// The sidebar should be hidden away at full-width tables
+body.full-width > section#sidebar { display: none; }
+
+body > footer {
+
+	clear: both;
+	z-index: 3;
+	background-color: @background;
+	
+	&:before {
+		content: '';
+		display: block;
+		width: 100%;
+		height: @base * 1.5;
+		margin-bottom: @base;
+		border-bottom: 1px solid #EEE;
+	}
+}
+
+/* ------ */
+
+section#main {
+
+	p, h1, h2, ul {
+		margin-bottom: @base;
+	}
+	p {
+		line-height: 1.5;
+	}
+	h1 {
+		font-size: @base * 2;
+		font-weight: bold;
+		letter-spacing: 0.1em;
+		line-height: 1;
+	}
+	h2 {
+		font-size: @base * 1.5;
+		font-weight: bold;
+		line-height: 1;
+	}
+	ul {
+		padding-left: @base * 2;
+		> ul {
+			margin: 0;
+			padding-left: @base * 1.5;
+		}
+		li {
+			margin-bottom: @base * 0.5;
+			list-style-type: circle;
+		}
+	}
+
+}
+
+/* ------ */
+
+@mobileMax:  @mobileWidth - 1;
+@media screen and (max-width: @mobileMax) {
+	body {
+		> nav { padding-right: 0; }
+		> section#main { width: 100%; float: none; }
+		> section#sidebar { width: 100%; float: none; padding-left: @base; }
+	}
+}
