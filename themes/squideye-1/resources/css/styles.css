@@ -149,15 +149,15 @@ section#sidebar h1 {
   margin-bottom: 16px;
 }
 /* Main Category Listing */
-ul.main_category_list {
+section#sidebar ul.main_category_list {
   margin: 0;
   padding: 0;
 }
-ul.main_category_list > ul {
+section#sidebar ul.main_category_list > ul {
   margin: 0;
   padding: 0 0 0 16px;
 }
-ul.main_category_list a {
+section#sidebar ul.main_category_list a {
   display: block;
   padding: 8px;
   color: #333;
@@ -166,10 +166,58 @@ ul.main_category_list a {
   text-decoration: none;
   border-bottom: 1px dotted #999;
 }
-ul.main_category_list a:hover,
-ul.main_category_list a:focus {
+section#sidebar ul.main_category_list a:hover,
+section#sidebar ul.main_category_list a:focus {
   background-color: #999999;
   color: #ffffff;
+}
+/* Product Lists */
+section#main ul.product-list.main-listing {
+  display: block;
+  margin: 32px 0 16px;
+  padding: 32px 0 0;
+  overflow: auto;
+  border-top: 1px solid #EEE;
+}
+section#main ul.product-list.main-listing > li {
+  width: 193px;
+  margin: 0 32px 32px 0;
+  padding: 0 32px 0 1px;
+  float: left;
+  list-style: none;
+  border-right: 1px solid #EEE;
+}
+section#main ul.product-list.main-listing > li img.thumbnail {
+  display: block;
+  width: 160px;
+  margin-bottom: 16px;
+  border: 6px solid white;
+  outline: 1px solid #EEE;
+}
+section#main ul.product-list.main-listing > li div.details h2 {
+  font-size: 16px;
+  line-height: 1;
+  text-align: center;
+}
+section#main ul.product-list.main-listing > li div.details p {
+  margin-bottom: 8px;
+  color: #666666;
+  font-size: 10px;
+  line-height: 16px;
+  text-align: right;
+}
+section#main ul.product-list.main-listing > li div.details > a {
+  display: block;
+  color: #33F;
+  text-align: right;
+  text-decoration: none;
+}
+section#main ul.product-list.main-listing > li div.details > a:after {
+  content: ' »';
+}
+section#main ul.product-list.main-listing > li div.details > a:hover,
+section#main ul.product-list.main-listing > li div.details > a:focus {
+  text-decoration: underline;
 }
 /* ------ */
 @media screen and (max-width: 599px) {
