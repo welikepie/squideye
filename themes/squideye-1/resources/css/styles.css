@@ -21,6 +21,10 @@ body > * {
   padding: 16px;
   position: relative;
 }
+a,
+a:visited {
+  color: #1C3AE6;
+}
 body > header {
   overflow: auto;
   z-index: 1;
@@ -63,6 +67,9 @@ body > nav > a {
   vertical-align: middle;
   border-left: 1px solid #cccccc;
   border-right: 1px solid #737373;
+}
+body > nav > a:visited {
+  color: #ffffff;
 }
 body > nav > a:hover,
 body > nav > a:focus,
@@ -157,7 +164,8 @@ section#sidebar ul.main_category_list > ul {
   margin: 0;
   padding: 0 0 0 16px;
 }
-section#sidebar ul.main_category_list a {
+section#sidebar ul.main_category_list a,
+section#sidebar ul.main_category_list a:visited {
   display: block;
   padding: 8px;
   color: #333;
@@ -167,7 +175,9 @@ section#sidebar ul.main_category_list a {
   border-bottom: 1px dotted #999;
 }
 section#sidebar ul.main_category_list a:hover,
-section#sidebar ul.main_category_list a:focus {
+section#sidebar ul.main_category_list a:visited:hover,
+section#sidebar ul.main_category_list a:focus,
+section#sidebar ul.main_category_list a:visited:focus {
   background-color: #999999;
   color: #ffffff;
 }
@@ -218,6 +228,73 @@ section#main ul.product-list.main-listing > li div.details > a:after {
 section#main ul.product-list.main-listing > li div.details > a:hover,
 section#main ul.product-list.main-listing > li div.details > a:focus {
   text-decoration: underline;
+}
+/* Single product view */
+section#main div#product-page p.flash {
+  float: left;
+  margin-bottom: 16px;
+  padding: 4px 16px;
+  color: #333;
+  border: 1px solid #999;
+  background-color: #CCC;
+  border-radius: 8px;
+}
+section#main div#product-page p.flash.success {
+  color: #393;
+  background-color: #CFC;
+  border-color: #6C6;
+}
+section#main div#product-page form {
+  clear: left;
+  overflow: auto;
+}
+section#main div#product-page form > img {
+  width: 300px;
+  float: left;
+  border: 1px solid #EEE;
+}
+section#main div#product-page form > div.details {
+  margin: 0 0 0 317px;
+}
+section#main div#product-page h1 {
+  margin-bottom: 8px;
+}
+section#main div#product-page h2 {
+  color: #595959;
+  font-size: 16px;
+  font-weight: 1;
+  line-height: 1;
+}
+section#main div#product-page div.description {
+  margin-bottom: 16px;
+}
+section#main div#product-page div.description:before {
+  content: 'Description:';
+  display: block;
+  margin-bottom: 4px;
+  color: #666;
+  font-weight: bold;
+  letter-spacing: 0.1em;
+}
+section#main div#product-page div.sizing {
+  margin-bottom: 16px;
+}
+section#main div#product-page div.sizing:before {
+  content: 'Sizing options:';
+  display: block;
+  margin-bottom: 4px;
+  color: #666;
+  font-weight: bold;
+  letter-spacing: 0.1em;
+}
+section#main div#product-page div.pricing {
+  margin-bottom: 16px;
+  font-size: 24px;
+  line-height: 1;
+}
+section#main div#product-page button {
+  padding: 4px 16px;
+  border-radius: 8px;
 }
 /* ------ */
 @media screen and (max-width: 599px) {

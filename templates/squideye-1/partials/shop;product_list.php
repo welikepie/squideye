@@ -14,7 +14,7 @@ if (isset($paginate) && $paginate) {
 }
 $products = $products instanceof Db_ActiveRecord ? $products->find_all() : $products;
 
-if (!$products->count) { ?>
+if ((!$products) || (!$products->count)) { ?>
 	<p>There are no products in this category.</p>
 <? } else { ?>
 	<ul<?= $list_class ?>>
@@ -35,6 +35,6 @@ if (!$products->count) { ?>
 	</ul>
 <? }
 
-if ($pagination) {
+if ($products && $products->count && $pagination) {
 	$this->render_partial('page:pagination', array('pagination' => $pagination, 'base_url' => $pagination_base_url));
 } ?>

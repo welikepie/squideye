@@ -67,4 +67,5 @@
 		-->
 		<? $this->render_partial('page:footer'); ?>
 	</body>
+	<? $this->render_block('body-scripts'); ?>
 </html>

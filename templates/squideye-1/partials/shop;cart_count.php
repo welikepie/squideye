@@ -1,0 +1,1 @@
+<?= Shop_Cart::get_item_total_num() ?>
