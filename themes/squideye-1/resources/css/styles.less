@@ -273,25 +273,24 @@ section#main ul.product-list.main-listing {
 
 }
 
+p.flash {
+	margin-bottom: @base;
+	padding: (@base * 0.25) @base;
+	
+	color: #333;
+	border: 1px solid #999;
+	background-color: #CCC;
+	border-radius: @base * 0.5;
+	
+	&.success {
+		color: #393;
+		background-color: #CFC;
+		border-color: #6C6;
+	}
+}
+
 /* Single product view */
 section#main div#product-page {
-
-	p.flash {
-		float: left;
-		margin-bottom: @base;
-		padding: (@base * 0.25) @base;
-		
-		color: #333;
-		border: 1px solid #999;
-		background-color: #CCC;
-		border-radius: @base * 0.5;
-		
-		&.success {
-			color: #393;
-			background-color: #CFC;
-			border-color: #6C6;
-		}
-	}
 
 	form {
 		clear: left;
@@ -337,6 +336,78 @@ section#main div#product-page {
 	}
 	
 	button { padding: (@base * 0.25) @base; border-radius: 8px; }
+
+}
+
+/* Cart view */
+section#main div#cart-page {
+
+	> * { text-align: right; }
+
+	h3 {
+		margin-bottom: @base * 0.5;
+		font-size: @base * 1.5;
+		font-weight: bold;
+		line-height: 1;
+	}
+	h3 + p {
+		margin-bottom: @base;
+		font-size: @base;
+		font-weight: normal;
+		line-height: 1;
+	}
+	
+	div.controls {
+		padding-top: @base;
+		border-top: 1px solid #EEE;
+		button { padding: (@base * 0.25) @base; border-radius: 8px; }
+	}
+
+	table {
+
+		width: 100%;
+		margin-bottom: @base * 2;
+		
+		thead th {
+			text-align: right;
+			padding: @base * 0.25 0;
+			border-bottom: 2px solid #CCC;
+			color: #666;
+		}
+		tbody tr td:first-child {
+			img { float: left; margin-right: @base; }
+			div { float: left; p { margin: 0; } }
+		}
+		tbody td {
+			text-align: right;
+			padding: @base * 0.5 0;
+			border-bottom: 1px solid #EEE;
+			
+			input {
+				width: 60px;
+				text-align: right;
+			}
+			
+			a[data-key] {
+				display: inline-block;
+				width: @base;
+				height: @base;
+			
+				color: #333;
+				font-size: @base * 1.25;
+				line-height: @base;
+				text-align: center;
+				
+				background-color: #EEE;
+				border-radius: @base * 0.25;
+				
+				cursor: pointer;
+			}
+		}
+		
+		tr > *:first-child { text-align: left; }
+
+	}
 
 }
 

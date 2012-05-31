@@ -229,9 +229,7 @@ section#main ul.product-list.main-listing > li div.details > a:hover,
 section#main ul.product-list.main-listing > li div.details > a:focus {
   text-decoration: underline;
 }
-/* Single product view */
-section#main div#product-page p.flash {
-  float: left;
+p.flash {
   margin-bottom: 16px;
   padding: 4px 16px;
   color: #333;
@@ -239,11 +237,12 @@ section#main div#product-page p.flash {
   background-color: #CCC;
   border-radius: 8px;
 }
-section#main div#product-page p.flash.success {
+p.flash.success {
   color: #393;
   background-color: #CFC;
   border-color: #6C6;
 }
+/* Single product view */
 section#main div#product-page form {
   clear: left;
   overflow: auto;
@@ -295,6 +294,74 @@ section#main div#product-page div.pricing {
 section#main div#product-page button {
   padding: 4px 16px;
   border-radius: 8px;
+}
+/* Cart view */
+section#main div#cart-page > * {
+  text-align: right;
+}
+section#main div#cart-page h3 {
+  margin-bottom: 8px;
+  font-size: 24px;
+  font-weight: bold;
+  line-height: 1;
+}
+section#main div#cart-page h3 + p {
+  margin-bottom: 16px;
+  font-size: 16px;
+  font-weight: normal;
+  line-height: 1;
+}
+section#main div#cart-page div.controls {
+  padding-top: 16px;
+  border-top: 1px solid #EEE;
+}
+section#main div#cart-page div.controls button {
+  padding: 4px 16px;
+  border-radius: 8px;
+}
+section#main div#cart-page table {
+  width: 100%;
+  margin-bottom: 32px;
+}
+section#main div#cart-page table thead th {
+  text-align: right;
+  padding: 4px 0;
+  border-bottom: 2px solid #CCC;
+  color: #666;
+}
+section#main div#cart-page table tbody tr td:first-child img {
+  float: left;
+  margin-right: 16px;
+}
+section#main div#cart-page table tbody tr td:first-child div {
+  float: left;
+}
+section#main div#cart-page table tbody tr td:first-child div p {
+  margin: 0;
+}
+section#main div#cart-page table tbody td {
+  text-align: right;
+  padding: 8px 0;
+  border-bottom: 1px solid #EEE;
+}
+section#main div#cart-page table tbody td input {
+  width: 60px;
+  text-align: right;
+}
+section#main div#cart-page table tbody td a[data-key] {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  color: #333;
+  font-size: 20px;
+  line-height: 16px;
+  text-align: center;
+  background-color: #EEE;
+  border-radius: 4px;
+  cursor: pointer;
+}
+section#main div#cart-page table tr > *:first-child {
+  text-align: left;
 }
 /* ------ */
 @media screen and (max-width: 599px) {

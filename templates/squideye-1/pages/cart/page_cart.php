@@ -1,0 +1,1 @@
+<div id="cart-page"><? $this->render_partial('shop:cart_partial'); ?></div>
