@@ -7,15 +7,15 @@ Features & Capabilities
 -----------------------
 
 * Browse available tattoos
-  * List featured tattoos [IDEA]
+  * List featured tattoos [IDEA] this would be represented as a category
   * List most popular tattoos
   * Search for specific tattoos
-    * Filter & sort by specific parameters
+    * Filter & sort by specific parameters - basic sort, ie date added to store, price, and sale items
   * View whole category of tattoos
   * View single tattoo
 * Buy the temporary tattoos
   * Process the order & notify the user
-  * Allow to specify tattoo dimensions (vector graphics are easily scalable)
+  * Allow to specify tattoo dimensions (vector graphics are easily scalable) - will not be offering this, as not all graphics will be vetor and would require different pricing per size, though products should have dimesions attributes
 
 [ anything else? ]
 
